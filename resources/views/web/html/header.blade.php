@@ -39,16 +39,16 @@
                     </div>
                     <div class="de-flex-col header-col-mid">
                         <ul id="mainmenu">
-                            <li><a class="menu-item" href="#">Home</a></li>
-                            <li><a class="menu-item" href="#">Cars</a></li>
-                            <li><a class="menu-item" href="#">Booking</a></li>
-                            <li><a class="menu-item" href="#">About Us</a></li>
-                            <li><a class="menu-item" href="#">Contact</a></li>
+                            <li><a class="menu-item" href="{{url("/")}}">Home</a></li>
+                            <li><a class="menu-item" href="{{url("/car-list")}}">Cars</a></li>
+                            <li><a class="menu-item" href="{{url("/booking")}}">Booking</a></li>
+                            <li><a class="menu-item" href="{{url("/about")}}">About Us</a></li>
+                            <li><a class="menu-item" href="{{url("/contact")}}">Contact</a></li>
                         </ul>
                     </div>
                     <div class="de-flex-col">
                         <div class="menu_side_area">
-                            <a href="login.html" class="btn-main">Sign In</a>
+                            <a href="#" class="btn-main">Sign In</a>
                             <span id="menu-btn"></span>
                         </div>
                     </div>

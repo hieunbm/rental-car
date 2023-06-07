@@ -12,7 +12,17 @@
             <div class="row">
                 <div class="col-lg-3">
                     <div class="item_filter_group">
-                        <h4>Vehicle Type</h4>
+                        <h4>Search Car</h4>
+                        <form role="search" action="#" method="get">
+                            <div class="input-group">
+                                <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+                                <button style="font-size: 12px" type="submit" class="btn btn-primary">search</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="item_filter_group">
+                        <h4>Car Type</h4>
                         <div class="de_form">
                             <div class="de_checkbox">
                                 <input id="vehicle_type_1" name="vehicle_type_1" type="checkbox" value="vehicle_type_1">
@@ -38,7 +48,7 @@
                     </div>
 
                     <div class="item_filter_group">
-                        <h4>Car Body Type</h4>
+                        <h4>Brands</h4>
                         <div class="de_form">
                             <div class="de_checkbox">
                                 <input id="car_body_type_1" name="car_body_type_1" type="checkbox"

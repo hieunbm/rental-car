@@ -11,11 +11,9 @@
         @include('web.html.breadcrumb')
         <!-- section close -->
 
-
         <section aria-label="section">
             <div class="container">
                 <div class="row g-custom-x">
-
                     <div class="col-lg-8 mb-sm-30">
 
                         <h3>Do you have any question?</h3>
@@ -60,35 +58,17 @@
                             </div>
                         </form>
                     </div>
-
                     <div class="col-lg-4">
-
                         <div class="de-box mb30">
-                            <h4>US Office</h4>
+                            <h4 style="margin-bottom: 20px">VIE Office</h4>
                             <address class="s1">
-                                <span><i
-                                        class="id-color fa fa-map-marker fa-lg"></i>08 W 36th St, New York, NY 10001</span>
-                                <span><i class="id-color fa fa-phone fa-lg"></i>+1 333 9296</span>
-                                <span><i class="id-color fa fa-envelope-o fa-lg"></i><a
-                                        href="mailto:contact@example.com">contact@example.com</a></span>
-                                <span><i class="id-color fa fa-file-pdf-o fa-lg"></i><a
-                                        href="#">Download Brochure</a></span>
+                                <span style="margin-bottom: 25px"><i class="id-color fa fa-map-marker fa-lg"></i>No. 8A Ton That Thuyet, My Dinh, Nam Tu Liem, Hanoi, Vietnam</i></span>
+                                <span style="margin-bottom: 25px"><i class="id-color fa fa-phone fa-lg"></i>Contact info: +1 333 9296</span>
+                                <span style="margin-bottom: 25px"><i class="id-color fa fa-envelope-o fa-lg"></i><a
+                                        href="#">contact@example.com</a></span>
                             </address>
                         </div>
-
-
-                        <div class="de-box mb30">
-                            <h4>AU Office</h4>
-                            <address class="s1">
-                                <span><i class="fa fa-map-marker fa-lg"></i>100 Mainstreet Center, Sydney</span>
-                                <span><i class="fa fa-phone fa-lg"></i>+61 333 9296</span>
-                                <span><i class="fa fa-envelope-o fa-lg"></i><a href="mailto:contact@example.com">contact@example.com</a></span>
-                                <span><i class="fa fa-file-pdf-o fa-lg"></i><a href="#">Download Brochure</a></span>
-                            </address>
-                        </div>
-
                     </div>
-
                 </div>
             </div>
 
