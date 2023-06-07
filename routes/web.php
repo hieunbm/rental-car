@@ -12,7 +12,28 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+// website start
+Route::get('/', [\App\Http\Controllers\WebController::class, "home"]);
+Route::get("/car-list", [\App\Http\Controllers\WebController::class, "car_list"]);
+Route::get("/booking", [\App\Http\Controllers\WebController::class, "booking"]);
+Route::get("/about", [\App\Http\Controllers\WebController::class, "about"]);
+Route::get("/contact", [\App\Http\Controllers\WebController::class, "contact"]);
+Route::get("/car", [\App\Http\Controllers\WebController::class, "car_detail"]);
+Route::get("/account-dashboard", [\App\Http\Controllers\WebController::class, "dashboard"]);
+Route::get("/account-profile", [\App\Http\Controllers\WebController::class, "profile"]);
+Route::get("/account-booking", [\App\Http\Controllers\WebController::class, "myOrders"]);
+// website end
 
-Route::get('/', function () {
-    return view('welcome');
+// admin start
+Route::prefix("/admin")->group(function () {// middleware: phải đăng nhập thì ms vào đc
+    Route::get("/", [App\Http\Controllers\AdminController::class, "admin_dashboard"]);
+    Route::get("/booking", [App\Http\Controllers\AdminController::class, "admin_booking"]);
+    Route::get("/cars", [App\Http\Controllers\AdminController::class, "admin_cars"]);
+    Route::get("/car-type", [App\Http\Controllers\AdminController::class, "admin_cartype"]);
+    Route::get("/brands", [App\Http\Controllers\AdminController::class, "admin_brand"]);
+    Route::get("/contact-query", [App\Http\Controllers\AdminController::class, "admin_contactquery"]);
+    Route::get("/customers", [App\Http\Controllers\AdminController::class, "admin_customer"]);
+    Route::get("/services", [App\Http\Controllers\AdminController::class, "admin_service"]);
+    Route::get("/incidents", [App\Http\Controllers\AdminController::class, "admin_incident"]);
 });
+// admin end
