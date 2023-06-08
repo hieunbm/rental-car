@@ -21,3 +21,5 @@
 <script src="../dashboard/js/custom-switcher.min.js"></script>
 <!-- Custom JS -->
 <script src="../dashboard/js/custom.js"></script>
+<!-- Fontawesome -->
+<script src="https://kit.fontawesome.com/5c282fdeb6.js" crossorigin="anonymous"></script>

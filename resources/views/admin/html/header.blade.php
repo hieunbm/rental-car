@@ -27,7 +27,7 @@
             <!-- Start::header-element -->
             <div class="header-element header-search">
                 <!-- Start::header-link -->
-                <a href="javascript:void(0);" class="header-link" data-bs-toggle="modal" data-bs-target="#searchModal"> <i class="bx bx-search-alt-2 header-link-icon"></i> </a>
+                <a href="javascript:void(0);" class="header-link" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fa-solid fa-magnifying-glass header-link-icon"></i> </a>
                 <!-- End::header-link -->
             </div>
             <!-- End::header-element -->
@@ -76,12 +76,12 @@
                 <a href="javascript:void(0);" class="header-link layout-setting">
 								<span class="light-layout">
 									<!-- Start::header-link-icon -->
-									<i class="bx bx-moon header-link-icon"></i>
+									<i class="fa-regular fa-lightbulb header-link-icon"></i>
                                     <!-- End::header-link-icon -->
 								</span>
                     <span class="dark-layout">
 									<!-- Start::header-link-icon -->
-									<i class="bx bx-sun header-link-icon"></i>
+									<i class="fa-solid fa-lightbulb header-link-icon"></i>
                         <!-- End::header-link-icon -->
 								</span>
                 </a>
@@ -92,7 +92,7 @@
             <div class="header-element cart-dropdown">
                 <!-- Start::header-link|dropdown-toggle -->
                 <a href="javascript:void(0);" class="header-link dropdown-toggle" data-bs-auto-close="outside" data-bs-toggle="dropdown">
-                    <i class="bx bx-cart header-link-icon"></i> <span class="badge bg-primary rounded-pill header-icon-badge" id="cart-icon-badge">5</span>
+                    <i class="fa-solid fa-cart-shopping header-link-icon"></i> <span class="badge bg-primary rounded-pill header-icon-badge" id="cart-icon-badge">5</span>
                 </a>
                 <!-- End::header-link|dropdown-toggle -->
                 <!-- Start::main-header-dropdown -->
@@ -219,7 +219,7 @@
             <div class="header-element notifications-dropdown">
                 <!-- Start::header-link|dropdown-toggle -->
                 <a href="javascript:void(0);" class="header-link dropdown-toggle" data-bs-toggle="dropdown" data-bs-auto-close="outside" id="messageDropdown" aria-expanded="false">
-                    <i class="bx bx-bell header-link-icon"></i> <span class="badge bg-secondary rounded-pill header-icon-badge pulse pulse-secondary" id="notification-icon-badge">5</span>
+                    <i class="fa-solid fa-bell header-link-icon"></i> <span class="badge bg-secondary rounded-pill header-icon-badge pulse pulse-secondary" id="notification-icon-badge">5</span>
                 </a>
                 <!-- End::header-link|dropdown-toggle -->
                 <!-- Start::main-header-dropdown -->
@@ -334,7 +334,7 @@
             <div class="header-element header-shortcuts-dropdown">
                 <!-- Start::header-link|dropdown-toggle -->
                 <a href="javascript:void(0);" class="header-link dropdown-toggle" data-bs-toggle="dropdown" data-bs-auto-close="outside" id="notificationDropdown" aria-expanded="false">
-                    <i class="bx bx-grid-alt header-link-icon"></i>
+                    <i class="fa-solid fa-grip header-link-icon"></i> header-link-icon"></i>
                 </a>
                 <!-- End::header-link|dropdown-toggle -->
                 <!-- Start::main-header-dropdown -->
@@ -420,7 +420,7 @@
             <!-- Start::header-element -->
             <div class="header-element header-fullscreen">
                 <!-- Start::header-link -->
-                <a onclick="openFullscreen();" href="#" class="header-link"> <i class="bx bx-fullscreen full-screen-open header-link-icon"></i> <i class="bx bx-exit-fullscreen full-screen-close header-link-icon d-none"></i> </a>
+                <a onclick="openFullscreen();" href="#" class="header-link"> <i class="fa-solid fa-expand header-link-icon"></i></a>
                 <!-- End::header-link -->
             </div>
             <!-- End::header-element -->
@@ -465,7 +465,7 @@
             <!-- Start::header-element -->
             <div class="header-element">
                 <!-- Start::header-link|switcher-icon -->
-                <a href="#" class="header-link switcher-icon" data-bs-toggle="offcanvas" data-bs-target="#switcher-canvas"> <i class="bx bx-cog header-link-icon"></i> </a>
+                <a href="#" class="header-link switcher-icon" data-bs-toggle="offcanvas" data-bs-target="#switcher-canvas"> <i class="fa-solid fa-gear header-link-icon"></i> </a>
                 <!-- End::header-link|switcher-icon -->
             </div>
             <!-- End::header-element -->

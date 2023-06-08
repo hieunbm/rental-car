@@ -1,9 +1,8 @@
 <aside class="app-sidebar sticky" id="sidebar">
     <!-- Start::main-sidebar-header -->
     <div class="main-sidebar-header">
-        <a href="index.html" class="header-logo">
-            <img src="../dashboard/images/brand-logos/desktop-logo.png" alt="logo" class="desktop-logo" /> <img src="../dashboard/images/brand-logos/toggle-logo.png" alt="logo" class="toggle-logo" />
-            <img src="../dashboard/images/brand-logos/desktop-dark.png" alt="logo" class="desktop-dark" /> <img src="../dashboard/images/brand-logos/toggle-dark.png" alt="logo" class="toggle-dark" />
+        <a href="{{url("/admin")}}" class="header-logo">
+            <img src="images/logo.png" alt="logo" class="desktop-dark" />
         </a>
     </div>
     <!-- End::main-sidebar-header -->
@@ -21,7 +20,7 @@
                 <!-- Start::slide -->
                 <li class="slide has-sub">
                     <a href="javascript:void(0);" class="side-menu__item">
-                        <i class="bx bx-home side-menu__icon"></i> <span class="side-menu__label">Dashboards<span class="badge bg-warning-transparent ms-2">2</span></span> <i class="fe fe-chevron-right side-menu__angle"></i>
+                        <i class="fa-solid fa-house side-menu__icon"></i> <span class="side-menu__label">Dashboards<span class="badge bg-warning-transparent ms-2">2</span></span> <i class="fe fe-chevron-right side-menu__angle"></i>
                     </a>
                     <ul class="slide-menu child1">
                         <li class="slide side-menu__label1"><a href="javascript:void(0)">Dashboards</a></li>
@@ -36,7 +35,7 @@
                 <!-- End::slide__category -->
                 <!-- Start::slide -->
                 <li class="slide has-sub">
-                    <a href="javascript:void(0);" class="side-menu__item"> <i class="bx bx-file-blank side-menu__icon"></i> <span class="side-menu__label">Booking</span> <i class="fe fe-chevron-right side-menu__angle"></i> </a>
+                    <a href="javascript:void(0);" class="side-menu__item"> <i class="fa-solid fa-car-on side-menu__icon"></i> <span class="side-menu__label">Booking</span> <i class="fe fe-chevron-right side-menu__angle"></i> </a>
                     <ul class="slide-menu child1">
                         <li class="slide"><a href="{{url("/admin/booking")}}" class="side-menu__item">Booking</a></li>
                         <li class="slide"><a href="#" class="side-menu__item">Booking Details</a></li>
@@ -49,11 +48,11 @@
                 <!-- End::slide__category -->
                 <!-- Start::slide -->
                 <li class="slide has-sub">
-                    <a href="javascript:void(0);" class="side-menu__item"> <i class="bx bx-box side-menu__icon"></i> <span class="side-menu__label">Cars</span> <i class="fe fe-chevron-right side-menu__angle"></i> </a>
+                    <a href="javascript:void(0);" class="side-menu__item"> <i class="fa-solid fa-car side-menu__icon"></i> <span class="side-menu__label">Cars</span> <i class="fe fe-chevron-right side-menu__angle"></i> </a>
                     <ul class="slide-menu child1 mega-menu">
                         <li class="slide"><a href="{{url("/admin/cars")}}" class="side-menu__item">Cars</a></li>
                         <li class="slide"><a href="{{url("/admin/car-type")}}" class="side-menu__item">Car Type</a></li>
-                        <li class="slide"><a href="#" class="side-menu__item">Add Cars</a></li>
+                        <li class="slide"><a href="{{url("/admin/add-car")}}" class="side-menu__item">Add Cars</a></li>
                     </ul>
                 </li>
                 <!-- End::slide -->
@@ -63,10 +62,10 @@
                 <!-- End::slide__category -->
                 <!-- Start::slide -->
                 <li class="slide has-sub">
-                    <a href="javascript:void(0);" class="side-menu__item"> <i class="bx bx-box side-menu__icon"></i> <span class="side-menu__label">Brands</span> <i class="fe fe-chevron-right side-menu__angle"></i> </a>
+                    <a href="javascript:void(0);" class="side-menu__item"> <i class="fa-solid fa-building side-menu__icon"></i> <span class="side-menu__label">Brands</span> <i class="fe fe-chevron-right side-menu__angle"></i> </a>
                     <ul class="slide-menu child1 mega-menu">
                         <li class="slide"><a href="{{url("/admin/brands")}}" class="side-menu__item">Brands</a></li>
-                        <li class="slide"><a href="#" class="side-menu__item">Add Brands</a></li>
+                        <li class="slide"><a href="{{url("/admin/add-brand")}}" class="side-menu__item">Add Brands</a></li>
                     </ul>
                 </li>
                 <!-- End::slide -->
@@ -76,7 +75,7 @@
                 <!-- End::slide__category -->
                 <!-- Start::slide -->
                 <li class="slide has-sub">
-                    <a href="javascript:void(0);" class="side-menu__item"> <i class="bx bx-box side-menu__icon"></i> <span class="side-menu__label">Contact Query</span> <i class="fe fe-chevron-right side-menu__angle"></i> </a>
+                    <a href="javascript:void(0);" class="side-menu__item"> <i class="fa-solid fa-users side-menu__icon"></i> <span class="side-menu__label">Contact Query</span> <i class="fe fe-chevron-right side-menu__angle"></i> </a>
                     <ul class="slide-menu child1 mega-menu">
                         <li class="slide"><a href="{{url("/admin/contact-query")}}" class="side-menu__item">Contact Query</a></li>
                     </ul>
@@ -88,7 +87,7 @@
                 <!-- End::slide__category -->
                 <!-- Start::slide -->
                 <li class="slide has-sub">
-                    <a href="javascript:void(0);" class="side-menu__item"> <i class="bx bx-box side-menu__icon"></i> <span class="side-menu__label">Customers</span> <i class="fe fe-chevron-right side-menu__angle"></i> </a>
+                    <a href="javascript:void(0);" class="side-menu__item"> <i class="fa-solid fa-user side-menu__icon"></i> <span class="side-menu__label">Customers</span> <i class="fe fe-chevron-right side-menu__angle"></i> </a>
                     <ul class="slide-menu child1 mega-menu">
                         <li class="slide"><a href="{{url("/admin/customers")}}" class="side-menu__item">Customers</a></li>
                     </ul>
@@ -100,7 +99,7 @@
                 <!-- End::slide__category -->
                 <!-- Start::slide -->
                 <li class="slide has-sub">
-                    <a href="javascript:void(0);" class="side-menu__item"> <i class="bx bx-box side-menu__icon"></i> <span class="side-menu__label">Services</span> <i class="fe fe-chevron-right side-menu__angle"></i> </a>
+                    <a href="javascript:void(0);" class="side-menu__item"> <i class="fa-solid fa-truck-fast side-menu__icon"></i> <span class="side-menu__label">Services</span> <i class="fe fe-chevron-right side-menu__angle"></i> </a>
                     <ul class="slide-menu child1 mega-menu">
                         <li class="slide"><a href="{{url("/admin/services")}}" class="side-menu__item">Services</a></li>
                     </ul>
@@ -112,7 +111,7 @@
                 <!-- End::slide__category -->
                 <!-- Start::slide -->
                 <li class="slide has-sub">
-                    <a href="javascript:void(0);" class="side-menu__item"> <i class="bx bx-box side-menu__icon"></i> <span class="side-menu__label">Incidents</span> <i class="fe fe-chevron-right side-menu__angle"></i> </a>
+                    <a href="javascript:void(0);" class="side-menu__item"> <i class="fa-solid fa-indent side-menu__icon"></i> <span class="side-menu__label">Incidents</span> <i class="fe fe-chevron-right side-menu__angle"></i> </a>
                     <ul class="slide-menu child1 mega-menu">
                         <li class="slide"><a href="{{url("/admin/incidents")}}" class="side-menu__item">Incidents</a></li>
                     </ul>
