@@ -33,38 +33,57 @@
                         <table class="table table-hover text-nowrap table-bordered">
                             <thead>
                             <tr>
-                                <th scope="col">S.No</th>
                                 <th scope="col">ID Booking</th>
-                                <th scope="col">Client</th>
-                                <th scope="col">Pick Up Date & Time</th>
+                                <th scope="col">Customer ID</th>
+                                <th scope="col">Car ID</th>
+                                <th scope="col">Rental Date & Time</th>
                                 <th scope="col">Return Date & Time</th>
+                                <th scope="col">Pickup Location</th>
+                                <th scope="col">Message</th>
+                                <th scope="col">Rental Type</th>
+                                <th scope="col">Price</th>
+                                <th scope="col">Incident ID</th>
+                                <th scope="col">Additional Fee</th>
+                                <th scope="col">Total Amount</th>
                                 <th scope="col">Status</th>
-                                <th scope="col">Actions</th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr>
-                                <td>1</td>
                                 <td>#INV111611</td>
                                 <td>
-                                    <div class="d-flex align-items-center lh-1">
-                                        <div class="me-2">
-                                            <span class="avatar avatar-md avatar-rounded"> <img
-                                                    src="../dashboard/images/faces/1.jpg" alt=""/> </span>
-                                        </div>
-                                        <div><span class="d-block fw-semibold mb-1">Rena Mark</span> <span
-                                                class="text-muted fs-12">renamark123@demo</span></div>
+                                    <div class="btn-list">
+                                        <a>1</a>
+                                        <a aria-label="anchor" href="{{url("/admin/customers")}}" class="btn btn-sm btn-icon btn-info-light">
+                                            <i class="fa-solid fa-circle-info"></i>
+                                        </a>
                                     </div>
                                 </td>
-                                <td>14-05-2023</td>
-                                <td>14-05-2023</td>
-                                <td><span class="badge bg-success">Paid</span></td>
                                 <td>
                                     <div class="btn-list">
-                                        <a aria-label="anchor" href="javascript:void(0);"
-                                           class="btn btn-sm btn-icon btn-info-light"><i class="ri-pencil-line"></i></a>
+                                        <a>1</a>
+                                        <a aria-label="anchor" href="{{url("/admin/cars")}}" class="btn btn-sm btn-icon btn-info-light">
+                                            <i class="fa-solid fa-circle-info"></i>
+                                        </a>
                                     </div>
                                 </td>
+                                <td>14-05-2023</td>
+                                <td>14-05-2023</td>
+                                <td>Ha Noi</td>
+                                <td>null</td>
+                                <td>null</td>
+                                <td>$98</td>
+                                <td>
+                                    <div class="btn-list">
+                                        <a>3</a>
+                                        <a aria-label="anchor" href="{{url("/admin/incidents")}}" class="btn btn-sm btn-icon btn-info-light">
+                                            <i class="fa-solid fa-circle-info"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                                <td>$10</td>
+                                <td>$108</td>
+                                <td><span class="badge bg-success">Paid</span></td>
                             </tr>
                             </tbody>
                         </table>

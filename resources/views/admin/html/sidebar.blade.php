@@ -2,7 +2,7 @@
     <!-- Start::main-sidebar-header -->
     <div class="main-sidebar-header">
         <a href="{{url("/admin")}}" class="header-logo">
-            <img src="images/logo.png" alt="logo" class="desktop-dark" />
+            <img src="{{ asset('images/logo.png') }}" alt="logo" class="desktop-dark" />
         </a>
     </div>
     <!-- End::main-sidebar-header -->
@@ -38,7 +38,7 @@
                     <a href="javascript:void(0);" class="side-menu__item"> <i class="fa-solid fa-car-on side-menu__icon"></i> <span class="side-menu__label">Booking</span> <i class="fe fe-chevron-right side-menu__angle"></i> </a>
                     <ul class="slide-menu child1">
                         <li class="slide"><a href="{{url("/admin/booking")}}" class="side-menu__item">Booking</a></li>
-                        <li class="slide"><a href="#" class="side-menu__item">Booking Details</a></li>
+                        <li class="slide"><a href="{{url("/admin/booking-detail")}}" class="side-menu__item">Booking Details</a></li>
                     </ul>
                 </li>
                 <!-- End::slide -->

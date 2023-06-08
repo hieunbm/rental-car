@@ -27,7 +27,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="">
+                <div class="" style="display: none">
                     <p class="switcher-style-head">Directions:</p>
                     <div class="row switcher-style gx-0">
                         <div class="col-4">

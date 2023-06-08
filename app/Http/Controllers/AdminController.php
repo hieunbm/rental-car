@@ -13,6 +13,9 @@ class AdminController extends Controller
     public function admin_booking() {
         return view("admin.admin-booking");
     }
+    public function admin_booking_detail() {
+        return view("admin.admin-booking-detail");
+    }
     public function admin_cars() {
         return view("admin.admin-cars");
 

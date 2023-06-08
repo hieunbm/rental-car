@@ -334,7 +334,7 @@
             <div class="header-element header-shortcuts-dropdown">
                 <!-- Start::header-link|dropdown-toggle -->
                 <a href="javascript:void(0);" class="header-link dropdown-toggle" data-bs-toggle="dropdown" data-bs-auto-close="outside" id="notificationDropdown" aria-expanded="false">
-                    <i class="fa-solid fa-grip header-link-icon"></i> header-link-icon"></i>
+                    <i class="fa-solid fa-grip header-link-icon"></i>
                 </a>
                 <!-- End::header-link|dropdown-toggle -->
                 <!-- Start::main-header-dropdown -->

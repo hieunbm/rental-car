@@ -28,11 +28,12 @@ Route::get("/account-booking", [\App\Http\Controllers\WebController::class, "myO
 Route::prefix("/admin")->group(function () {// middleware: phải đăng nhập thì ms vào đc
     Route::get("/", [App\Http\Controllers\AdminController::class, "admin_dashboard"]);
     Route::get("/booking", [App\Http\Controllers\AdminController::class, "admin_booking"]);
+    Route::get("/booking-detail", [App\Http\Controllers\AdminController::class, "admin_booking_detail"]);
     Route::get("/cars", [App\Http\Controllers\AdminController::class, "admin_cars"]);
     Route::get("/car-type", [App\Http\Controllers\AdminController::class, "admin_cartype"]);
-    Route::post("/add-car", [App\Http\Controllers\AdminController::class, "admin_addcar"]);
+    Route::get("/add-car", [App\Http\Controllers\AdminController::class, "admin_addcar"]);
     Route::get("/brands", [App\Http\Controllers\AdminController::class, "admin_brand"]);
-    Route::post("/add-brand", [App\Http\Controllers\AdminController::class, "admin_addbrand"]);
+    Route::get("/add-brand", [App\Http\Controllers\AdminController::class, "admin_addbrand"]);
     Route::get("/contact-query", [App\Http\Controllers\AdminController::class, "admin_contactquery"]);
     Route::get("/contact-query-detail", [App\Http\Controllers\AdminController::class, "admin_contactdetail"]);
     Route::get("/customers", [App\Http\Controllers\AdminController::class, "admin_customer"]);
