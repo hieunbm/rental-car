@@ -1,578 +1,702 @@
 @extends("admin.layout.layout")
+@section("title","Overview")
 @section("main")
+    <!-- Page Header -->
+    @include("admin.html.content-header")
+    <!-- Page Header Close -->
+
+    <!-- Start::row-1 -->
     <div class="row">
-        <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-info">
-                <div class="inner">
-                    <h3>150</h3>
-
-                    <p>New Orders</p>
+        <div class="col-xxl-5 col-xl-12">
+            <div class="row">
+                <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                    <div class="card custom-card hrm-main-card primary">
+                        <div class="card-body">
+                            <div class="d-flex align-items-top">
+                                <div class="me-3">
+                                    <span class="avatar bg-primary"> <i class="ri-team-line fs-18"></i> </span>
+                                </div>
+                                <div class="flex-fill">
+                                    <span class="fw-semibold text-muted d-block mb-2">Total Employees</span>
+                                    <h5 class="fw-semibold mb-2">22,124</h5>
+                                    <p class="mb-0"><span class="badge bg-primary-transparent">This Month</span></p>
+                                </div>
+                                <div><span class="fs-14 fw-semibold text-success">+1.03%</span></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="icon">
-                    <i class="ion ion-bag"></i>
+                <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                    <div class="card custom-card hrm-main-card secondary">
+                        <div class="card-body">
+                            <div class="d-flex align-items-top">
+                                <div class="me-3">
+                                    <span class="avatar bg-secondary"> <i
+                                            class="ri-user-unfollow-line fs-18"></i> </span>
+                                </div>
+                                <div class="flex-fill">
+                                    <span class="fw-semibold text-muted d-block mb-2">Employees In Leave</span>
+                                    <h5 class="fw-semibold mb-2">528</h5>
+                                    <p class="mb-0"><span class="badge bg-secondary-transparent">This Month</span></p>
+                                </div>
+                                <div><span class="fs-14 fw-semibold text-success">+0.36%</span></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                    <div class="card custom-card hrm-main-card warning">
+                        <div class="card-body">
+                            <div class="d-flex align-items-top">
+                                <div class="me-3">
+                                    <span class="avatar bg-warning"> <i class="ri-service-line fs-18"></i> </span>
+                                </div>
+                                <div class="flex-fill">
+                                    <span class="fw-semibold text-muted d-block mb-2">Total Clients</span>
+                                    <h5 class="fw-semibold mb-2">8,289</h5>
+                                    <p class="mb-0"><span class="badge bg-warning-transparent">This Month</span></p>
+                                </div>
+                                <div><span class="fs-14 fw-semibold text-danger">-1.28%</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                    <div class="card custom-card hrm-main-card danger">
+                        <div class="card-body">
+                            <div class="d-flex align-items-top">
+                                <div class="me-3">
+                                    <span class="avatar bg-danger"> <i class="ri-contacts-line fs-18"></i> </span>
+                                </div>
+                                <div class="flex-fill">
+                                    <span class="fw-semibold text-muted d-block mb-2">New Leads</span>
+                                    <h5 class="fw-semibold mb-2">1,453</h5>
+                                    <p class="mb-0"><span class="badge bg-danger-transparent">This Month</span></p>
+                                </div>
+                                <div><span class="fs-14 fw-semibold text-success">+4.25%</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-12">
+                    <div class="card custom-card">
+                        <div class="card-header">
+                            <div class="card-title">Applicants Summary</div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row gy-md-0 gy-3">
+                                <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-4 col-sm-12">
+                                    <div class="d-flex align-items-top">
+                                        <div class="me-3">
+                                            <span class="avatar avatar-rounded bg-light text-primary"> <i
+                                                    class="ti ti-files fs-18"></i> </span>
+                                        </div>
+                                        <div>
+                                            <span class="d-block mb-1 text-muted">New Applicants</span>
+                                            <h6 class="fw-semibold mb-0">2,981</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-4 col-sm-12">
+                                    <div class="d-flex align-items-top">
+                                        <div class="me-3">
+                                            <span class="avatar avatar-rounded bg-light text-secondary"> <i
+                                                    class="ti ti-file-check fs-18"></i> </span>
+                                        </div>
+                                        <div>
+                                            <span class="d-block mb-1 text-muted">Selected Candidates</span>
+                                            <h6 class="fw-semibold mb-0">2,981</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-4 col-sm-12">
+                                    <div class="d-flex align-items-top">
+                                        <div class="me-3">
+                                            <span class="avatar avatar-rounded bg-light text-warning"> <i
+                                                    class="ti ti-file-dislike fs-18"></i> </span>
+                                        </div>
+                                        <div>
+                                            <span class="d-block mb-1 text-muted">Rejected Candidates</span>
+                                            <h6 class="fw-semibold mb-0">2,981</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <!-- ./col -->
-        <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-success">
-                <div class="inner">
-                    <h3>53<sup style="font-size: 20px">%</sup></h3>
-
-                    <p>Bounce Rate</p>
+        <div class="col-xxl-7 col-xl-12">
+            <div class="card custom-card">
+                <div class="card-header justify-content-between align-items-center d-sm-flex d-block">
+                    <div class="card-title mb-sm-0 mb-2">Performance By Category</div>
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                        <button type="button" class="btn btn-primary-light btn-sm btn-wave">1W</button>
+                        <button type="button" class="btn btn-primary-light btn-sm btn-wave">1M</button>
+                        <button type="button" class="btn btn-primary-light btn-sm btn-wave">6M</button>
+                        <button type="button" class="btn btn-primary btn-sm btn-wave">1Y</button>
+                    </div>
                 </div>
-                <div class="icon">
-                    <i class="ion ion-stats-bars"></i>
+                <div class="card-body">
+                    <div id="performanceReport"></div>
                 </div>
-                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
         </div>
-        <!-- ./col -->
-        <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-warning">
-                <div class="inner">
-                    <h3>44</h3>
-
-                    <p>User Registrations</p>
-                </div>
-                <div class="icon">
-                    <i class="ion ion-person-add"></i>
-                </div>
-                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-        </div>
-        <!-- ./col -->
-        <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-danger">
-                <div class="inner">
-                    <h3>65</h3>
-
-                    <p>Unique Visitors</p>
-                </div>
-                <div class="icon">
-                    <i class="ion ion-pie-graph"></i>
-                </div>
-                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-        </div>
-        <!-- ./col -->
     </div>
-    <!-- /.row -->
-    <!-- Main row -->
+    <!--End::row-1 -->
+
+    <!-- Start::row-2 -->
     <div class="row">
-        <!-- Left col -->
-        <section class="col-lg-7 connectedSortable">
-            <!-- Custom tabs (Charts with tabs)-->
-            <div class="card">
+        <div class="col-xxl-3 col-xl-6 col-lg-6 col-md-12">
+            <div class="card custom-card">
                 <div class="card-header">
-                    <h3 class="card-title">
-                        <i class="fas fa-chart-pie mr-1"></i>
-                        Sales
-                    </h3>
-                    <div class="card-tools">
-                        <ul class="nav nav-pills ml-auto">
-                            <li class="nav-item">
-                                <a class="nav-link active" href="#revenue-chart" data-toggle="tab">Area</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#sales-chart" data-toggle="tab">Donut</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div><!-- /.card-header -->
-                <div class="card-body">
-                    <div class="tab-content p-0">
-                        <!-- Morris chart - Sales -->
-                        <div class="chart tab-pane active" id="revenue-chart"
-                             style="position: relative; height: 300px;">
-                            <canvas id="revenue-chart-canvas" height="300" style="height: 300px;"></canvas>
+                    <div class="card-title">Jobs Summary</div>
+                </div>
+                <div class="card-body p-4">
+                    <div id="jobs-summary"></div>
+                </div>
+                <div class="card-footer p-4 my-2">
+                    <div class="row row-cols-12">
+                        <div class="col p-0">
+                            <div class="text-center">
+                                <span class="text-muted fs-12 mb-1 hrm-jobs-legend published d-inline-block ms-2">Published </span>
+                                <div><span class="fs-16 fw-semibold">1,624</span></div>
+                            </div>
                         </div>
-                        <div class="chart tab-pane" id="sales-chart" style="position: relative; height: 300px;">
-                            <canvas id="sales-chart-canvas" height="300" style="height: 300px;"></canvas>
+                        <div class="col p-0">
+                            <div class="text-center">
+                                <span
+                                    class="text-muted fs-12 mb-1 hrm-jobs-legend private d-inline-block ms-2">Private </span>
+                                <div><span class="fs-16 fw-semibold">1,267</span></div>
+                            </div>
+                        </div>
+                        <div class="col p-0">
+                            <div class="text-center">
+                                <span
+                                    class="text-muted fs-12 mb-1 hrm-jobs-legend closed d-inline-block ms-2">Closed </span>
+                                <div><span class="fs-16 fw-semibold">1,153</span></div>
+                            </div>
+                        </div>
+                        <div class="col p-0">
+                            <div class="text-center">
+                                <span
+                                    class="text-muted fs-12 mb-1 hrm-jobs-legend onhold d-inline-block ms-2">On Hold </span>
+                                <div><span class="fs-16 fw-semibold">1,153</span></div>
+                            </div>
                         </div>
                     </div>
-                </div><!-- /.card-body -->
+                </div>
             </div>
-            <!-- /.card -->
-
-            <!-- DIRECT CHAT -->
-            <div class="card direct-chat direct-chat-primary">
+        </div>
+        <div class="col-xxl-4 col-xl-6 col-lg-6 col-md-12">
+            <div class="card custom-card">
                 <div class="card-header">
-                    <h3 class="card-title">Direct Chat</h3>
-
-                    <div class="card-tools">
-                        <span title="3 New Messages" class="badge badge-primary">3</span>
-                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                            <i class="fas fa-minus"></i>
-                        </button>
-                        <button type="button" class="btn btn-tool" title="Contacts" data-widget="chat-pane-toggle">
-                            <i class="fas fa-comments"></i>
-                        </button>
-                        <button type="button" class="btn btn-tool" data-card-widget="remove">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </div>
+                    <div class="card-title">Upcoming Events</div>
                 </div>
-                <!-- /.card-header -->
                 <div class="card-body">
-                    <!-- Conversations are loaded here -->
-                    <div class="direct-chat-messages">
-                        <!-- Message. Default to the left -->
-                        <div class="direct-chat-msg">
-                            <div class="direct-chat-infos clearfix">
-                                <span class="direct-chat-name float-left">Alexander Pierce</span>
-                                <span class="direct-chat-timestamp float-right">23 Jan 2:00 pm</span>
-                            </div>
-                            <!-- /.direct-chat-infos -->
-                            <img class="direct-chat-img" src="dist/img/user1-128x128.jpg" alt="message user image">
-                            <!-- /.direct-chat-img -->
-                            <div class="direct-chat-text">
-                                Is this template really for free? That's unbelievable!
-                            </div>
-                            <!-- /.direct-chat-text -->
-                        </div>
-                        <!-- /.direct-chat-msg -->
-
-                        <!-- Message to the right -->
-                        <div class="direct-chat-msg right">
-                            <div class="direct-chat-infos clearfix">
-                                <span class="direct-chat-name float-right">Sarah Bullock</span>
-                                <span class="direct-chat-timestamp float-left">23 Jan 2:05 pm</span>
-                            </div>
-                            <!-- /.direct-chat-infos -->
-                            <img class="direct-chat-img" src="dist/img/user3-128x128.jpg" alt="message user image">
-                            <!-- /.direct-chat-img -->
-                            <div class="direct-chat-text">
-                                You better believe it!
-                            </div>
-                            <!-- /.direct-chat-text -->
-                        </div>
-                        <!-- /.direct-chat-msg -->
-
-                        <!-- Message. Default to the left -->
-                        <div class="direct-chat-msg">
-                            <div class="direct-chat-infos clearfix">
-                                <span class="direct-chat-name float-left">Alexander Pierce</span>
-                                <span class="direct-chat-timestamp float-right">23 Jan 5:37 pm</span>
-                            </div>
-                            <!-- /.direct-chat-infos -->
-                            <img class="direct-chat-img" src="dist/img/user1-128x128.jpg" alt="message user image">
-                            <!-- /.direct-chat-img -->
-                            <div class="direct-chat-text">
-                                Working with AdminLTE on a great new app! Wanna join?
-                            </div>
-                            <!-- /.direct-chat-text -->
-                        </div>
-                        <!-- /.direct-chat-msg -->
-
-                        <!-- Message to the right -->
-                        <div class="direct-chat-msg right">
-                            <div class="direct-chat-infos clearfix">
-                                <span class="direct-chat-name float-right">Sarah Bullock</span>
-                                <span class="direct-chat-timestamp float-left">23 Jan 6:10 pm</span>
-                            </div>
-                            <!-- /.direct-chat-infos -->
-                            <img class="direct-chat-img" src="dist/img/user3-128x128.jpg" alt="message user image">
-                            <!-- /.direct-chat-img -->
-                            <div class="direct-chat-text">
-                                I would love to.
-                            </div>
-                            <!-- /.direct-chat-text -->
-                        </div>
-                        <!-- /.direct-chat-msg -->
-
-                    </div>
-                    <!--/.direct-chat-messages-->
-
-                    <!-- Contacts are loaded here -->
-                    <div class="direct-chat-contacts">
-                        <ul class="contacts-list">
-                            <li>
-                                <a href="#">
-                                    <img class="contacts-list-img" src="dist/img/user1-128x128.jpg" alt="User Avatar">
-
-                                    <div class="contacts-list-info">
-                          <span class="contacts-list-name">
-                            Count Dracula
-                            <small class="contacts-list-date float-right">2/28/2015</small>
-                          </span>
-                                        <span class="contacts-list-msg">How have you been? I was...</span>
+                    <ul class="list-unstyled timeline-widget mb-0 my-3">
+                        <li class="timeline-widget-list">
+                            <div class="d-flex align-items-top">
+                                <div class="me-5 text-center"><span
+                                        class="d-block fs-20 fw-semibold text-primary">02</span> <span
+                                        class="d-block fs-12 text-muted">Mon</span></div>
+                                <div class="d-flex flex-wrap flex-fill align-items-top justify-content-between">
+                                    <div>
+                                        <p class="mb-1 text-truncate timeline-widget-content text-wrap">You have an
+                                            announcement - Ipsum Est Diam Eirmod</p>
+                                        <p class="mb-0 fs-12 lh-1 text-muted">10:00AM<span
+                                                class="badge bg-primary-transparent ms-2">Announcement</span></p>
                                     </div>
-                                    <!-- /.contacts-list-info -->
-                                </a>
-                            </li>
-                            <!-- End Contact Item -->
-                            <li>
-                                <a href="#">
-                                    <img class="contacts-list-img" src="dist/img/user7-128x128.jpg" alt="User Avatar">
-
-                                    <div class="contacts-list-info">
-                          <span class="contacts-list-name">
-                            Sarah Doe
-                            <small class="contacts-list-date float-right">2/23/2015</small>
-                          </span>
-                                        <span class="contacts-list-msg">I will be waiting for...</span>
+                                    <div class="dropdown">
+                                        <a aria-label="anchor" href="javascript:void(0);" class="p-2 fs-16 text-muted"
+                                           data-bs-toggle="dropdown"> <i class="fe fe-more-vertical"></i> </a>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item" href="javascript:void(0);">Action</a></li>
+                                            <li><a class="dropdown-item" href="javascript:void(0);">Another action</a>
+                                            </li>
+                                            <li><a class="dropdown-item" href="javascript:void(0);">Something else
+                                                    here</a></li>
+                                        </ul>
                                     </div>
-                                    <!-- /.contacts-list-info -->
-                                </a>
-                            </li>
-                            <!-- End Contact Item -->
-                            <li>
-                                <a href="#">
-                                    <img class="contacts-list-img" src="dist/img/user3-128x128.jpg" alt="User Avatar">
-
-                                    <div class="contacts-list-info">
-                          <span class="contacts-list-name">
-                            Nadia Jolie
-                            <small class="contacts-list-date float-right">2/20/2015</small>
-                          </span>
-                                        <span class="contacts-list-msg">I'll call you back at...</span>
-                                    </div>
-                                    <!-- /.contacts-list-info -->
-                                </a>
-                            </li>
-                            <!-- End Contact Item -->
-                            <li>
-                                <a href="#">
-                                    <img class="contacts-list-img" src="dist/img/user5-128x128.jpg" alt="User Avatar">
-
-                                    <div class="contacts-list-info">
-                          <span class="contacts-list-name">
-                            Nora S. Vans
-                            <small class="contacts-list-date float-right">2/10/2015</small>
-                          </span>
-                                        <span class="contacts-list-msg">Where is your new...</span>
-                                    </div>
-                                    <!-- /.contacts-list-info -->
-                                </a>
-                            </li>
-                            <!-- End Contact Item -->
-                            <li>
-                                <a href="#">
-                                    <img class="contacts-list-img" src="dist/img/user6-128x128.jpg" alt="User Avatar">
-
-                                    <div class="contacts-list-info">
-                          <span class="contacts-list-name">
-                            John K.
-                            <small class="contacts-list-date float-right">1/27/2015</small>
-                          </span>
-                                        <span class="contacts-list-msg">Can I take a look at...</span>
-                                    </div>
-                                    <!-- /.contacts-list-info -->
-                                </a>
-                            </li>
-                            <!-- End Contact Item -->
-                            <li>
-                                <a href="#">
-                                    <img class="contacts-list-img" src="dist/img/user8-128x128.jpg" alt="User Avatar">
-
-                                    <div class="contacts-list-info">
-                          <span class="contacts-list-name">
-                            Kenneth M.
-                            <small class="contacts-list-date float-right">1/4/2015</small>
-                          </span>
-                                        <span class="contacts-list-msg">Never mind I found...</span>
-                                    </div>
-                                    <!-- /.contacts-list-info -->
-                                </a>
-                            </li>
-                            <!-- End Contact Item -->
-                        </ul>
-                        <!-- /.contacts-list -->
-                    </div>
-                    <!-- /.direct-chat-pane -->
-                </div>
-                <!-- /.card-body -->
-                <div class="card-footer">
-                    <form action="#" method="post">
-                        <div class="input-group">
-                            <input type="text" name="message" placeholder="Type Message ..." class="form-control">
-                            <span class="input-group-append">
-                      <button type="button" class="btn btn-primary">Send</button>
-                    </span>
-                        </div>
-                    </form>
-                </div>
-                <!-- /.card-footer-->
-            </div>
-            <!--/.direct-chat -->
-
-            <!-- TO DO List -->
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">
-                        <i class="ion ion-clipboard mr-1"></i>
-                        To Do List
-                    </h3>
-
-                    <div class="card-tools">
-                        <ul class="pagination pagination-sm">
-                            <li class="page-item"><a href="#" class="page-link">&laquo;</a></li>
-                            <li class="page-item"><a href="#" class="page-link">1</a></li>
-                            <li class="page-item"><a href="#" class="page-link">2</a></li>
-                            <li class="page-item"><a href="#" class="page-link">3</a></li>
-                            <li class="page-item"><a href="#" class="page-link">&raquo;</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <!-- /.card-header -->
-                <div class="card-body">
-                    <ul class="todo-list" data-widget="todo-list">
-                        <li>
-                            <!-- drag handle -->
-                            <span class="handle">
-                      <i class="fas fa-ellipsis-v"></i>
-                      <i class="fas fa-ellipsis-v"></i>
-                    </span>
-                            <!-- checkbox -->
-                            <div  class="icheck-primary d-inline ml-2">
-                                <input type="checkbox" value="" name="todo1" id="todoCheck1">
-                                <label for="todoCheck1"></label>
-                            </div>
-                            <!-- todo text -->
-                            <span class="text">Design a nice theme</span>
-                            <!-- Emphasis label -->
-                            <small class="badge badge-danger"><i class="far fa-clock"></i> 2 mins</small>
-                            <!-- General tools such as edit or delete-->
-                            <div class="tools">
-                                <i class="fas fa-edit"></i>
-                                <i class="fas fa-trash-o"></i>
+                                </div>
                             </div>
                         </li>
-                        <li>
-                    <span class="handle">
-                      <i class="fas fa-ellipsis-v"></i>
-                      <i class="fas fa-ellipsis-v"></i>
-                    </span>
-                            <div  class="icheck-primary d-inline ml-2">
-                                <input type="checkbox" value="" name="todo2" id="todoCheck2" checked>
-                                <label for="todoCheck2"></label>
-                            </div>
-                            <span class="text">Make the theme responsive</span>
-                            <small class="badge badge-info"><i class="far fa-clock"></i> 4 hours</small>
-                            <div class="tools">
-                                <i class="fas fa-edit"></i>
-                                <i class="fas fa-trash-o"></i>
-                            </div>
-                        </li>
-                        <li>
-                    <span class="handle">
-                      <i class="fas fa-ellipsis-v"></i>
-                      <i class="fas fa-ellipsis-v"></i>
-                    </span>
-                            <div  class="icheck-primary d-inline ml-2">
-                                <input type="checkbox" value="" name="todo3" id="todoCheck3">
-                                <label for="todoCheck3"></label>
-                            </div>
-                            <span class="text">Let theme shine like a star</span>
-                            <small class="badge badge-warning"><i class="far fa-clock"></i> 1 day</small>
-                            <div class="tools">
-                                <i class="fas fa-edit"></i>
-                                <i class="fas fa-trash-o"></i>
+                        <li class="timeline-widget-list">
+                            <div class="d-flex align-items-top">
+                                <div class="me-5 text-center"><span
+                                        class="d-block fs-20 fw-semibold text-primary">15</span> <span
+                                        class="d-block fs-12 text-muted">Sun</span></div>
+                                <div class="d-flex flex-wrap flex-fill align-items-top justify-content-between">
+                                    <div>
+                                        <p class="mb-1 text-truncate timeline-widget-content text-wrap">National holiday
+                                            - Vero Jayanti</p>
+                                        <p class="mb-0 fs-12 lh-1 text-muted"><span
+                                                class="badge bg-warning-transparent">Holiday</span></p>
+                                    </div>
+                                    <div class="dropdown">
+                                        <a aria-label="anchor" href="javascript:void(0);" class="p-2 fs-16 text-muted"
+                                           data-bs-toggle="dropdown"> <i class="fe fe-more-vertical"></i> </a>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item" href="javascript:void(0);">Action</a></li>
+                                            <li><a class="dropdown-item" href="javascript:void(0);">Another action</a>
+                                            </li>
+                                            <li><a class="dropdown-item" href="javascript:void(0);">Something else
+                                                    here</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
                             </div>
                         </li>
-                        <li>
-                    <span class="handle">
-                      <i class="fas fa-ellipsis-v"></i>
-                      <i class="fas fa-ellipsis-v"></i>
-                    </span>
-                            <div  class="icheck-primary d-inline ml-2">
-                                <input type="checkbox" value="" name="todo4" id="todoCheck4">
-                                <label for="todoCheck4"></label>
-                            </div>
-                            <span class="text">Let theme shine like a star</span>
-                            <small class="badge badge-success"><i class="far fa-clock"></i> 3 days</small>
-                            <div class="tools">
-                                <i class="fas fa-edit"></i>
-                                <i class="fas fa-trash-o"></i>
-                            </div>
-                        </li>
-                        <li>
-                    <span class="handle">
-                      <i class="fas fa-ellipsis-v"></i>
-                      <i class="fas fa-ellipsis-v"></i>
-                    </span>
-                            <div  class="icheck-primary d-inline ml-2">
-                                <input type="checkbox" value="" name="todo5" id="todoCheck5">
-                                <label for="todoCheck5"></label>
-                            </div>
-                            <span class="text">Check your messages and notifications</span>
-                            <small class="badge badge-primary"><i class="far fa-clock"></i> 1 week</small>
-                            <div class="tools">
-                                <i class="fas fa-edit"></i>
-                                <i class="fas fa-trash-o"></i>
+                        <li class="timeline-widget-list">
+                            <div class="d-flex align-items-top">
+                                <div class="me-5 text-center"><span
+                                        class="d-block fs-20 fw-semibold text-primary">23</span> <span
+                                        class="d-block fs-12 text-muted">Mon</span></div>
+                                <div class="d-flex flex-wrap flex-fill align-items-top justify-content-between">
+                                    <div>
+                                        <p class="mb-1 text-truncate timeline-widget-content text-wrap">John pup
+                                            birthday - Team Member</p>
+                                        <p class="mb-4 fs-12 lh-1 text-muted">09:00AM<span
+                                                class="badge bg-success-transparent ms-2">Birthday</span></p>
+                                        <p class="mb-1 text-truncate timeline-widget-content text-wrap">Amet sed no
+                                            dolor kasd - Et Dolores Tempor Erat</p>
+                                        <p class="mb-0 fs-12 lh-1 text-muted">04:00PM<span
+                                                class="badge bg-primary-transparent ms-2">Announcement</span></p>
+                                    </div>
+                                    <div class="dropdown">
+                                        <a aria-label="anchor" href="javascript:void(0);" class="p-2 fs-16 text-muted"
+                                           data-bs-toggle="dropdown"> <i class="fe fe-more-vertical"></i> </a>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item" href="javascript:void(0);">Action</a></li>
+                                            <li><a class="dropdown-item" href="javascript:void(0);">Another action</a>
+                                            </li>
+                                            <li><a class="dropdown-item" href="javascript:void(0);">Something else
+                                                    here</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
                             </div>
                         </li>
-                        <li>
-                    <span class="handle">
-                      <i class="fas fa-ellipsis-v"></i>
-                      <i class="fas fa-ellipsis-v"></i>
-                    </span>
-                            <div  class="icheck-primary d-inline ml-2">
-                                <input type="checkbox" value="" name="todo6" id="todoCheck6">
-                                <label for="todoCheck6"></label>
-                            </div>
-                            <span class="text">Let theme shine like a star</span>
-                            <small class="badge badge-secondary"><i class="far fa-clock"></i> 1 month</small>
-                            <div class="tools">
-                                <i class="fas fa-edit"></i>
-                                <i class="fas fa-trash-o"></i>
+                        <li class="timeline-widget-list">
+                            <div class="d-flex align-items-top">
+                                <div class="me-5 text-center"><span
+                                        class="d-block fs-20 fw-semibold text-primary">31</span> <span
+                                        class="d-block fs-12 text-muted">Tue</span></div>
+                                <div class="d-flex flex-wrap flex-fill align-items-top justify-content-between">
+                                    <div>
+                                        <p class="mb-1 text-truncate timeline-widget-content text-wrap">National Holiday
+                                            - Dolore Ipsum</p>
+                                        <p class="mb-0 fs-12 lh-1 text-muted"><span
+                                                class="badge bg-warning-transparent">Holiday</span></p>
+                                    </div>
+                                    <div class="dropdown">
+                                        <a aria-label="anchor" href="javascript:void(0);" class="p-2 fs-16 text-muted"
+                                           data-bs-toggle="dropdown"> <i class="fe fe-more-vertical"></i> </a>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item" href="javascript:void(0);">Action</a></li>
+                                            <li><a class="dropdown-item" href="javascript:void(0);">Another action</a>
+                                            </li>
+                                            <li><a class="dropdown-item" href="javascript:void(0);">Something else
+                                                    here</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
                             </div>
                         </li>
                     </ul>
                 </div>
-                <!-- /.card-body -->
-                <div class="card-footer clearfix">
-                    <button type="button" class="btn btn-primary float-right"><i class="fas fa-plus"></i> Add item</button>
+            </div>
+        </div>
+        <div class="col-xxl-5 col-xl-12">
+            <div class="card custom-card">
+                <div class="card-header">
+                    <div class="card-title">Clients</div>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table text-nowrap">
+                            <thead>
+                            <tr>
+                                <th scope="col">Client</th>
+                                <th scope="col">Mail</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <th scope="row">
+                                    <div class="d-flex align-items-center lh-1">
+                                        <div class="me-3">
+                                            <span class="avatar avatar-rounded"> <img
+                                                    src="../dashboard/images/faces/2.jpg" alt=""/> </span>
+                                        </div>
+                                        <div><span class="d-block fw-semibold mb-1">Diana Aise</span> <span
+                                                class="d-block text-muted fs-12">C.E.O</span></div>
+                                    </div>
+                                </th>
+                                <td>diana.1116@demo.com</td>
+                                <td>
+                                    <select class="form-select" aria-label="Default select example">
+                                        <option value="1">Active</option>
+                                        <option value="2">In Active</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <div class="btn-list">
+                                        <button aria-label="button" type="button"
+                                                class="btn btn-sm btn-primary-light btn-icon"><i
+                                                class="ri-pencil-line"></i></button>
+                                        <button aria-label="button" type="button"
+                                                class="btn btn-sm btn-success-light btn-icon"><i
+                                                class="ri-delete-bin-line"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">
+                                    <div class="d-flex align-items-center lh-1">
+                                        <div class="me-3">
+                                            <span class="avatar avatar-rounded"> <img
+                                                    src="../dashboard/images/faces/8.jpg" alt=""/> </span>
+                                        </div>
+                                        <div><span class="d-block fw-semibold mb-1">Rose Mary</span> <span
+                                                class="d-block text-muted fs-12">C.E.O</span></div>
+                                    </div>
+                                </th>
+                                <td>rose756@demo.com</td>
+                                <td>
+                                    <select class="form-select" aria-label="Default select example">
+                                        <option value="1">Active</option>
+                                        <option value="2">In Active</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <div class="btn-list">
+                                        <button aria-label="button" type="button"
+                                                class="btn btn-sm btn-primary-light btn-icon"><i
+                                                class="ri-pencil-line"></i></button>
+                                        <button aria-label="button" type="button"
+                                                class="btn btn-sm btn-success-light btn-icon"><i
+                                                class="ri-delete-bin-line"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">
+                                    <div class="d-flex align-items-center lh-1">
+                                        <div class="me-3">
+                                            <span class="avatar avatar-rounded"> <img
+                                                    src="../dashboard/images/faces/13.jpg" alt=""/> </span>
+                                        </div>
+                                        <div><span class="d-block fw-semibold mb-1">Gretchen Iox</span> <span
+                                                class="d-block text-muted fs-12">Manager</span></div>
+                                    </div>
+                                </th>
+                                <td>gretchen.1.25@demo.com</td>
+                                <td>
+                                    <select class="form-select" aria-label="Default select example">
+                                        <option value="1">Active</option>
+                                        <option value="2">In Active</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <div class="btn-list">
+                                        <button aria-label="button" type="button"
+                                                class="btn btn-sm btn-primary-light btn-icon"><i
+                                                class="ri-pencil-line"></i></button>
+                                        <button aria-label="button" type="button"
+                                                class="btn btn-sm btn-success-light btn-icon"><i
+                                                class="ri-delete-bin-line"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">
+                                    <div class="d-flex align-items-center lh-1">
+                                        <div class="me-3">
+                                            <span class="avatar avatar-rounded"> <img
+                                                    src="../dashboard/images/faces/11.jpg" alt=""/> </span>
+                                        </div>
+                                        <div><span class="d-block fw-semibold mb-1">Gray Noal</span> <span
+                                                class="d-block text-muted fs-12">Manager</span></div>
+                                    </div>
+                                </th>
+                                <td>gray12gray@demo.com</td>
+                                <td>
+                                    <select class="form-select" aria-label="Default select example">
+                                        <option value="1">Active</option>
+                                        <option value="2">In Active</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <div class="btn-list">
+                                        <button aria-label="button" type="button"
+                                                class="btn btn-sm btn-primary-light btn-icon"><i
+                                                class="ri-pencil-line"></i></button>
+                                        <button aria-label="button" type="button"
+                                                class="btn btn-sm btn-success-light btn-icon"><i
+                                                class="ri-delete-bin-line"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row" class="border-bottom-0">
+                                    <div class="d-flex align-items-center lh-1">
+                                        <div class="me-3">
+                                            <span class="avatar avatar-rounded"> <img
+                                                    src="../dashboard/images/faces/5.jpg" alt=""/> </span>
+                                        </div>
+                                        <div><span class="d-block fw-semibold mb-1">Isa Bella</span> <span
+                                                class="d-block text-muted fs-12">C.E.O</span></div>
+                                    </div>
+                                </th>
+                                <td class="border-bottom-0">isa158@demo.com</td>
+                                <td class="border-bottom-0">
+                                    <select class="form-select" aria-label="Default select example">
+                                        <option value="1">Active</option>
+                                        <option value="2">In Active</option>
+                                    </select>
+                                </td>
+                                <td class="border-bottom-0">
+                                    <div class="btn-list">
+                                        <button aria-label="button" type="button"
+                                                class="btn btn-sm btn-primary-light btn-icon"><i
+                                                class="ri-pencil-line"></i></button>
+                                        <button aria-label="button" type="button"
+                                                class="btn btn-sm btn-success-light btn-icon"><i
+                                                class="ri-delete-bin-line"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-            <!-- /.card -->
-        </section>
-        <!-- /.Left col -->
-        <!-- right col (We are only adding the ID to make the widgets sortable)-->
-        <section class="col-lg-5 connectedSortable">
-
-            <!-- Map card -->
-            <div class="card bg-gradient-primary">
-                <div class="card-header border-0">
-                    <h3 class="card-title">
-                        <i class="fas fa-map-marker-alt mr-1"></i>
-                        Visitors
-                    </h3>
-                    <!-- card tools -->
-                    <div class="card-tools">
-                        <button type="button" class="btn btn-primary btn-sm daterange" title="Date range">
-                            <i class="far fa-calendar-alt"></i>
-                        </button>
-                        <button type="button" class="btn btn-primary btn-sm" data-card-widget="collapse" title="Collapse">
-                            <i class="fas fa-minus"></i>
-                        </button>
-                    </div>
-                    <!-- /.card-tools -->
-                </div>
-                <div class="card-body">
-                    <div id="world-map" style="height: 250px; width: 100%;"></div>
-                </div>
-                <!-- /.card-body-->
-                <div class="card-footer bg-transparent">
-                    <div class="row">
-                        <div class="col-4 text-center">
-                            <div id="sparkline-1"></div>
-                            <div class="text-white">Visitors</div>
-                        </div>
-                        <!-- ./col -->
-                        <div class="col-4 text-center">
-                            <div id="sparkline-2"></div>
-                            <div class="text-white">Online</div>
-                        </div>
-                        <!-- ./col -->
-                        <div class="col-4 text-center">
-                            <div id="sparkline-3"></div>
-                            <div class="text-white">Sales</div>
-                        </div>
-                        <!-- ./col -->
-                    </div>
-                    <!-- /.row -->
-                </div>
-            </div>
-            <!-- /.card -->
-
-            <!-- solid sales graph -->
-            <div class="card bg-gradient-info">
-                <div class="card-header border-0">
-                    <h3 class="card-title">
-                        <i class="fas fa-th mr-1"></i>
-                        Sales Graph
-                    </h3>
-
-                    <div class="card-tools">
-                        <button type="button" class="btn bg-info btn-sm" data-card-widget="collapse">
-                            <i class="fas fa-minus"></i>
-                        </button>
-                        <button type="button" class="btn bg-info btn-sm" data-card-widget="remove">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <canvas class="chart" id="line-chart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
-                </div>
-                <!-- /.card-body -->
-                <div class="card-footer bg-transparent">
-                    <div class="row">
-                        <div class="col-4 text-center">
-                            <input type="text" class="knob" data-readonly="true" value="20" data-width="60" data-height="60"
-                                   data-fgColor="#39CCCC">
-
-                            <div class="text-white">Mail-Orders</div>
-                        </div>
-                        <!-- ./col -->
-                        <div class="col-4 text-center">
-                            <input type="text" class="knob" data-readonly="true" value="50" data-width="60" data-height="60"
-                                   data-fgColor="#39CCCC">
-
-                            <div class="text-white">Online</div>
-                        </div>
-                        <!-- ./col -->
-                        <div class="col-4 text-center">
-                            <input type="text" class="knob" data-readonly="true" value="30" data-width="60" data-height="60"
-                                   data-fgColor="#39CCCC">
-
-                            <div class="text-white">In-Store</div>
-                        </div>
-                        <!-- ./col -->
-                    </div>
-                    <!-- /.row -->
-                </div>
-                <!-- /.card-footer -->
-            </div>
-            <!-- /.card -->
-
-            <!-- Calendar -->
-            <div class="card bg-gradient-success">
-                <div class="card-header border-0">
-
-                    <h3 class="card-title">
-                        <i class="far fa-calendar-alt"></i>
-                        Calendar
-                    </h3>
-                    <!-- tools card -->
-                    <div class="card-tools">
-                        <!-- button with a dropdown -->
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown" data-offset="-52">
-                                <i class="fas fa-bars"></i>
-                            </button>
-                            <div class="dropdown-menu" role="menu">
-                                <a href="#" class="dropdown-item">Add new event</a>
-                                <a href="#" class="dropdown-item">Clear events</a>
-                                <div class="dropdown-divider"></div>
-                                <a href="#" class="dropdown-item">View calendar</a>
-                            </div>
-                        </div>
-                        <button type="button" class="btn btn-success btn-sm" data-card-widget="collapse">
-                            <i class="fas fa-minus"></i>
-                        </button>
-                        <button type="button" class="btn btn-success btn-sm" data-card-widget="remove">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </div>
-                    <!-- /. tools -->
-                </div>
-                <!-- /.card-header -->
-                <div class="card-body pt-0">
-                    <!--The calendar -->
-                    <div id="calendar" style="width: 100%"></div>
-                </div>
-                <!-- /.card-body -->
-            </div>
-            <!-- /.card -->
-        </section>
-        <!-- right col -->
+        </div>
     </div>
+    <!-- End::row-2 -->
+
+    <!-- Start::row-3 -->
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="card custom-card">
+                <div class="card-header justify-content-between flex-wrap">
+                    <div class="card-title">Bills Summary</div>
+                    <div class="d-flex">
+                        <div class="me-3"><input class="form-control form-control-sm" type="text"
+                                                 placeholder="Search Here" aria-label=".form-control-sm example"/></div>
+                        <div class="dropdown">
+                            <a href="javascript:void(0);"
+                               class="btn btn-primary btn-sm btn-wave waves-effect waves-light"
+                               data-bs-toggle="dropdown" aria-expanded="false">
+                                Sort By<i class="ri-arrow-down-s-line align-middle ms-1 d-inline-block"></i>
+                            </a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a class="dropdown-item" href="javascript:void(0);">New</a></li>
+                                <li><a class="dropdown-item" href="javascript:void(0);">Popular</a></li>
+                                <li><a class="dropdown-item" href="javascript:void(0);">Relevant</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover text-nowrap table-bordered">
+                            <thead>
+                            <tr>
+                                <th scope="col">S.No</th>
+                                <th scope="col">Invoice ID</th>
+                                <th scope="col">Client</th>
+                                <th scope="col">Due Date</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Amount</th>
+                                <th scope="col">Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>#INV111611</td>
+                                <td>
+                                    <div class="d-flex align-items-center lh-1">
+                                        <div class="me-2">
+                                            <span class="avatar avatar-md avatar-rounded"> <img
+                                                    src="../dashboard/images/faces/1.jpg" alt=""/> </span>
+                                        </div>
+                                        <div><span class="d-block fw-semibold mb-1">Rena Mark</span> <span
+                                                class="text-muted fs-12">renamark123@demo</span></div>
+                                    </div>
+                                </td>
+                                <td>14-05-2023</td>
+                                <td><span class="badge bg-success">Paid</span></td>
+                                <td>$9,523</td>
+                                <td>
+                                    <div class="btn-list">
+                                        <a aria-label="anchor" href="javascript:void(0);"
+                                           class="btn btn-sm btn-icon btn-info-light"><i class="ri-pencil-line"></i></a>
+                                        <a aria-label="anchor" href="javascript:void(0);"
+                                           class="btn btn-icon btn-sm btn-danger-light"><i
+                                                class="ri-delete-bin-line"></i></a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>#INV111611</td>
+                                <td>
+                                    <div class="d-flex align-items-center lh-1">
+                                        <div class="me-2">
+                                            <span class="avatar avatar-md avatar-rounded"> <img
+                                                    src="../dashboard/images/faces/4.jpg" alt=""/> </span>
+                                        </div>
+                                        <div><span class="d-block fw-semibold mb-1">Xong Yun</span> <span
+                                                class="text-muted fs-12">xongyun2134@gmail.com</span></div>
+                                    </div>
+                                </td>
+                                <td>14-05-2023</td>
+                                <td><span class="badge bg-warning">Pending</span></td>
+                                <td>$8,243</td>
+                                <td>
+                                    <div class="btn-list">
+                                        <a aria-label="anchor" href="javascript:void(0);"
+                                           class="btn btn-sm btn-icon btn-info-light"><i class="ri-pencil-line"></i></a>
+                                        <a aria-label="anchor" href="javascript:void(0);"
+                                           class="btn btn-icon btn-sm btn-danger-light"><i
+                                                class="ri-delete-bin-line"></i></a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>#INV147852</td>
+                                <td>
+                                    <div class="d-flex align-items-center lh-1">
+                                        <div class="me-2">
+                                            <span class="avatar avatar-md avatar-rounded"> <img
+                                                    src="../dashboard/images/faces/6.jpg" alt=""/> </span>
+                                        </div>
+                                        <div><span class="d-block fw-semibold mb-1">Kane William</span> <span
+                                                class="text-muted fs-12">william154@demo</span></div>
+                                    </div>
+                                </td>
+                                <td>16-05-2023</td>
+                                <td><span class="badge bg-primary">Overdue</span></td>
+                                <td>$5,234</td>
+                                <td>
+                                    <div class="btn-list">
+                                        <a aria-label="anchor" href="javascript:void(0);"
+                                           class="btn btn-sm btn-icon btn-info-light"><i class="ri-pencil-line"></i></a>
+                                        <a aria-label="anchor" href="javascript:void(0);"
+                                           class="btn btn-icon btn-sm btn-danger-light"><i
+                                                class="ri-delete-bin-line"></i></a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td>#INV753159</td>
+                                <td>
+                                    <div class="d-flex align-items-center lh-1">
+                                        <div class="me-2">
+                                            <span class="avatar avatar-md avatar-rounded"> <img
+                                                    src="../dashboard/images/faces/12.jpg" alt=""/> </span>
+                                        </div>
+                                        <div><span class="d-block fw-semibold mb-1">Stewart Rem</span> <span
+                                                class="text-muted fs-12">remstew092@demo</span></div>
+                                    </div>
+                                </td>
+                                <td>21-05-2023</td>
+                                <td><span class="badge bg-success">Paid</span></td>
+                                <td>$7,546</td>
+                                <td>
+                                    <div class="btn-list">
+                                        <a aria-label="anchor" href="javascript:void(0);"
+                                           class="btn btn-sm btn-icon btn-info-light"><i class="ri-pencil-line"></i></a>
+                                        <a aria-label="anchor" href="javascript:void(0);"
+                                           class="btn btn-icon btn-sm btn-danger-light"><i
+                                                class="ri-delete-bin-line"></i></a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td>#INV369874</td>
+                                <td>
+                                    <div class="d-flex align-items-center lh-1">
+                                        <div class="me-2">
+                                            <span class="avatar avatar-md avatar-rounded"> <img
+                                                    src="../dashboard/images/faces/3.jpg" alt=""/> </span>
+                                        </div>
+                                        <div><span class="d-block fw-semibold mb-1">Elliot Yun</span> <span
+                                                class="text-muted fs-12">eiiliot000@demo</span></div>
+                                    </div>
+                                </td>
+                                <td>18-05-2023</td>
+                                <td><span class="badge bg-primary">Overdue</span></td>
+                                <td>$7,541</td>
+                                <td>
+                                    <div class="btn-list">
+                                        <a aria-label="anchor" href="javascript:void(0);"
+                                           class="btn btn-sm btn-icon btn-info-light"><i class="ri-pencil-line"></i></a>
+                                        <a aria-label="anchor" href="javascript:void(0);"
+                                           class="btn btn-icon btn-sm btn-danger-light"><i
+                                                class="ri-delete-bin-line"></i></a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>6</td>
+                                <td>#INV123456</td>
+                                <td>
+                                    <div class="d-flex align-items-center lh-1">
+                                        <div class="me-2">
+                                            <span class="avatar avatar-md avatar-rounded"> <img
+                                                    src="../dashboard/images/faces/5.jpg" alt=""/> </span>
+                                        </div>
+                                        <div><span class="d-block fw-semibold mb-1">Gretchen Xio</span> <span
+                                                class="text-muted fs-12">gretchenxio999@demo</span></div>
+                                    </div>
+                                </td>
+                                <td>20-05-2023</td>
+                                <td><span class="badge bg-warning">Pending</span></td>
+                                <td>$2,541</td>
+                                <td>
+                                    <div class="btn-list">
+                                        <a aria-label="anchor" href="javascript:void(0);"
+                                           class="btn btn-sm btn-icon btn-info-light"><i class="ri-pencil-line"></i></a>
+                                        <a aria-label="anchor" href="javascript:void(0);"
+                                           class="btn btn-icon btn-sm btn-danger-light"><i
+                                                class="ri-delete-bin-line"></i></a>
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="d-flex align-items-center">
+                        <div>Showing 6 Entries <i class="bi bi-arrow-right ms-2 fw-semibold"></i></div>
+                        <div class="ms-auto">
+                            <nav aria-label="Page navigation" class="pagination-style-4">
+                                <ul class="pagination mb-0">
+                                    <li class="page-item disabled"><a class="page-link" href="javascript:void(0);">
+                                            Prev </a></li>
+                                    <li class="page-item active"><a class="page-link" href="javascript:void(0);">1</a>
+                                    </li>
+                                    <li class="page-item"><a class="page-link" href="javascript:void(0);">2</a></li>
+                                    <li class="page-item"><a class="page-link text-primary" href="javascript:void(0);">
+                                            next </a></li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End::row-3 -->
 @endsection
