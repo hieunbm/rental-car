@@ -22,6 +22,9 @@
                                         <input type="email" name="email" class="form-control" placeholder="Email" />
                                     </div>
                                     <br>
+                                    <div class="field-set">
+                                        <input type="text" name="phone" class="form-control" placeholder="Phone" />
+                                    </div>
                                     <br>
                                     <div class="field-set">
                                         <input type="password" name="password" class="form-control" placeholder="Password" />
