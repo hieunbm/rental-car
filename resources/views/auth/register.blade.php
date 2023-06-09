@@ -1,77 +1,86 @@
-@extends('layouts.app')
+@extends('web.layout.layout')
 
-@section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Register') }}</div>
+@section('main')
+    <!-- content begin -->
+    <div class="no-bottom no-top" id="content">
+        <div id="top"></div>
 
-                <div class="card-body">
-                    <form method="POST" action="{{ route('register') }}">
-                        @csrf
-
-                        <div class="row mb-3">
-                            <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Name') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
-
-                                @error('name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
+        <!-- section begin -->
+        <section id="subheader" class="jarallax text-light">
+            <img src="images/background/subheader.jpg" class="jarallax-img" alt="">
+            <div class="center-y relative text-center">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <h1>Register</h1>
                         </div>
-
-                        <div class="row mb-3">
-                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
-
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-end">{{ __('Confirm Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
-                            </div>
-                        </div>
-
-                        <div class="row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Register') }}
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+                        <div class="clearfix"></div>
+                    </div>
                 </div>
             </div>
-        </div>
+        </section>
+        <!-- section close -->
+
+        <section aria-label="section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8 offset-md-2">
+                        <h3>Don't have an account? Register now.</h3>
+                        <p>Welcome to Rentaly. We're excited to have you on board. By creating an account with us, you'll gain access to a range of benefits and convenient features that will enhance your car rental experience.</p>
+                        <div class="spacer-10"></div>
+                        <form name="contactForm" id='contact_form' class="form-border" method="post" action='https://www.madebydesignesia.com/themes/rentaly/blank.php'>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="field-set">
+                                        <label>Name:</label>
+                                        <input type='text' name='name' id='name' class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="field-set">
+                                        <label>Email Address:</label>
+                                        <input type='text' name='email' id='email' class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="field-set">
+                                        <label>Choose a Username:</label>
+                                        <input type='text' name='username' id='username' class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="field-set">
+                                        <label>Phone:</label>
+                                        <input type='text' name='phone' id='phone' class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="field-set">
+                                        <label>Password:</label>
+                                        <input type='text' name='password' id='password' class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="field-set">
+                                        <label>Re-enter Password:</label>
+                                        <input type='text' name='re-password' id='re-password' class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div id='submit' class="pull-left">
+                                        <input type='submit' id='send_message' value='Register Now' class="btn-main color-2">
+                                    </div>
+                                    <div id='mail_success' class='success'>Your message has been sent successfully.</div>
+                                    <div id='mail_fail' class='error'>Sorry, error occured this time sending your message.</div>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
     </div>
-</div>
+    <!-- content close -->
+    <a href="#" id="back-to-top"></a>
 @endsection
