@@ -41,3 +41,7 @@ Route::prefix("/admin")->group(function () {// middleware: phải đăng nhập 
     Route::get("/incidents", [App\Http\Controllers\AdminController::class, "admin_incident"]);
 });
 // admin end
+
+Auth::routes();
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
