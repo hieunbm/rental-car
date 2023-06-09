@@ -20,6 +20,8 @@ return new class extends Migration
             $table->unsignedBigInteger("carType_id");
             $table->string("thumbnail");
             $table->string("fuelType");
+            $table->string("transmission");
+            $table->unsignedBigInteger("km_limit");
             $table->unsignedBigInteger("modelYear");
             $table->unsignedBigInteger("reverse_sensor");
             $table->unsignedBigInteger("airConditioner");
