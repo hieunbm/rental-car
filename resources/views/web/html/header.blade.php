@@ -48,8 +48,16 @@
                     </div>
                     <div class="de-flex-col">
                         <div class="menu_side_area">
-                            <a href="#" class="btn-main">Sign In</a>
-                            <span id="menu-btn"></span>
+                            @guest()
+                                <a href="{{url("/login")}}"><i class="fa fa-user"></i> Login</a>
+                            @endguest
+                            @auth()
+                                <a href="#"><i class="fa fa-user"></i> {{auth()->user()->name}}</a>
+                                <form action="{{route("logout")}}" method="post">
+                                    @csrf
+                                    <button type="submit"><i class="fa fa-arrow-right"></i></button>
+                                </form>
+                            @endauth
                         </div>
                     </div>
                 </div>

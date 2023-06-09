@@ -12,26 +12,22 @@
                             <div class="padding40 rounded-3 shadow-soft" data-bgcolor="#ffffff">
                                 <h4>Login</h4>
                                 <div class="spacer-10"></div>
-                                <form id="form_register" class="form-border" method="post" action="https://www.madebydesignesia.com/themes/rentaly/account-dashboard.html">
+                                <form id="form_register" class="form-border" method="post" action="{{route("login")}}">
+                                    @csrf
                                     <div class="field-set">
-                                        <input type="text" name="name" id="name" class="form-control" placeholder="Your Name" />
+                                        <input type="email" name="email" id="name" class="form-control" placeholder="email" />
                                     </div>
+                                    <br>
                                     <div class="field-set">
-                                        <input type="text" name="name" id="name" class="form-control" placeholder="Your Name" />
+                                        <input type="password" name="password" id="name" class="form-control" placeholder="password" />
                                     </div>
+                                    <br>
                                     <div id="submit">
                                         <input type="submit" id="send_message" value="Sign In" class="btn-main btn-fullwidth rounded-3" />
                                     </div>
                                 </form>
-                                <div class="title-line">Or&nbsp;sign&nbsp;up&nbsp;with</div>
-                                <div class="row g-2">
-                                    <div class="col-lg-6">
-                                        <a class="btn-sc btn-fullwidth mb10" href="#"><img src="images/svg/google_icon.svg" alt="">Google</a>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <a class="btn-sc btn-fullwidth mb10" href="#"><img src="images/svg/facebook_icon.svg" alt="">Facebook</a>
-                                    </div>
-                                </div>
+                                <br>
+                                <div>Don't have an account? <a href="{{url("/register")}}">&nbsp;Register&nbsp;</a> now</div>
                             </div>
                         </div>
                     </div>
