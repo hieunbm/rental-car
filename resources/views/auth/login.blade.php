@@ -27,7 +27,7 @@
                                     </div>
                                 </form>
                                 <br>
-                                <div>Don't have an account? <a href="{{url("/register")}}">&nbsp;Register&nbsp;</a> now</div>
+                                <div>Don't have an account? <a href="{{url("/register")}}">&nbsp;Register now</a></div>
                             </div>
                         </div>
                     </div>
