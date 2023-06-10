@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Brand;
+use App\Models\Car;
+use App\Models\CarType;
 use App\Models\Rental;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -13,7 +16,14 @@ class WebController extends Controller
         return view("welcome");
     }
     public function car_list() {
-        return view("web.car-list");
+        $car=Car::paginate(12);
+        $brand=Brand::limit(10)->get();
+        $carType=CarType::limit(10)->get();
+        return view("web.car-list",[
+            "car"=>$car,
+            "brand"=>$brand,
+            "carType"=>$carType,
+        ]);
     }
     public function booking() {
         return view("web.booking");
