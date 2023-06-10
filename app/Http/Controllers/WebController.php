@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Rental;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class WebController extends Controller
@@ -28,8 +30,12 @@ class WebController extends Controller
     public function myOrders() {
         return view("web.account-booking");
     }
-    public function dashboard() {
-        return view("web.account-dashboard");
+    public function dashboard(User $user) {
+        $rental= Rental::limit(10)->get();
+        return view("web.account-dashboard",[
+            "user"=>$user,
+            "rental"=>$rental,
+            ]);
     }
     public function profile() {
         return view("web.account-profile");

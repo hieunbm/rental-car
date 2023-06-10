@@ -1,7 +1,5 @@
-@extends('web.layout.layout')
-@section("name")
-    Dashboard
-@endsection
+@extends("web.layout.layout")
+@section("title","Dashboard")
 @section("main")
     <div class="no-bottom no-top zebra" id="content">
         <div id="top"></div>
@@ -21,8 +19,8 @@
                                 </div>
                                 <div class="profile_name">
                                     <h4>
-                                        Monica Lucas
-                                        <span class="profile_username text-gray">monica@rentaly.com</span>
+                                        {{$user->name}}
+                                        <span class="profile_username text-gray">{{$user->email}}</span>
                                     </h4>
                                 </div>
                             </div>
