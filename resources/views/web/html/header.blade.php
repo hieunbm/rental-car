@@ -48,14 +48,24 @@
                     <div class="de-flex-col">
                         <div class="menu_side_area">
                             @guest()
-                                <a href="{{url("/login")}}"><i class="fa fa-user"></i> Login</a>
+                                <a class="btn-main" href="{{url("/login")}}"><i class="fa fa-user"></i> Login</a>
                             @endguest
                             @auth()
-                                <a href="#"><i class="fa fa-user"></i> {{auth()->user()->name}}</a>
-                                <form action="{{route("logout")}}" method="post">
-                                    @csrf
-                                    <button type="submit"><i class="fa fa-arrow-right"></i></button>
-                                </form>
+                                <ul id="mainmenu">
+                                    <li><a href="#"><i class="fa fa-user"></i> {{auth()->user()->name}}</a>
+                                        <ul>
+                                            <li><a class="menu-item" href="{{url("/account-dashboard")}}">Dashboard</a></li>
+                                            <li><a class="menu-item" href="{{url("/account-profile")}}">My profile</a></li>
+                                            <li><a class="menu-item" href="{{url("/account-booking")}}">My orders</a></li>
+                                            <li>
+                                                <form action="{{route("logout")}}" method="post">
+                                                    @csrf
+                                                    <button style="border: none; background-color: white; width: 100%;" class="menu-item" type="submit"><i class="fa fa-arrow-right"></i>Logout</button>
+                                                </form>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
                             @endauth
                         </div>
                     </div>
