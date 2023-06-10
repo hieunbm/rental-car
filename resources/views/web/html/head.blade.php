@@ -2,6 +2,7 @@
 <meta name="viewport"
       content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
+<link rel="icon" href="images/icon.png" type="image/gif" sizes="16x16">
 <link href="css/mdb.min.css" rel="stylesheet" type="text/css" id="mdb">
 <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" id="bootstrap">
 <link href="css/plugins.css" rel="stylesheet" type="text/css">

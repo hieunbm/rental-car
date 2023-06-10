@@ -15,7 +15,6 @@ use Illuminate\Support\Facades\Route;
 // website start
 Route::get('/', [\App\Http\Controllers\WebController::class, "home"]);
 Route::get("/car-list", [\App\Http\Controllers\WebController::class, "car_list"]);
-Route::get("/booking", [\App\Http\Controllers\WebController::class, "booking"]);
 Route::get("/about", [\App\Http\Controllers\WebController::class, "about"]);
 Route::get("/contact", [\App\Http\Controllers\WebController::class, "contact"]);
 Route::get("/car", [\App\Http\Controllers\WebController::class, "car_detail"]);
