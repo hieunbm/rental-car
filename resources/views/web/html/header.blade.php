@@ -52,7 +52,7 @@
                                 <a href="{{url("/login")}}"><i class="fa fa-user"></i> Login</a>
                             @endguest
                             @auth()
-                                <a href="{{url("/account-dashboard",[auth()->user()->email])}}"><i class="fa fa-user"></i> {{auth()->user()->name}}</a>
+                                <a href="{{url("/account-dashboard",[auth()->user()->id])}}"><i class="fa fa-user"></i> {{auth()->user()->name}}</a>
                                 <form action="{{route("logout")}}" method="post">
                                     @csrf
                                     <button type="submit"><i class="fa fa-arrow-right"></i></button>

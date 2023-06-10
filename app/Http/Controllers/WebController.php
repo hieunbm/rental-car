@@ -33,7 +33,7 @@ class WebController extends Controller
     public function dashboard(User $user) {
         $rental= Rental::limit(10)->get();
         return view("web.account-dashboard",[
-            "user"=>$user,
+            'user'=>$user,
             "rental"=>$rental,
             ]);
     }
