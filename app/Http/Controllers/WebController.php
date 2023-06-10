@@ -5,8 +5,11 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use App\Models\Car;
+use App\Models\CarReview;
 use App\Models\CarType;
+use App\Models\Gallery;
 use App\Models\Rental;
+use App\Models\RentalRate;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -34,8 +37,23 @@ class WebController extends Controller
     public function contact() {
         return view("web.contact");
     }
-    public function car_detail() {
-        return view("web.car-detail");
+    public function car_detail(Car $car) {
+        $thumbnails = Gallery::where("car_id", $car->id)->get();
+        $reviews = CarReview::where("car_id", $car->id)->get();
+        $priceday = RentalRate::where("car_id", $car->id)->get();
+        $rate = 0;
+        $totals = 0;
+        foreach ($reviews as $item) {
+            $totals += $item->score;
+            $rate = $totals / $reviews->count();
+        }
+        return view("web.car-detail", [
+            "car" => $car,
+            "thumbnails" => $thumbnails,
+            "reviews" => $reviews,
+            "priceday" => $priceday,
+            "rate" => $rate
+        ]);
     }
     public function myOrders() {
         return view("web.account-booking");

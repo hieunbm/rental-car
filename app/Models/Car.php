@@ -31,4 +31,13 @@ class Car extends Model
         'description',
         'rate',
     ];
+    public function gallery() {
+        return $this->belongsTo(Gallery::class);
+    }
+    public function reviewcar() {
+        return $this->belongsTo(CarReview::class);
+    }
+    public function price() {
+        return $this->belongsTo(RentalRate::class);
+    }
 }

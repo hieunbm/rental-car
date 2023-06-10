@@ -17,14 +17,14 @@ Route::get('/', [\App\Http\Controllers\WebController::class, "home"]);
 Route::get("/car-list", [\App\Http\Controllers\WebController::class, "car_list"]);
 Route::get("/about", [\App\Http\Controllers\WebController::class, "about"]);
 Route::get("/contact", [\App\Http\Controllers\WebController::class, "contact"]);
-Route::get("/car", [\App\Http\Controllers\WebController::class, "car_detail"]);
+Route::get("/car/{car}", [\App\Http\Controllers\WebController::class, "car_detail"]);
 Route::get("/account-dashboard/{user}", [\App\Http\Controllers\WebController::class, "dashboard"]);
 Route::get("/account-profile", [\App\Http\Controllers\WebController::class, "profile"]);
 Route::get("/account-booking", [\App\Http\Controllers\WebController::class, "myOrders"]);
 // website end
 
 // admin start
-Route::prefix("/admin")->group(function () {// middleware: phải đăng nhập thì ms vào đc
+Route::prefix("/admin")->middleware(["auth", "admin"])->group(function () {// middleware: phải đăng nhập thì ms vào đc
     Route::get("/", [App\Http\Controllers\AdminController::class, "admin_dashboard"]);
     Route::get("/booking", [App\Http\Controllers\AdminController::class, "admin_booking"]);
     Route::get("/booking-detail", [App\Http\Controllers\AdminController::class, "admin_booking_detail"]);

@@ -16,4 +16,7 @@ class CarReview extends Model
         'customer_id',
         'car_id',
     ];
+    public function customer() {
+        return $this->belongsTo(User::class);
+    }
 }

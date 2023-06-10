@@ -1,6 +1,6 @@
 @extends('web.layout.layout')
 @section("name")
-    Car Detail
+    {{$car->model}}
 @endsection
 @section("main")
     <!-- content begin -->
@@ -17,17 +17,13 @@
                     <div class="col-lg-6">
                         <div id="slider-carousel" class="owl-carousel">
                             <div class="item">
-                                <img src="images/car-single/1.jpg" alt="">
+                                <img src="{{$car->thumbnail}}" alt="">
                             </div>
-                            <div class="item">
-                                <img src="images/car-single/2.jpg" alt="">
-                            </div>
-                            <div class="item">
-                                <img src="images/car-single/3.jpg" alt="">
-                            </div>
-                            <div class="item">
-                                <img src="images/car-single/4.jpg" alt="">
-                            </div>
+                            @foreach($thumbnails as $item)
+                                <div class="item">
+                                    <img src="{{$item->thumbnail}}" alt="">
+                                </div>
+                            @endforeach
                         </div>
                         <div class="col-md-12">
                             <h3>Information</h3>
@@ -41,16 +37,139 @@
                                 </li>
                             </ul>
                             <div class="tab-content" id="pills-tabContent">
-                                <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab"><p>Consequat occaecat ullamco amet non eiusmod nostrud dolore irure incididunt est duis anim sunt officia. Fugiat velit proident aliquip nisi incididunt nostrud exercitation proident est nisi. Irure magna elit commodo anim ex veniam culpa eiusmod id nostrud sit cupidatat in veniam ad. Eiusmod consequat eu adipisicing minim anim aliquip cupidatat culpa excepteur quis. Occaecat sit eu exercitation irure Lorem incididunt nostrud.</p></div>
-                                <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab"><p>Ad pariatur nostrud pariatur exercitation ipsum ipsum culpa mollit commodo mollit ex. Aute sunt incididunt amet commodo est sint nisi deserunt pariatur do. Aliquip ex eiusmod voluptate exercitation cillum id incididunt elit sunt. Qui minim sit magna Lorem id et dolore velit Lorem amet exercitation duis deserunt. Anim id labore elit adipisicing ut in id occaecat pariatur ut ullamco ea tempor duis.</p></div>
+                                <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab"><p>{{$car->description}}</p></div>
+                                <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                                    @foreach($reviews as $item)
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-md-2">
+                                                        <img src="https://image.ibb.co/jw55Ex/def_face.jpg" class="img img-rounded img-fluid"/>
+                                                    </div>
+                                                    <div class="col-md-10">
+                                                        <p>
+                                                            <a class="float-left" href="#"><strong>{{$item->customer->name}}</strong></a>
+                                                            @if($item->score == 0)
+                                                                <span class="float-end"><i class="fa fa-star"></i></span>
+                                                                <span class="float-end"><i class="fa fa-star"></i></span>
+                                                                <span class="float-end"><i class="fa fa-star"></i></span>
+                                                                <span class="float-end"><i class="fa fa-star"></i></span>
+                                                                <span class="float-end"><i class="fa fa-star"></i></span>
+                                                            @endif
+                                                            @if($item->score == 1)
+                                                                <span class="float-end"><i class="fa fa-star"></i></span>
+                                                                <span class="float-end"><i class="fa fa-star"></i></span>
+                                                                <span class="float-end"><i class="fa fa-star"></i></span>
+                                                                <span class="float-end"><i class="fa fa-star"></i></span>
+                                                                <span class="float-end"><i class="text-warning fa fa-star"></i></span>
+                                                            @endif
+                                                            @if($item->score == 2)
+                                                                <span class="float-end"><i class="fa fa-star"></i></span>
+                                                                <span class="float-end"><i class="fa fa-star"></i></span>
+                                                                <span class="float-end"><i class="fa fa-star"></i></span>
+                                                                <span class="float-end"><i class="text-warning fa fa-star"></i></span>
+                                                                <span class="float-end"><i class="text-warning fa fa-star"></i></span>
+                                                            @endif
+                                                            @if($item->score == 3)
+                                                                <span class="float-end"><i class="fa fa-star"></i></span>
+                                                                <span class="float-end"><i class="fa fa-star"></i></span>
+                                                                <span class="float-end"><i class="text-warning fa fa-star"></i></span>
+                                                                <span class="float-end"><i class="text-warning fa fa-star"></i></span>
+                                                                <span class="float-end"><i class="text-warning fa fa-star"></i></span>
+                                                            @endif
+                                                            @if($item->score == 4)
+                                                                <span class="float-end"><i class="fa fa-star"></i></span>
+                                                                <span class="float-end"><i class="text-warning fa fa-star"></i></span>
+                                                                <span class="float-end"><i class="text-warning fa fa-star"></i></span>
+                                                                <span class="float-end"><i class="text-warning fa fa-star"></i></span>
+                                                                <span class="float-end"><i class="text-warning fa fa-star"></i></span>
+                                                            @endif
+                                                            @if($item->score == 5)
+                                                                <span class="float-end"><i class="text-warning fa fa-star"></i></span>
+                                                                <span class="float-end"><i class="text-warning fa fa-star"></i></span>
+                                                                <span class="float-end"><i class="text-warning fa fa-star"></i></span>
+                                                                <span class="float-end"><i class="text-warning fa fa-star"></i></span>
+                                                                <span class="float-end"><i class="text-warning fa fa-star"></i></span>
+                                                            @endif
+                                                        </p>
+                                                        <div class="clearfix"></div>
+                                                        <p>{{$item->message}}</p>
+                                                        <span class="float-end">{{$item->created_at}}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
                             </div>
                         </div>
                     </div>
 
                     <div class="col-lg-3">
-                        <h3>BMW M2 2020</h3>
-                        <p>The BMW M2 is the high-performance version of the 2 Series 2-door coupé. The first generation
-                            of the M2 is the F87 coupé and is powered by turbocharged.</p>
+                        <h3>{{$car->model}}</h3>
+                        <style>
+
+                            .ratings{
+                                margin-right:10px;
+                            }
+
+                            .ratings i{
+                                color:#cecece;
+                                font-size:20px;
+                            }
+
+                            .rating-color{
+                                color:#fbc634 !important;
+                            }
+
+                            .review-count{
+                                font-weight:400;
+                                margin-bottom:2px;
+                                font-size:16px !important;
+                            }
+                        </style>
+                        <div style="margin-bottom: 15px" class="d-flex justify-content-between align-items-center">
+                            <div class="ratings">
+                                @if($rate == 5)
+                                    <i class="fa fa-star rating-color"></i>
+                                    <i class="fa fa-star rating-color"></i>
+                                    <i class="fa fa-star rating-color"></i>
+                                    <i class="fa fa-star rating-color"></i>
+                                    <i class="fa fa-star rating-color"></i>
+                                @elseif($rate < 5 && $rate >= 4)
+                                    <i class="fa fa-star rating-color"></i>
+                                    <i class="fa fa-star rating-color"></i>
+                                    <i class="fa fa-star rating-color"></i>
+                                    <i class="fa fa-star rating-color"></i>
+                                    <i class="fa fa-star"></i>
+                                @elseif($rate < 4 && $rate >= 3)
+                                    <i class="fa fa-star rating-color"></i>
+                                    <i class="fa fa-star rating-color"></i>
+                                    <i class="fa fa-star rating-color"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                @elseif($rate < 3 && $rate >= 2)
+                                    <i class="fa fa-star rating-color"></i>
+                                    <i class="fa fa-star rating-color"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                @elseif($rate < 2 && $rate >= 1)
+                                    <i class="fa fa-star rating-color"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                @else
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                @endif
+                            </div>
+                            <h5 class="review-count">{{$reviews->count()}} Reviews <span class="rating-color">({{$rate}}/5)</span></h5>
+                        </div>
                         <div class="spacer-10"></div>
 
                         <h4>Specifications</h4>
@@ -60,52 +179,24 @@
                                 <spam class="d-value">Sedan</spam>
                             </div>
                             <div class="d-row">
-                                <span class="d-title">Seat</span>
-                                <spam class="d-value">2 seats</spam>
-                            </div>
-                            <div class="d-row">
-                                <span class="d-title">Door</span>
-                                <spam class="d-value">2 doors</spam>
-                            </div>
-                            <div class="d-row">
-                                <span class="d-title">Luggage</span>
-                                <spam class="d-value">150</spam>
-                            </div>
-                            <div class="d-row">
                                 <span class="d-title">Fuel Type</span>
-                                <spam class="d-value">Hybird</spam>
+                                <spam class="d-value">{{$car->fuelType}}</spam>
                             </div>
                             <div class="d-row">
-                                <span class="d-title">Engine</span>
-                                <spam class="d-value">3000</spam>
+                                <span class="d-title">Km limit</span>
+                                <spam class="d-value">{{$car->km_limit}} Km</spam>
                             </div>
                             <div class="d-row">
                                 <span class="d-title">Year</span>
-                                <spam class="d-value">2020</spam>
-                            </div>
-                            <div class="d-row">
-                                <span class="d-title">Mileage</span>
-                                <spam class="d-value">200</spam>
+                                <spam class="d-value">{{$car->modelYear}}</spam>
                             </div>
                             <div class="d-row">
                                 <span class="d-title">Transmission</span>
-                                <spam class="d-value">Automatic</spam>
+                                <spam class="d-value">{{$car->transmission}}</spam>
                             </div>
                             <div class="d-row">
-                                <span class="d-title">Drive</span>
-                                <spam class="d-value">4WD</spam>
-                            </div>
-                            <div class="d-row">
-                                <span class="d-title">Fuel Economy</span>
-                                <spam class="d-value">18.5</spam>
-                            </div>
-                            <div class="d-row">
-                                <span class="d-title">Exterior Color</span>
-                                <spam class="d-value">Blue Metalic</spam>
-                            </div>
-                            <div class="d-row">
-                                <span class="d-title">Interior Color</span>
-                                <spam class="d-value">Black</spam>
+                                <span class="d-title">License plate</span>
+                                <spam class="d-value">{{$car->license_plate}}</spam>
                             </div>
                         </div>
 
@@ -113,17 +204,27 @@
 
                         <h4>Features</h4>
                         <ul class="ul-style-2">
-                            <li>Bluetooth</li>
-                            <li>Multimedia Player</li>
-                            <li>Central Lock</li>
-                            <li>Sunroof</li>
+                            @if($car->reverse_sensor == 1)
+                                <li>Reverse sensor</li>
+                            @endif
+                            @if($car->airConditioner == 1)
+                                <li>Air Conditioner</li>
+                            @endif
+                            @if($car->cDPlayer == 1)
+                                <li>CD Player</li>
+                            @endif
+                            @if($car->brakeAssist == 1)
+                                <li>Brake Assist</li>
+                            @endif
                         </ul>
                     </div>
 
                     <div class="col-lg-3">
                         <div class="de-price text-center">
                             Daily rate
-                            <h3>$265</h3>
+                            @foreach($priceday as $item)
+                                <h3>${{$item->price}}</h3>
+                            @endforeach
                         </div>
                         <div class="spacer-30"></div>
                         <div class="de-box mb25">
