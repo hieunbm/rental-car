@@ -115,17 +115,7 @@
                     <div class="d-flex align-items-center">
                         <div>Showing 6 Entries <i class="bi bi-arrow-right ms-2 fw-semibold"></i></div>
                         <div class="ms-auto">
-                            <nav aria-label="Page navigation" class="pagination-style-4">
-                                <ul class="pagination mb-0">
-                                    <li class="page-item disabled"><a class="page-link" href="javascript:void(0);">
-                                            Prev </a></li>
-                                    <li class="page-item active"><a class="page-link" href="javascript:void(0);">1</a>
-                                    </li>
-                                    <li class="page-item"><a class="page-link" href="javascript:void(0);">2</a></li>
-                                    <li class="page-item"><a class="page-link text-primary" href="javascript:void(0);">
-                                            next </a></li>
-                                </ul>
-                            </nav>
+                            {!! $rentals->appends(app("request")->input())->links("pagination::bootstrap-4") !!}
                         </div>
                     </div>
                 </div>

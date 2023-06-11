@@ -32,8 +32,6 @@
                                 <div class="col-12">
                                     <h4 style="text-align: center; margin-bottom: 20px">
                                         CAR RENTAL CONTRACT
-                                        <br>
-                                        (HỢP ĐỒNG CHO THUÊ XE)
                                     </h4>
                                     <div style="float: right; margin-bottom: 20px">
                                         <span>No: 2343</span>
@@ -42,14 +40,8 @@
                                     </div>
                                 </div>
                                 <div class="col-12">
-                                    <p>- According to the Civil Code became effective as from 01st January 2006;
-                                    <br>
-                                        (Căn cứ vào Bộ Luật Dân Sự ngày 1 tháng 1 năm 2006)
-                                    </p>
-                                    <p>- According to ability and requirement of both parties.
-                                        <br>
-                                        (Căn cứ vào khả năng và nhu cầu của hai bên)
-                                    </p>
+                                    <p>- According to the Civil Code became effective as from 01st January 2006;</p>
+                                    <p>- According to ability and requirement of both parties.</p>
                                 </div>
                                 <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6">
                                     <p class="text-muted mb-2">LEADER (Party A) : </p>
@@ -69,134 +61,178 @@
                                     <p class="text-muted">Phone: {{$rental->customer->phone}} </p></div>
                             </div>
                         </div>
-                        <div class="col-xl-3"><p class="fw-semibold text-muted mb-1">Invoice ID :</p>
-                            <p class="fs-15 mb-1">#SPK120219890</p></div>
-                        <div class="col-xl-3"><p class="fw-semibold text-muted mb-1">Date Issued :</p>
-                            <p class="fs-15 mb-1">29,Nov 2022 - <span class="text-muted fs-12">12:42PM</span></p>
+                        <div class="col-xl-3">
+                            <p class="fw-semibold text-muted mb-1">Invoice ID :</p>
+                            <p class="fs-15 mb-1">{{$rental->id}}</p></div>
+                        <div class="col-xl-3">
+                            <p class="fw-semibold text-muted mb-1">Rental Date :</p>
+                            <p class="fs-15 mb-1">{{$rental->rental_date}}</p>
                         </div>
-                        <div class="col-xl-3"><p class="fw-semibold text-muted mb-1">Due Date :</p>
-                            <p class="fs-15 mb-1">29,Dec 2022</p></div>
-                        <div class="col-xl-3"><p class="fw-semibold text-muted mb-1">Due Amount :</p>
-                            <p class="fs-16 mb-1 fw-semibold">$2,570.42</p></div>
+                        <div class="col-xl-3">
+                            <p class="fw-semibold text-muted mb-1">Return Date :</p>
+                            <p class="fs-15 mb-1">{{$rental->return_date}}</p></div>
+                        <div class="col-xl-3">
+                            <p class="fw-semibold text-muted mb-1">Due Amount :</p>
+                            <p class="fs-16 mb-1 fw-semibold">${{$rental->total_amount}}</p></div>
                         <div class="col-xl-12">
+                            <div class="row">
+                                <h6 class="col-12" style="text-align: center">
+                                    SERVICE INFORMATION
+                                </h6>
+                                <div class="col-xl-3"></div>
+                                <div class="col-xl-6 table-responsive">
+                                    <table class="table nowrap text-nowrap border mt-4">
+                                        <thead>
+                                        <tr>
+                                            <th>SERVICE</th>
+                                            <th>PRICE</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        @foreach($rental->service as $item)
+                                            <tr>
+                                                <td>{{$item->title}}</td>
+                                                <td>{{$item->price}}</td>
+                                            </tr>
+                                        @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="col-xl-3"></div>
+                            </div>
+
+                        </div>
+                        <div class="col-xl-12">
+                            <h6 style="text-align: center">
+                                CAR INFORMATION
+                            </h6>
                             <div class="table-responsive">
                                 <table class="table nowrap text-nowrap border mt-4">
                                     <thead>
                                     <tr>
-                                        <th>BRAND NAME</th>
-                                        <th>DESCRIPTION</th>
-                                        <th>QUANTITY</th>
-                                        <th>PRICE PER UNIT</th>
-                                        <th>TOTAL</th>
+                                        <th>CAR</th>
+                                        <th>RENTAL DATE</th>
+                                        <th>RETURN DATE</th>
+                                        <th>PICKUP LOCATION</th>
+                                        <th>TOTAL DAYS</th>
+                                        <th>TOTAL CAR BOOKING</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     <tr>
-                                        <td>
-                                            <div class="fw-semibold"> Dapzem &amp; Co (Sweatshirt)</div>
-                                        </td>
-                                        <td>
-                                            <div class="text-muted"> Branded hoodie ethnic style</div>
-                                        </td>
-                                        <td class="product-quantity-container"> 2</td>
-                                        <td> $60</td>
-                                        <td> $120</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="fw-semibold"> Denim Winjo (Jacket)</div>
-                                        </td>
-                                        <td>
-                                            <div class="text-muted"> Vintage pure leather Jacket</div>
-                                        </td>
-                                        <td class="product-quantity-container"> 1</td>
-                                        <td> $249</td>
-                                        <td> $249</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="fw-semibold"> Jimmy Lolfiger (Winter Coat)</div>
-                                        </td>
-                                        <td>
-                                            <div class="text-muted"> Unisex jacket for men &amp; women</div>
-                                        </td>
-                                        <td class="product-quantity-container"> 1</td>
-                                        <td> $499</td>
-                                        <td> $499</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="fw-semibold"> Blueberry &amp; Co</div>
-                                        </td>
-                                        <td>
-                                            <div class="text-muted"> Light colored sweater form blueberry</div>
-                                        </td>
-                                        <td class="product-quantity-container"> 3</td>
-                                        <td> $299</td>
-                                        <td> $897</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="fw-semibold"> Denim Corporation</div>
-                                        </td>
-                                        <td>
-                                            <div class="text-muted"> Flap pockets denim jackets for men</div>
-                                        </td>
-                                        <td class="product-quantity-container"> 1</td>
-                                        <td> $599</td>
-                                        <td> $599</td>
-                                    </tr>
+                                        <td>{{$rental->car->model}}</td>
+                                        <td>{{$rental->rental_date}}</td>
+                                        <td>{{$rental->return_date}}</td>
+                                        <td>{{$rental->pickup_location}}</td>
+                                        <td>{{$numberdays}}</td>
+                                        <td> ${{$rental->car_price * $numberdays}}</td>
                                     <tr>
                                         <td colspan="3"></td>
-                                        <td colspan="2">
+                                        <td colspan="3">
                                             <table class="table table-sm text-nowrap mb-0 table-borderless">
                                                 <tbody>
                                                 <tr>
+                                                    <th scope="row"><p class="mb-0">Payment Status :</p></th>
+                                                    <td><p class="mb-0 fw-semibold fs-15">
+                                                            @if($rental->is_paid)
+                                                                <span class="badge bg-success">Pain</span>
+                                                            @else
+                                                                <span class="badge bg-danger">UnPain</span>
+                                                            @endif
+                                                        </p>
+                                                    </td>
+                                                </tr>
+                                                <tr>
                                                     <th scope="row"><p class="mb-0">Sub Total :</p></th>
-                                                    <td><p class="mb-0 fw-semibold fs-15">$2,364</p></td>
+                                                    <td><p class="mb-0 fw-semibold fs-15">${{$rental->car_price * $numberdays}}</p></td>
                                                 </tr>
                                                 <tr>
-                                                    <th scope="row"><p class="mb-0">Avail Discount :</p></th>
-                                                    <td><p class="mb-0 fw-semibold fs-15">$29.98</p></td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row"><p class="mb-0">Coupon Discount <span
-                                                                class="text-success">(10%)</span> :</p></th>
-                                                    <td><p class="mb-0 fw-semibold fs-15">$236.40</p></td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row"><p class="mb-0">Vat <span
-                                                                class="text-danger">(20%)</span>
-                                                            :</p></th>
-                                                    <td><p class="mb-0 fw-semibold fs-15">$472.80</p></td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row"><p class="mb-0">Due Till Date :</p></th>
-                                                    <td><p class="mb-0 fw-semibold fs-15">$0</p></td>
+                                                    <th scope="row"><p class="mb-0">Service Total :</p></th>
+                                                    <td><p class="mb-0 fw-semibold fs-15">${{$total}}</p></td>
                                                 </tr>
                                                 <tr>
                                                     <th scope="row"><p class="mb-0 fs-14">Total :</p></th>
-                                                    <td><p class="mb-0 fw-semibold fs-16 text-success">$2,570.42</p>
+                                                    <td><p class="mb-0 fw-semibold fs-16 text-success">${{$rental->total_amount}}</p>
                                                     </td>
                                                 </tr>
                                                 </tbody>
                                             </table>
                                         </td>
                                     </tr>
+                                    </tr>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                         <div class="col-xl-12">
-                            <div><label for="invoice-note" class="form-label">Note:</label> <textarea
-                                    class="form-control form-control-light" id="invoice-note" rows="3">Once the invoice has been verified by the accounts payable team and recorded, the only task left is to send it for approval before releasing the payment</textarea>
+                            <p>
+                                <b>After discussion, both Parties have agreed to sign this contract on the terms and conditions as follows:</b>
+                            </p>
+                            <p><b>Article 1:</b> Rental period:</p>
+                            <p>1.1 Rental period is {{$numberdays}} days from {{$rental->rental_date}} to {{$rental->return_date}}</p>
+                            <p>1.2 Mileage Limit: {{$rental->car->km_limit}} Km/Day.</p>
+                            <p>1.3 Place to pick up passengers: {{$rental->pickup_location}}.</p>
+                            <p><b>Article 2:</b> Rental vehicles and charges</p>
+                            <p>2.1 Rental vehicles: {{$rental->car->model}} : ${{$rental->car_price}}/day</p>
+                            <p>2.2 Other charges:</p>
+                            <p>- Over Limited Mileage rate (excess of .......kms/....days)    : USD ............/km.</p>
+                            <p>2.3 All charges are inclusive of Value Added Tax.</p>
+                            <p>2.4(if any) Car rental charges include gasoline and driver's salary, driver’s daily lunch.</p>
+                            <p>2.5 Timely delivery of the vehicle will be paid by Party A.</p>
+                            <p>2.6 Check the car, Receive the car , All costs and expenses occurred as the consequence of traffic accident will be at Party B's account.</p>
+                            <p><b>Article 3:</b> Payment </p>
+                            <p>3.1 All rates are quoted in USD.</p>
+                            <p><b>Article 4:</b> Other terms and conditions</p>
+                            <p>4.1 Party A is responsible for all legal documents and formalities for transportation of the above-mentioned vehicle.</p>
+                            <p>4.2 Party B is not allowed to bring any illegal, flammable, or explosive materials into the vehicle.</p>
+                            <p>4.3 Party B pay all fuel costs when using the vehicle.</p>
+                            <p>4.4 In case of accident, any liability and settlement of claim lodged by third Parties will be the sole responsibility of Party B.</p>
+                            <p>4.5 Insuring car and passengers (US$10,000 for each person) are the responsibility of  Party B.</p>
+                            <p>4.6 The terms of this contract are confidential. Both Parties agree not to disclose them to any person unless applicable law requires.</p>
+                        </div>
+                        <div class="col-xl-12">
+                            <div>
+                                <label for="invoice-note" class="form-label">Note:</label>
+                                <textarea class="form-control form-control-light" id="invoice-note" rows="3">Once the invoice has been verified by the accounts payable team and recorded, the only task left is to send it for approval before releasing the payment</textarea>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="card-footer text-end">
-                    <button class="btn btn-success">Download <i class="ri-download-2-line ms-1 align-middle"></i>
-                    </button>
+                    @switch($rental->status)
+                        @case(0)
+                            <a href="#" class="btn btn-success float-right">
+                                <i class="far fa-credit-card"></i>
+                                Confirm
+                            </a>
+                            <a href="#" class="btn btn-danger float-right">
+                                <i class="far fa-credit-card"></i>
+                                Cancel
+                            </a>
+                            @break
+                        @case(1)
+                            <a href="#" class="btn btn-success float-right"><i class="far fa-credit-card"></i> Submit
+                                Shipping
+                            </a>
+                            @break
+                        @case(2)
+                            <a href="#" class="btn btn-success float-right"><i class="far fa-credit-card"></i> Submit
+                                Shipped
+                            </a>
+                            @break
+                        @case(3)
+                            <a href="#" class="btn btn-success float-right"><i class="far fa-credit-card"></i> Submit
+                                Complete
+                            </a>
+                            @break
+                        @case(4)
+
+                            @break
+                        @case(5)
+
+                            @break
+                    @endswitch
+                    <button class="btn btn-success">Download <i class="ri-download-2-line ms-1 align-middle"></i></button>
                 </div>
             </div>
         </div>

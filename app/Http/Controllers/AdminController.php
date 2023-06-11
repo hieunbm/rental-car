@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Incident;
 use App\Models\Rental;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 
 class AdminController extends Controller
 {
@@ -20,8 +21,19 @@ class AdminController extends Controller
     }
     public function admin_booking_detail(Rental $rental) {
 
+        $startDate = Carbon::parse($rental->rental_date);; // Ngày bắt đầu thuê
+        $endDate = Carbon::parse($rental->return_date); // Ngày kết thúc thuê
+        $numberOfDays = $startDate->diffInDays($endDate);
+        $services = $rental->service;
+        $total = 0;
+        foreach ($services as $item){
+            $total += $item->price;
+        }
+
         return view("admin.admin-booking-detail", [
-            "rental" => $rental
+            "rental" => $rental,
+            "numberdays" => $numberOfDays,
+            "total" => $total
         ]);
     }
     public function admin_cars() {

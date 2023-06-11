@@ -37,4 +37,7 @@ class Rental extends Model
     public function incident(){
         return $this->hasMany(Incident::class);
     }
+    public function service(){
+        return $this->belongsToMany(Service::class, "rental_service");
+    }
 }

@@ -15,4 +15,7 @@ class Service extends Model
         'description',
         'price',
     ];
+    public function rental(){
+        return $this->belongsToMany(Rental::class, "rental_service");
+    }
 }
