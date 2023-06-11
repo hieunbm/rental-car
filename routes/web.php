@@ -27,7 +27,7 @@ Route::get("/account-booking", [\App\Http\Controllers\WebController::class, "myO
 Route::prefix("/admin")->middleware(["auth", "admin"])->group(function () {// middleware: phải đăng nhập thì ms vào đc
     Route::get("/", [App\Http\Controllers\AdminController::class, "admin_dashboard"]);
     Route::get("/booking", [App\Http\Controllers\AdminController::class, "admin_booking"]);
-    Route::get("/booking-detail", [App\Http\Controllers\AdminController::class, "admin_booking_detail"]);
+    Route::get("/booking-detail/{rental}", [App\Http\Controllers\AdminController::class, "admin_booking_detail"]);
     Route::get("/cars", [App\Http\Controllers\AdminController::class, "admin_cars"]);
     Route::get("/car-type", [App\Http\Controllers\AdminController::class, "admin_cartype"]);
     Route::get("/add-car", [App\Http\Controllers\AdminController::class, "admin_addcar"]);

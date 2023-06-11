@@ -7,6 +7,7 @@
 <meta name="Author" content="Spruko Technologies Private Limited" />
 <meta name="keywords" content="admin,admin dashboard,admin panel,admin template,bootstrap,clean,dashboard,flat,jquery,modern,responsive,premium admin templates,responsive admin,ui,ui kit." />
 <!-- Favicon -->
+<base href="/"/>
 <link rel="icon" href="images/logo.png" type="image/x-icon" />
 <!-- Choices JS -->
 <script src="../dashboard/libs/choices.js/public/dashboard/scripts/choices.min.js"></script>

@@ -34,57 +34,79 @@
                             <thead>
                             <tr>
                                 <th scope="col">ID Booking</th>
-                                <th scope="col">Customer ID</th>
-                                <th scope="col">Car ID</th>
-                                <th scope="col">Rental Date & Time</th>
-                                <th scope="col">Return Date & Time</th>
-                                <th scope="col">Pickup Location</th>
-                                <th scope="col">Message</th>
-                                <th scope="col">Rental Type</th>
-                                <th scope="col">Price</th>
-                                <th scope="col">Incident ID</th>
-                                <th scope="col">Additional Fee</th>
+                                <th scope="col">Customer Name</th>
+                                <th scope="col">Car</th>
+                                <th scope="col">
+                                    Rental Date & Time
+                                    <br>
+                                    Return Date & Time
+                                </th>
+                                <th scope="col">Incident</th>
                                 <th scope="col">Total Amount</th>
+                                <th scope="col">Payment method</th>
+                                <th scope="col">Is paid</th>
                                 <th scope="col">Status</th>
+                                <th scope="col">View</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td>#INV111611</td>
-                                <td>
-                                    <div class="btn-list">
-                                        <a>1</a>
-                                        <a aria-label="anchor" href="{{url("/admin/customers")}}" class="btn btn-sm btn-icon btn-info-light">
-                                            <i class="fa-solid fa-circle-info"></i>
-                                        </a>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="btn-list">
-                                        <a>1</a>
-                                        <a aria-label="anchor" href="{{url("/admin/cars")}}" class="btn btn-sm btn-icon btn-info-light">
-                                            <i class="fa-solid fa-circle-info"></i>
-                                        </a>
-                                    </div>
-                                </td>
-                                <td>14-05-2023</td>
-                                <td>14-05-2023</td>
-                                <td>Ha Noi</td>
-                                <td>null</td>
-                                <td>null</td>
-                                <td>$98</td>
-                                <td>
-                                    <div class="btn-list">
-                                        <a>3</a>
-                                        <a aria-label="anchor" href="{{url("/admin/incidents")}}" class="btn btn-sm btn-icon btn-info-light">
-                                            <i class="fa-solid fa-circle-info"></i>
-                                        </a>
-                                    </div>
-                                </td>
-                                <td>$10</td>
-                                <td>$108</td>
-                                <td><span class="badge bg-success">Paid</span></td>
-                            </tr>
+                            @foreach($rentals as $item)
+                                <tr>
+                                    <td>{{$item->id}}</td>
+                                    <td>
+                                        <div class="btn-list">
+                                            <a>{{$item->customer->name}}</a>
+                                            <a aria-label="anchor" href="{{url("/admin/customers")}}" class="btn btn-sm btn-icon btn-info-light">
+                                                <i class="fa-solid fa-circle-info"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="btn-list">
+                                            <a>{{$item->car->model}}</a>
+                                            <a aria-label="anchor" href="{{url("/admin/cars")}}" class="btn btn-sm btn-icon btn-info-light">
+                                                <i class="fa-solid fa-circle-info"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        {{$item->rental_date}}
+                                        <br>
+                                        {{$item->return_date}}
+                                    </td>
+                                    <td>
+                                        0
+                                    </td>
+                                    <td>${{$item->total_amount}}</td>
+                                    <td>{{$item->payment_method}}</td>
+                                    <td>
+                                        @if($item->is_paid)
+                                            <span class="badge bg-success">Pain</span>
+                                        @else
+                                            <span class="badge bg-danger">UnPain</span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @switch($item->satus)
+                                            @case(0) <span
+                                                class="text text-dark">Pending</span>@break
+                                            @case(1) <span
+                                                class="text text-blue">Comfirm</span>@break
+                                            @case(2) <span
+                                                class="text text-warning">Shipping</span>@break
+                                            @case(3) <span
+                                                class="text text-warning">Shipped</span>@break
+                                            @case(4) <span
+                                                class="text text-success">Complete</span>@break
+                                            @case(5) <span
+                                                class="text text-danger">Cancel</span>@break
+                                        @endswitch
+                                    </td>
+                                    <td>
+                                        <a href="#" class="badge bg-info">View</a>
+                                    </td>
+                                </tr>
+                            @endforeach
                             </tbody>
                         </table>
                     </div>

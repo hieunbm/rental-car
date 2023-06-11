@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Incident;
+use App\Models\Rental;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -11,10 +13,16 @@ class AdminController extends Controller
         return view("admin.dashboard");
     }
     public function admin_booking() {
-        return view("admin.admin-booking");
+        $rentals = Rental::orderBy("id", "asc")->paginate(12);
+        return view("admin.admin-booking", [
+            "rentals" => $rentals
+        ]);
     }
-    public function admin_booking_detail() {
-        return view("admin.admin-booking-detail");
+    public function admin_booking_detail(Rental $rental) {
+
+        return view("admin.admin-booking-detail", [
+            "rental" => $rental
+        ]);
     }
     public function admin_cars() {
         return view("admin.admin-cars");

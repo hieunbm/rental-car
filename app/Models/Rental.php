@@ -28,4 +28,13 @@ class Rental extends Model
         'payment_method',
         'is_paid',
     ];
+    public function car(){
+        return $this->belongsTo(Car::class);
+    }
+    public function customer(){
+        return $this->belongsTo(User::class);
+    }
+    public function incident(){
+        return $this->hasMany(Incident::class);
+    }
 }
