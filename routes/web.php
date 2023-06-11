@@ -20,7 +20,7 @@ Route::get("/contact", [\App\Http\Controllers\WebController::class, "contact"]);
 Route::get("/car/{car}", [\App\Http\Controllers\WebController::class, "car_detail"]);
 Route::get("/account-dashboard/{user}", [\App\Http\Controllers\WebController::class, "dashboard"]);
 Route::get("/account-profile", [\App\Http\Controllers\WebController::class, "profile"]);
-Route::get("/account-booking", [\App\Http\Controllers\WebController::class, "myOrders"]);
+Route::get("/account-booking/{user}", [\App\Http\Controllers\WebController::class, "myOrders"]);
 // website end
 
 // admin start

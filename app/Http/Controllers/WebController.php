@@ -56,7 +56,24 @@ class WebController extends Controller
         ]);
     }
     public function myOrders() {
-        return view("web.account-booking");
+        $user = auth()->user();
+        $customer_id = $user->id; // Chi lay nhung don hang cua tai khoan đang đăng nhập
+
+        $pendingOrders = Rental::where('status', 0)->where('customer_id', $customer_id)->orderBy('id')->get();
+        $confirmedOrders = Rental::where('status', 1)->where('customer_id', $customer_id)->orderBy('id')->get();
+        $shippingOrders = Rental::where('status', 2)->where('customer_id', $customer_id)->orderBy('id')->get();
+        $shippedOrders = Rental::where('status', 3)->where('customer_id', $customer_id)->orderBy('id')->get();
+        $completedOrders = Rental::where('status', 4)->where('customer_id', $customer_id)->orderBy('id')->get();
+        $cancelledOrders = Rental::where('status', 5)->where('customer_id', $customer_id)->orderBy('id')->get();
+        return view("web.account-booking",[
+            'user' => $user,
+            'pendingOrders' => $pendingOrders,
+            'confirmedOrders' => $confirmedOrders,
+            'shippingOrders' => $shippingOrders,
+            'shippedOrders' => $shippedOrders,
+            'completedOrders' => $completedOrders,
+            'cancelledOrders' => $cancelledOrders
+        ]);
     }
     public function dashboard(User $user) {
         $rental= Rental::limit(10)->get();
