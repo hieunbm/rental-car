@@ -22,8 +22,8 @@
                                 </div>
                                 <div class="profile_name">
                                     <h4>
-                                        Monica Lucas
-                                        <span class="profile_username text-gray">monica@rentaly.com</span>
+                                        {{$user->name}}
+                                        <span class="profile_username text-gray">{{$user->email}}</span>
                                     </h4>
                                 </div>
                             </div>
@@ -39,146 +39,262 @@
 
                     <div class="col-lg-9">
 
+{{--                        Pending--}}
                         <div class="card p-4 rounded-5 mb25">
-                            <h4>Scheduled Orders</h4>
-
+                            <h4 class="rounded-pill" style="width: 180px;background-color: rgb(13,110,253);color: white;text-align: center">Pending Orders</h4>
+                            @if($pendingOrders->isEmpty())
+                                <p class="text-center" style="margin-top: 20px;">If there is an order in this status, it will be displayed here!</p>
+                            @else
                             <table class="table de-table">
                                 <thead>
                                 <tr>
                                     <th scope="col"><span class="text-uppercase fs-12 text-gray">Order ID</span></th>
                                     <th scope="col"><span class="text-uppercase fs-12 text-gray">Car Name</span></th>
                                     <th scope="col"><span class="text-uppercase fs-12 text-gray">Pick Up Location</span></th>
-                                    <th scope="col"><span class="text-uppercase fs-12 text-gray">Drop Off Location</span></th>
                                     <th scope="col"><span class="text-uppercase fs-12 text-gray">Pick Up Date</span></th>
                                     <th scope="col"><span class="text-uppercase fs-12 text-gray">Return Date</span></th>
-                                    <th scope="col"><span class="text-uppercase fs-12 text-gray">Status</span></th>
+                                    <th scope="col"><span class="text-uppercase fs-12 text-gray">Total Amount</span></th>
+                                    <th scope="col"><span class="text-uppercase fs-12 text-gray">Pay</span></th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td><span class="d-lg-none d-sm-block">Order ID</span><div class="badge bg-gray-100 text-dark">#01245</div></td>
-                                    <td><span class="d-lg-none d-sm-block">Car Name</span><span class="bold">Ferrari Enzo</span></td>
-                                    <td><span class="d-lg-none d-sm-block">Pick Up Location</span>Kentucky</td>
-                                    <td><span class="d-lg-none d-sm-block">Drop Off Location</span>Michigan</td>
-                                    <td><span class="d-lg-none d-sm-block">Pick Up Date</span>March 14, 2023</td>
-                                    <td><span class="d-lg-none d-sm-block">Return Date</span>March 16, 2023</td>
-                                    <td><div class="badge rounded-pill bg-warning">scheduled</div></td>
-                                </tr>
-                                <tr>
-                                    <td><span class="d-lg-none d-sm-block">Order ID</span><div class="badge bg-gray-100 text-dark">#01245</div></td>
-                                    <td><span class="d-lg-none d-sm-block">Car Name</span><span class="bold">VW Polo</span></td>
-                                    <td><span class="d-lg-none d-sm-block">Pick Up Location</span>Philadelphia</td>
-                                    <td><span class="d-lg-none d-sm-block">Drop Off Location</span>Washington</td>
-                                    <td><span class="d-lg-none d-sm-block">Pick Up Date</span>March 16, 2023</td>
-                                    <td><span class="d-lg-none d-sm-block">Return Date</span>March 18, 2023</td>
-                                    <td><div class="badge rounded-pill bg-warning">scheduled</div></td>
-                                </tr>
-                                <tr>
-                                    <td><span class="d-lg-none d-sm-block">Order ID</span><div class="badge bg-gray-100 text-dark">#01216</div></td>
-                                    <td><span class="d-lg-none d-sm-block">Car Name</span><span class="bold">Toyota Rav 4</span></td>
-                                    <td><span class="d-lg-none d-sm-block">Pick Up Location</span>Baltimore</td>
-                                    <td><span class="d-lg-none d-sm-block">Drop Off Location</span>Sacramento</td>
-                                    <td><span class="d-lg-none d-sm-block">Pick Up Date</span>March 19, 2023</td>
-                                    <td><span class="d-lg-none d-sm-block">Return Date</span>March 20, 2023</td>
-                                    <td><div class="badge rounded-pill bg-warning">scheduled</div></td>
-                                </tr>
+                                @foreach($pendingOrders as $order)
+                                    <tr>
+                                        <td><div class="badge bg-gray-100 text-dark">#{{ $order->id }}</div></td>
+                                        <td><span class="bold">{{ $order->car->model }}</span></td>
+                                        <td>{{ $order->address }}, {{ $order->pickup_location }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($order->rental_date)->format('m/d/Y') }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($order->return_date)->format('m/d/Y') }}</td>
+                                        <td>${{ $order->total_amount }}</td>
+                                        <td>
+                                            @if($order->is_paid)
+                                                <span class="text-success">Paid</span>
+                                            @else
+                                                <span class="text-danger">unPaid</span>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @endforeach
                                 </tbody>
                             </table>
+                            @endif
                         </div>
+{{--                        End Pending--}}
 
+{{--                        Confirmed--}}
                         <div class="card p-4 rounded-5 mb25">
-                            <h4>Completed Orders</h4>
-
+                            <h4 class="rounded-pill" style="width: 180px;background-color: rgb(108,117,125);color: white;text-align: center">Confirmed Orders</h4>
+                            @if($confirmedOrders->isEmpty())
+                                <p class="text-center" style="margin-top: 20px;">If there is an order in this status, it will be displayed here!</p>
+                            @else
                             <table class="table de-table">
                                 <thead>
                                 <tr>
                                     <th scope="col"><span class="text-uppercase fs-12 text-gray">Order ID</span></th>
                                     <th scope="col"><span class="text-uppercase fs-12 text-gray">Car Name</span></th>
                                     <th scope="col"><span class="text-uppercase fs-12 text-gray">Pick Up Location</span></th>
-                                    <th scope="col"><span class="text-uppercase fs-12 text-gray">Drop Off Location</span></th>
                                     <th scope="col"><span class="text-uppercase fs-12 text-gray">Pick Up Date</span></th>
                                     <th scope="col"><span class="text-uppercase fs-12 text-gray">Return Date</span></th>
-                                    <th scope="col"><span class="text-uppercase fs-12 text-gray">Status</span></th>
+                                    <th scope="col"><span class="text-uppercase fs-12 text-gray">Total Amount</span></th>
+                                    <th scope="col"><span class="text-uppercase fs-12 text-gray">Pay</span></th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td><span class="d-lg-none d-sm-block">Order ID</span><div class="badge bg-gray-100 text-dark">#01236</div></td>
-                                    <td><span class="d-lg-none d-sm-block">Car Name</span><span class="bold">Jeep Renegade</span></td>
-                                    <td><span class="d-lg-none d-sm-block">Pick Up Location</span>New York</td>
-                                    <td><span class="d-lg-none d-sm-block">Drop Off Location</span>Los Angeles</td>
-                                    <td><span class="d-lg-none d-sm-block">Pick Up Date</span>March 2, 2023</td>
-                                    <td><span class="d-lg-none d-sm-block">Return Date</span>March 11, 2023</td>
-                                    <td><div class="badge rounded-pill bg-success">completed</div></td>
-                                </tr>
-                                <tr>
-                                    <td><span class="d-lg-none d-sm-block">Order ID</span><div class="badge bg-gray-100 text-dark">#01287</div></td>
-                                    <td><span class="d-lg-none d-sm-block">Car Name</span><span class="bold">Hyundai Staria</span></td>
-                                    <td><span class="d-lg-none d-sm-block">Pick Up Location</span>Nevada</td>
-                                    <td><span class="d-lg-none d-sm-block">Drop Off Location</span>New Mexico</td>
-                                    <td><span class="d-lg-none d-sm-block">Pick Up Date</span>March 6, 2023</td>
-                                    <td><span class="d-lg-none d-sm-block">Return Date</span>March 12, 2023</td>
-                                    <td><div class="badge rounded-pill bg-success">completed</div></td>
-                                </tr>
-                                <tr>
-                                    <td><span class="d-lg-none d-sm-block">Order ID</span><div class="badge bg-gray-100 text-dark">#01236</div></td>
-                                    <td><span class="d-lg-none d-sm-block">Car Name</span><span class="bold">Range Rover</span></td>
-                                    <td><span class="d-lg-none d-sm-block">Pick Up Location</span>Virginia</td>
-                                    <td><span class="d-lg-none d-sm-block">Drop Off Location</span>Oregon</td>
-                                    <td><span class="d-lg-none d-sm-block">Pick Up Date</span>March 2, 2023</td>
-                                    <td><span class="d-lg-none d-sm-block">Return Date</span>March 13, 2023</td>
-                                    <td><div class="badge rounded-pill bg-success">completed</div></td>
-                                </tr>
-                                <tr>
-                                    <td><span class="d-lg-none d-sm-block">Order ID</span><div class="badge bg-gray-100 text-dark">#01287</div></td>
-                                    <td><span class="d-lg-none d-sm-block">Car Name</span><span class="bold">BMW M2</span></td>
-                                    <td><span class="d-lg-none d-sm-block">Pick Up Location</span>Kansas City</td>
-                                    <td><span class="d-lg-none d-sm-block">Drop Off Location</span>Houston</td>
-                                    <td><span class="d-lg-none d-sm-block">Pick Up Date</span>March 1, 2023</td>
-                                    <td><span class="d-lg-none d-sm-block">Return Date</span>March 14, 2023</td>
-                                    <td><div class="badge rounded-pill bg-success">completed</div></td>
-                                </tr>
+                                @foreach($confirmedOrders as $order)
+                                    <tr>
+                                        <td><div class="badge bg-gray-100 text-dark">#{{ $order->id }}</div></td>
+                                        <td><span class="bold">{{ $order->car->model }}</span></td>
+                                        <td>{{ $order->address }}, {{ $order->pickup_location }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($order->rental_date)->format('m/d/Y') }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($order->return_date)->format('m/d/Y') }}</td>
+                                        <td>${{ $order->total_amount }}</td>
+                                        <td>
+                                            @if($order->is_paid)
+                                                <span class="text-success">Paid</span>
+                                            @else
+                                                <span class="text-danger">unPaid</span>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @endforeach
                                 </tbody>
                             </table>
+                            @endif
                         </div>
+{{--                        End Confirmed--}}
 
+{{--                        Shipping--}}
                         <div class="card p-4 rounded-5 mb25">
-                            <h4>Cancelled Orders</h4>
-
+                            <h4 class="rounded-pill" style="width: 180px;background-color: rgb(255,192,8);color: white;text-align: center">Shipping Orders</h4>
+                            @if($shippingOrders->isEmpty())
+                                <p class="text-center" style="margin-top: 20px;">If there is an order in this status, it will be displayed here!</p>
+                            @else
                             <table class="table de-table">
                                 <thead>
                                 <tr>
                                     <th scope="col"><span class="text-uppercase fs-12 text-gray">Order ID</span></th>
                                     <th scope="col"><span class="text-uppercase fs-12 text-gray">Car Name</span></th>
                                     <th scope="col"><span class="text-uppercase fs-12 text-gray">Pick Up Location</span></th>
-                                    <th scope="col"><span class="text-uppercase fs-12 text-gray">Drop Off Location</span></th>
                                     <th scope="col"><span class="text-uppercase fs-12 text-gray">Pick Up Date</span></th>
                                     <th scope="col"><span class="text-uppercase fs-12 text-gray">Return Date</span></th>
-                                    <th scope="col"><span class="text-uppercase fs-12 text-gray">Status</span></th>
+                                    <th scope="col"><span class="text-uppercase fs-12 text-gray">Total Amount</span></th>
+                                    <th scope="col"><span class="text-uppercase fs-12 text-gray">Pay</span></th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td><span class="d-lg-none d-sm-block">Order ID</span><div class="badge bg-gray-100 text-dark">#01263</div></td>
-                                    <td><span class="d-lg-none d-sm-block">Car Name</span><span class="bold">Mini Cooper</span></td>
-                                    <td><span class="d-lg-none d-sm-block">Pick Up Location</span>San Fransisco</td>
-                                    <td><span class="d-lg-none d-sm-block">Drop Off Location</span>Chicago</td>
-                                    <td><span class="d-lg-none d-sm-block">Pick Up Date</span>March 8, 2023</td>
-                                    <td><span class="d-lg-none d-sm-block">Return Date</span>March 12, 2023</td>
-                                    <td><div class="badge rounded-pill bg-danger">cancelled</div></td>
-                                </tr>
-                                <tr>
-                                    <td><span class="d-lg-none d-sm-block">Order ID</span><div class="badge bg-gray-100 text-dark">#01263</div></td>
-                                    <td><span class="d-lg-none d-sm-block">Car Name</span><span class="bold">Ford Raptor</span></td>
-                                    <td><span class="d-lg-none d-sm-block">Pick Up Location</span>Georgia</td>
-                                    <td><span class="d-lg-none d-sm-block">Drop Off Location</span>Lousiana</td>
-                                    <td><span class="d-lg-none d-sm-block">Pick Up Date</span>March 8, 2023</td>
-                                    <td><span class="d-lg-none d-sm-block">Return Date</span>March 13, 2023</td>
-                                    <td><div class="badge rounded-pill bg-danger">cancelled</div></td>
-                                </tr>
+                                @foreach($shippingOrders as $order)
+                                    <tr>
+                                        <td><div class="badge bg-gray-100 text-dark">#{{ $order->id }}</div></td>
+                                        <td><span class="bold">{{ $order->car->model }}</span></td>
+                                        <td>{{ $order->address }}, {{ $order->pickup_location }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($order->rental_date)->format('m/d/Y') }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($order->return_date)->format('m/d/Y') }}</td>
+                                        <td>${{ $order->total_amount }}</td>
+                                        <td>
+                                            @if($order->is_paid)
+                                                <span class="text-success">Paid</span>
+                                            @else
+                                                <span class="text-danger">unPaid</span>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @endforeach
                                 </tbody>
                             </table>
+                            @endif
                         </div>
+
+                        {{--                        End Shipping--}}
+
+{{--                        Shipped--}}
+                        <div class="card p-4 rounded-5 mb25">
+                            <h4 class="rounded-pill" style="width: 180px;background-color: rgb(255,192,8);color: white;text-align: center">Shipped Orders</h4>
+                            @if($shippedOrders->isEmpty())
+                                <p class="text-center" style="margin-top: 20px;">If there is an order in this status, it will be displayed here!</p>
+                            @else
+                            <table class="table de-table">
+                                <thead>
+                                <tr>
+                                    <th scope="col"><span class="text-uppercase fs-12 text-gray">Order ID</span></th>
+                                    <th scope="col"><span class="text-uppercase fs-12 text-gray">Car Name</span></th>
+                                    <th scope="col"><span class="text-uppercase fs-12 text-gray">Pick Up Location</span></th>
+                                    <th scope="col"><span class="text-uppercase fs-12 text-gray">Pick Up Date</span></th>
+                                    <th scope="col"><span class="text-uppercase fs-12 text-gray">Return Date</span></th>
+                                    <th scope="col"><span class="text-uppercase fs-12 text-gray">Total Amount</span></th>
+                                    <th scope="col"><span class="text-uppercase fs-12 text-gray">Pay</span></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach($shippedOrders as $order)
+                                    <tr>
+                                        <td><div class="badge bg-gray-100 text-dark">#{{ $order->id }}</div></td>
+                                        <td><span class="bold">{{ $order->car->model }}</span></td>
+                                        <td>{{ $order->address }}, {{ $order->pickup_location }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($order->rental_date)->format('m/d/Y') }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($order->return_date)->format('m/d/Y') }}</td>
+                                        <td>${{ $order->total_amount }}</td>
+                                        <td>
+                                            @if($order->is_paid)
+                                                <span class="text-success">Paid</span>
+                                            @else
+                                                <span class="text-danger">unPaid</span>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                            @endif
+                        </div>
+
+                        {{--                        End Shipped--}}
+
+{{--                        Completed--}}
+                        <div class="card p-4 rounded-5 mb25">
+                            <h4 class="rounded-pill" style="width: 180px;background-color: rgb(25,135,84);color: white;text-align: center">Completed Orders</h4>
+                            @if($completedOrders->isEmpty())
+                                <p class="text-center" style="margin-top: 20px;">If there is an order in this status, it will be displayed here!</p>
+                            @else
+                            <table class="table de-table">
+                                <thead>
+                                <tr>
+                                    <th scope="col"><span class="text-uppercase fs-12 text-gray">Order ID</span></th>
+                                    <th scope="col"><span class="text-uppercase fs-12 text-gray">Car Name</span></th>
+                                    <th scope="col"><span class="text-uppercase fs-12 text-gray">Pick Up Location</span></th>
+                                    <th scope="col"><span class="text-uppercase fs-12 text-gray">Pick Up Date</span></th>
+                                    <th scope="col"><span class="text-uppercase fs-12 text-gray">Return Date</span></th>
+                                    <th scope="col"><span class="text-uppercase fs-12 text-gray">Total Amount</span></th>
+                                    <th scope="col"><span class="text-uppercase fs-12 text-gray">Pay</span></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach($completedOrders as $order)
+                                    <tr>
+                                        <td><div class="badge bg-gray-100 text-dark">#{{ $order->id }}</div></td>
+                                        <td><span class="bold">{{ $order->car->model }}</span></td>
+                                        <td>{{ $order->address }}, {{ $order->pickup_location }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($order->rental_date)->format('m/d/Y') }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($order->return_date)->format('m/d/Y') }}</td>
+                                        <td>${{ $order->total_amount }}</td>
+                                        <td>
+                                            @if($order->is_paid)
+                                                <span class="text-success">Paid</span>
+                                            @else
+                                                <span class="text-danger">unPaid</span>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                            @endif
+                        </div>
+
+                        {{--                        End Completed--}}
+
+{{--                        Cancel--}}
+                        <div class="card p-4 rounded-5 mb25">
+                            <h4 class="rounded-pill" style="width: 180px;background-color: rgb(220,53,69);color: white;text-align: center">Cancel Orders</h4>
+                            @if($cancelledOrders->isEmpty())
+                                <p class="text-center" style="margin-top: 20px;">If there is an order in this status, it will be displayed here!</p>
+                            @else
+                            <table class="table de-table">
+                                <thead>
+                                <tr>
+                                    <th scope="col"><span class="text-uppercase fs-12 text-gray">Order ID</span></th>
+                                    <th scope="col"><span class="text-uppercase fs-12 text-gray">Car Name</span></th>
+                                    <th scope="col"><span class="text-uppercase fs-12 text-gray">Pick Up Location</span></th>
+                                    <th scope="col"><span class="text-uppercase fs-12 text-gray">Pick Up Date</span></th>
+                                    <th scope="col"><span class="text-uppercase fs-12 text-gray">Return Date</span></th>
+                                    <th scope="col"><span class="text-uppercase fs-12 text-gray">Total Amount</span></th>
+                                    <th scope="col"><span class="text-uppercase fs-12 text-gray">Pay</span></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach($cancelledOrders as $order)
+                                    <tr>
+                                        <td><div class="badge bg-gray-100 text-dark">#{{ $order->id }}</div></td>
+                                        <td><span class="bold">{{ $order->car->model }}</span></td>
+                                        <td>{{ $order->address }}, {{ $order->pickup_location }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($order->rental_date)->format('m/d/Y') }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($order->return_date)->format('m/d/Y') }}</td>
+                                        <td>${{ $order->total_amount }}</td>
+                                        <td>
+                                            @if($order->is_paid)
+                                                <span class="text-success">Paid</span>
+                                            @else
+                                                <span class="text-danger">unPaid</span>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                            @endif
+                        </div>
+
+                        {{--                        End Cancel--}}
+
                     </div>
                 </div>
             </div>

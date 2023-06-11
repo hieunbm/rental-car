@@ -59,7 +59,7 @@
                                             </li>
                                             <li><a class="menu-item" href="{{url("/account-profile")}}">My profile</a>
                                             </li>
-                                            <li><a class="menu-item" href="{{url("/account-booking")}}">My orders</a>
+                                            <li><a class="menu-item" href="{{ url("/account-booking", ['user' => auth()->user()]) }}">My orders</a>
                                             </li>
                                             <li>
                                                 <form action="{{route("logout")}}" method="post">
