@@ -42,6 +42,7 @@
                         <ul id="mainmenu">
                             <li><a class="menu-item" href="{{url("/")}}">Home</a></li>
                             <li><a class="menu-item" href="{{url("/car-list")}}">Cars</a></li>
+                            <li><a class="menu-item" href="{{url("/booking")}}">Booking</a></li>
                             <li><a class="menu-item" href="{{url("/about")}}">About Us</a></li>
                             <li><a class="menu-item" href="{{url("/contact")}}">Contact</a></li>
                         </ul>
@@ -53,7 +54,7 @@
                             @endguest
                             @auth()
                                 <ul id="mainmenu">
-                                    <li><a href="#"><i class="fa fa-user"></i> {{auth()->user()->name}}</a>
+                                    <li><a href="{{url("/account-dashboard")}}"><i class="fa fa-user"></i> {{auth()->user()->name}}</a>
                                         <ul>
                                             <li><a class="menu-item" href="{{url("/account-dashboard")}}">Dashboard</a>
                                             </li>

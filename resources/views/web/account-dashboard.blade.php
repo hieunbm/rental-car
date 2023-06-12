@@ -7,7 +7,7 @@
         <!-- section begin -->
         @include('web.html.breadcrumb')
         <!-- section close -->
-
+@auth()
         <section id="section-cars" class="bg-gray-100">
             <div class="container">
                 <div class="row">
@@ -19,16 +19,16 @@
                                 </div>
                                 <div class="profile_name">
                                     <h4>
-                                        {{$user->name}}
-                                        <span class="profile_username text-gray">{{$user->email}}</span>
+                                        {{auth()->user()->name}}
+                                        <span class="profile_username text-gray">{{auth()->user()->email}}</span>
                                     </h4>
                                 </div>
                             </div>
                             <div class="spacer-20"></div>
                             <ul class="menu-col">
-                                <li><a href="#" class="active"><i class="fa fa-home"></i>Dashboard</a></li>
-                                <li><a href="account-profile.html"><i class="fa fa-user"></i>My Profile</a></li>
-                                <li><a href="account-booking.html"><i class="fa fa-calendar"></i>My Orders</a></li>
+                                <li><a href="{{url("/account-dashboard")}}" class="active"><i class="fa fa-home"></i>Dashboard</a></li>
+                                <li><a href="{{url("/account-profile")}}"><i class="fa fa-user"></i>My Profile</a></li>
+                                <li><a href="{{url("/account-booking")}}"><i class="fa fa-calendar"></i>My Orders</a></li>
                                 <li><a href="login.html"><i class="fa fa-sign-out"></i>Sign Out</a></li>
                             </ul>
                         </div>
@@ -36,42 +36,33 @@
 
                     <div class="col-lg-9">
                         <div class="row">
-                            <div class="col-lg-3 col-6 mb25 order-sm-1">
+                            <div class="col-lg-4 col-6 mb25 order-sm-1">
                                 <div class="card p-4 rounded-5">
                                     <div class="symbol mb40">
                                         <i class="fa id-color fa-2x fa-calendar-check-o"></i>
                                     </div>
-                                    <span class="h1 mb0">03</span>
+                                    <span class="h1 mb0">{{$rentalUpComing}}</span>
                                     <span class="text-gray">Upcoming Orders</span>
                                 </div>
                             </div>
 
-                            <div class="col-lg-3 col-6 mb25 order-sm-1">
-                                <div class="card p-4 rounded-5">
-                                    <div class="symbol mb40">
-                                        <i class="fa id-color fa-2x fa-tags"></i>
-                                    </div>
-                                    <span class="h1 mb0">12</span>
-                                    <span class="text-gray">Coupons</span>
-                                </div>
-                            </div>
 
-                            <div class="col-lg-3 col-6 mb25 order-sm-1">
+                            <div class="col-lg-4 col-6 mb25 order-sm-1">
                                 <div class="card p-4 rounded-5">
                                     <div class="symbol mb40">
                                         <i class="fa id-color fa-2x fa-calendar"></i>
                                     </div>
-                                    <span class="h1 mb0">58</span>
+                                    <span class="h1 mb0">{{$rentalCount}}</span>
                                     <span class="text-gray">Total Orders</span>
                                 </div>
                             </div>
 
-                            <div class="col-lg-3 col-6 mb25 order-sm-1">
+                            <div class="col-lg-4 col-6 mb25 order-sm-1">
                                 <div class="card p-4 rounded-5">
                                     <div class="symbol mb40">
                                         <i class="fa id-color fa-2x fa-calendar-times-o"></i>
                                     </div>
-                                    <span class="h1 mb0">24</span>
+                                    <span class="h1 mb0">{{$rentalCancel}}</span>
                                     <span class="text-gray">Cancel Orders</span>
                                 </div>
                             </div>
@@ -86,58 +77,26 @@
                                     <th scope="col"><span class="text-uppercase fs-12 text-gray">Order ID</span></th>
                                     <th scope="col"><span class="text-uppercase fs-12 text-gray">Car Name</span></th>
                                     <th scope="col"><span class="text-uppercase fs-12 text-gray">Pick Up Location</span></th>
-                                    <th scope="col"><span class="text-uppercase fs-12 text-gray">Drop Off Location</span></th>
-                                    <th scope="col"><span class="text-uppercase fs-12 text-gray">Pick Up Date</span></th>
+                                    <th scope="col"><span class="text-uppercase fs-12 text-gray">Rental Date</span></th>
                                     <th scope="col"><span class="text-uppercase fs-12 text-gray">Return Date</span></th>
                                     <th scope="col"><span class="text-uppercase fs-12 text-gray">Status</span></th>
                                 </tr>
                                 </thead>
                                 <tbody>
+                                @foreach($rental as $us)
                                 <tr>
-                                    <td><span class="d-lg-none d-sm-block">Order ID</span><div class="badge bg-gray-100 text-dark">#01236</div></td>
-                                    <td><span class="d-lg-none d-sm-block">Car Name</span><span class="bold">Jeep Renegade</span></td>
-                                    <td><span class="d-lg-none d-sm-block">Pick Up Location</span>New York</td>
-                                    <td><span class="d-lg-none d-sm-block">Drop Off Location</span>Los Angeles</td>
-                                    <td><span class="d-lg-none d-sm-block">Pick Up Date</span>March 2, 2023</td>
-                                    <td><span class="d-lg-none d-sm-block">Return Date</span>March 10, 2023</td>
-                                    <td><div class="badge rounded-pill bg-success">completed</div></td>
+                                    <td><span class="d-lg-none d-sm-block">Order ID</span><div class="badge bg-gray-100 text-dark">{{$us->id}}</div></td>
+                                    <td><span class="d-lg-none d-sm-block">Car Name</span><span class="bold">{{$us->car->model}}</span></td>
+                                    <td><span class="d-lg-none d-sm-block">Pick Up Location</span>{{$us->pickup_location}}</td>
+                                    <td><span class="d-lg-none d-sm-block">Rental Date</span>{{$us->rental_date}}</td>
+                                    <td><span class="d-lg-none d-sm-block">Return Date</span>{{$us->return_date}}</td>
+                                    <td>@switch($us->status)
+                                            @case(0)<div class="badge rounded-pill bg-warning">scheduled</div>@break
+                                            @case(1)<div class="badge rounded-pill bg-success">completed</div>@break
+                                            @case(2)<div class="badge rounded-pill bg-danger">cancelled</div>@break</td>
+                                    @endswitch
                                 </tr>
-                                <tr>
-                                    <td><span class="d-lg-none d-sm-block">Order ID</span><div class="badge bg-gray-100 text-dark">#01263</div></td>
-                                    <td><span class="d-lg-none d-sm-block">Car Name</span><span class="bold">Mini Cooper</span></td>
-                                    <td><span class="d-lg-none d-sm-block">Pick Up Location</span>San Fransisco</td>
-                                    <td><span class="d-lg-none d-sm-block">Drop Off Location</span>Chicago</td>
-                                    <td><span class="d-lg-none d-sm-block">Pick Up Date</span>March 8, 2023</td>
-                                    <td><span class="d-lg-none d-sm-block">Return Date</span>March 10, 2023</td>
-                                    <td><div class="badge rounded-pill bg-danger">cancelled</div></td>
-                                </tr>
-                                <tr>
-                                    <td><span class="d-lg-none d-sm-block">Order ID</span><div class="badge bg-gray-100 text-dark">#01245</div></td>
-                                    <td><span class="d-lg-none d-sm-block">Car Name</span><span class="bold">Ferrari Enzo</span></td>
-                                    <td><span class="d-lg-none d-sm-block">Pick Up Location</span>Philadelphia</td>
-                                    <td><span class="d-lg-none d-sm-block">Drop Off Location</span>Washington</td>
-                                    <td><span class="d-lg-none d-sm-block">Pick Up Date</span>March 6, 2023</td>
-                                    <td><span class="d-lg-none d-sm-block">Return Date</span>March 10, 2023</td>
-                                    <td><div class="badge rounded-pill bg-warning">scheduled</div></td>
-                                </tr>
-                                <tr>
-                                    <td><span class="d-lg-none d-sm-block">Order ID</span><div class="badge bg-gray-100 text-dark">#01287</div></td>
-                                    <td><span class="d-lg-none d-sm-block">Car Name</span><span class="bold">Hyundai Staria</span></td>
-                                    <td><span class="d-lg-none d-sm-block">Pick Up Location</span>Kansas City</td>
-                                    <td><span class="d-lg-none d-sm-block">Drop Off Location</span>Houston</td>
-                                    <td><span class="d-lg-none d-sm-block">Pick Up Date</span>March 13, 2023</td>
-                                    <td><span class="d-lg-none d-sm-block">Return Date</span>March 10, 2023</td>
-                                    <td><div class="badge rounded-pill bg-success">completed</div></td>
-                                </tr>
-                                <tr>
-                                    <td><span class="d-lg-none d-sm-block">Order ID</span><div class="badge bg-gray-100 text-dark">#01216</div></td>
-                                    <td><span class="d-lg-none d-sm-block">Car Name</span><span class="bold">Toyota Rav 4</span></td>
-                                    <td><span class="d-lg-none d-sm-block">Pick Up Location</span>Baltimore</td>
-                                    <td><span class="d-lg-none d-sm-block">Drop Off Location</span>Sacramento</td>
-                                    <td><span class="d-lg-none d-sm-block">Pick Up Date</span>March 7, 2023</td>
-                                    <td><span class="d-lg-none d-sm-block">Return Date</span>March 10, 2023</td>
-                                    <td><div class="badge rounded-pill bg-warning">scheduled</div></td>
-                                </tr>
+                                @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -149,4 +108,5 @@
     <!-- content close -->
 
     <a href="#" id="back-to-top"></a>
+    @endauth
 @endsection

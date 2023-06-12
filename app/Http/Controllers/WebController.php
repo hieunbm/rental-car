@@ -12,6 +12,7 @@ use App\Models\Rental;
 use App\Models\RentalRate;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class WebController extends Controller
 {
@@ -76,10 +77,16 @@ class WebController extends Controller
         ]);
     }
     public function dashboard(User $user) {
-        $rental= Rental::limit(10)->get();
+        $rental= Rental::limit(10)->where("customer_id", auth()->user()->id)->get();
+        $rentalCount=DB::table('rental')->count();
+        $rentalUpComing=DB::table('rental')->where("status",0)->count();
+        $rentalCancel=DB::table('rental')->where("status",0)->count();
         return view("web.account-dashboard",[
+            'rentalCount'=>$rentalCount,
             'user'=>$user,
             "rental"=>$rental,
+            "rentalUpComing"=>$rentalUpComing,
+            "rentalCancel"=>$rentalCancel,
             ]);
     }
     public function profile() {
