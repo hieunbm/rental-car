@@ -48,7 +48,15 @@
                                                     </div>
                                                     <div class="col-md-10">
                                                         <p>
-                                                            <a class="float-left" href="#"><strong>{{$item->customer->name}}</strong></a>
+                                                            <a class="float-left" href="#">
+                                                                <strong>
+                                                                    @if($item->customer == auth()->user())
+                                                                        Me
+                                                                    @else
+                                                                        {{$item->customer->name}}
+                                                                    @endif
+                                                                </strong>
+                                                            </a>
                                                             @if($item->score == 0)
                                                                 <span class="float-end"><i class="fa fa-star"></i></span>
                                                                 <span class="float-end"><i class="fa fa-star"></i></span>
@@ -236,10 +244,11 @@
                                 <div class="row">
                                     <div class="col-lg-12 mb20">
                                         <h5>Pick Up Location</h5>
-                                        <input type="text" name="PickupLocation" onfocus="geolocate()"
-                                               placeholder="Enter your pickup location" id="autocomplete"
-                                               autocomplete="off" class="form-control">
-
+                                        <select name="PickupLocation" id="mySelect"  class="form-control">
+                                            <option>Chose Location</option>
+                                            <option>pick up the car at the store</option>
+                                            <option>pick up car at home (only 15km radius)</option>
+                                        </select>
                                         <div class="jls-address-preview jls-address-preview--hidden">
                                             <div class="jls-address-preview__header">
                                             </div>
@@ -247,15 +256,17 @@
                                     </div>
 
                                     <div class="col-lg-12 mb20">
-                                        <h5>Drop Off Location</h5>
-                                        <input type="text" name="DropoffLocation" onfocus="geolocate()"
-                                               placeholder="Enter your dropoff location" id="autocomplete2"
-                                               autocomplete="off" class="form-control">
-
-                                        <div class="jls-address-preview jls-address-preview--hidden">
-                                            <div class="jls-address-preview__header">
-                                            </div>
-                                        </div>
+                                        <h5>Choose a rental type</h5>
+                                        <select name="rental rate" id="mySelect2"  class="form-control" onchange="updateInput()">
+                                            <option selected>Choose Rental Type</option>
+                                            @foreach($rentalrate as $rt)
+                                                <option value="{{$rt->id}}">{{$rt->rental_type}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-12 mb20">
+                                        <h5>Price</h5>
+                                        <input type="text" id="myLable" readonly/>
                                     </div>
                                     <div class="col-lg-12 mb20">
                                         <h5>Pick Up Date & Time</h5>
@@ -397,3 +408,17 @@
     <!-- content close -->
     <a href="#" id="back-to-top"></a>
 @endsection
+<script>
+    var rentalMethodData = {
+        @foreach ($rentalrate as $rentalMethod)
+        "{{ $rentalMethod->id }}": "{{ $rentalMethod->price }}",
+        @endforeach
+    };
+    function updateInput() {
+        var select = document.getElementById("mySelect2");
+        var lable = document.getElementById("myLable");
+        var selectedRentalMethodId = select.value;
+
+        lable.value = rentalMethodData[selectedRentalMethodId];
+    }
+</script>

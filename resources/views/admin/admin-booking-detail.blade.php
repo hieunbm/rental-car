@@ -199,6 +199,20 @@
                     </div>
                 </div>
                 <div class="card-footer text-end">
+                    <b style="float: left">
+                        @switch($rental->status)
+                            @case(0) <span
+                                class="text text-dark">Pending</span>@break
+                            @case(1) <span
+                                class="text text-blue">Confirmed</span>@break
+                            @case(2) <span
+                                class="text text-warning">In Progress</span>@break
+                            @case(3) <span
+                                class="text text-success">Completed</span>@break
+                            @case(4) <span
+                                class="text text-danger">Cancel</span>@break
+                        @endswitch
+                    </b>
                     @switch($rental->status)
                         @case(0)
                             <a href="#" class="btn btn-success float-right">
@@ -211,25 +225,22 @@
                             </a>
                             @break
                         @case(1)
-                            <a href="#" class="btn btn-success float-right"><i class="far fa-credit-card"></i> Submit
-                                Shipping
+                            <a href="#" class="btn btn-danger float-right">
+                                <i class="far fa-credit-card"></i>
+                                Cancel
                             </a>
                             @break
                         @case(2)
                             <a href="#" class="btn btn-success float-right"><i class="far fa-credit-card"></i> Submit
-                                Shipped
+                                Completed
+                            </a>
+                            <a href="#" class="btn btn-danger float-right"><i class="far fa-credit-card"></i> Submit
+                                Incident
                             </a>
                             @break
                         @case(3)
-                            <a href="#" class="btn btn-success float-right"><i class="far fa-credit-card"></i> Submit
-                                Complete
-                            </a>
                             @break
                         @case(4)
-
-                            @break
-                        @case(5)
-
                             @break
                     @endswitch
                     <button class="btn btn-success">Download <i class="ri-download-2-line ms-1 align-middle"></i></button>

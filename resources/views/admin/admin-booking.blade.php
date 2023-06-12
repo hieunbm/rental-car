@@ -93,17 +93,15 @@
                                             @case(1) <span
                                                 class="text text-blue">Comfirm</span>@break
                                             @case(2) <span
-                                                class="text text-warning">Shipping</span>@break
+                                                class="text text-warning">In Progress</span>@break
                                             @case(3) <span
-                                                class="text text-warning">Shipped</span>@break
-                                            @case(4) <span
                                                 class="text text-success">Complete</span>@break
-                                            @case(5) <span
+                                            @case(4) <span
                                                 class="text text-danger">Cancel</span>@break
                                         @endswitch
                                     </td>
                                     <td>
-                                        <a href="#" class="badge bg-info">View</a>
+                                        <a href="{{url("/admin/booking-detail", ["rental" => $item->id])}}" class="badge bg-info">View</a>
                                     </td>
                                 </tr>
                             @endforeach

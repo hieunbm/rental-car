@@ -41,19 +41,21 @@ class WebController extends Controller
     public function car_detail(Car $car) {
         $thumbnails = Gallery::where("car_id", $car->id)->get();
         $reviews = CarReview::where("car_id", $car->id)->get();
-        $priceday = RentalRate::where("car_id", $car->id)->get();
+        $priceday = RentalRate::where("car_id", $car->id)->where("rental_type", "rent by day")->get();
         $rate = 0;
         $totals = 0;
         foreach ($reviews as $item) {
             $totals += $item->score;
             $rate = $totals / $reviews->count();
         }
+        $rentalrate = RentalRate::where("car_id", $car->id)->get();
         return view("web.car-detail", [
             "car" => $car,
             "thumbnails" => $thumbnails,
             "reviews" => $reviews,
             "priceday" => $priceday,
-            "rate" => $rate
+            "rate" => $rate,
+            "rentalrate" => $rentalrate
         ]);
     }
     public function myOrders() {
