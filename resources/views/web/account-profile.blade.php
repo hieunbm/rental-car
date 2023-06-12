@@ -33,7 +33,14 @@
                                 <li><a href="account-profile.html" class="active"><i class="fa fa-user"></i>My
                                         Profile</a></li>
                                 <li><a href="account-booking.html"><i class="fa fa-calendar"></i>My Orders</a></li>
-                                <li><a href="login.html"><i class="fa fa-sign-out"></i>Sign Out</a></li>
+                                <li>
+                                    <form action="{{route("logout")}}" method="post">
+                                        @csrf
+                                        <button style="border: none; background-color: white; width: 100%;text-align: left;margin-left: 5px"
+                                                class="menu-item" type="submit"><i class="fa fa-sign-out"></i>Sign out
+                                        </button>
+                                    </form>
+                                </li>
                             </ul>
                         </div>
                     </div>
