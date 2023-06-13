@@ -29,6 +29,37 @@ class WebController extends Controller
             "carType"=>$carType,
         ]);
     }
+    public function car_search(Request $request) {
+        $q = $request->get("q");
+        $cars = Car::where("model", 'like', "%$q%")->get();
+        $reviews = CarReview::whereIn("car_id", $cars->pluck('id')->all())->get();
+        $priceday = RentalRate::where("car_id", $cars->pluck('id')->all())->where("rental_type", "rent by day")->get();
+
+        $rates = []; // Mảng chứa số sao cho từng xe
+        foreach ($cars as $car) {
+            $total = 0;
+            $count = 0;
+            foreach ($reviews as $item) {
+                if ($item->car_id == $car->id && isset($item->score)) {
+                    $total += $item->score;
+                    $count++;
+                }
+            }
+            if ($count > 0) {
+                $rate = $total / $count;
+                $rates[$car->id] = $rate;
+            }
+        }
+
+        $count = $cars->count(); // hiển thị số lượng xe tìm được
+        return view("web.car-search", [
+            "cars" => $cars,
+            "reviews" => $reviews,
+            "priceday" => $priceday,
+            "rates" => $rates,
+            "count" => $count
+        ]);
+    }
     public function booking() {
         return view("web.booking");
     }
