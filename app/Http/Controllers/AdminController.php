@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Incident;
 use App\Models\Rental;
+use App\Models\Service;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 
@@ -62,9 +63,35 @@ class AdminController extends Controller
         return view("admin.admin-customers");
     }
     public function admin_service() {
-        return view("admin.admin-service");
+        $service = Service::orderBy("id", "desc")->paginate(2);
+        return view("admin.admin-service", [
+            "service" => $service
+        ]);
+    }
+    public function admin_serviceCreate() {
+        return view("admin.admin-serviceCreate", [
+
+        ]);
+    }
+    public function admin_serviceSave(Request $request) {
+        $request->validate([
+            "title"=>"required",
+            "description" => "required",
+            "price"=>"required|numeric|min:0",
+        ],[
+            // thong bao gi thi thong bao
+        ]);
+        Service::create([
+            "title" => $request->get("title"),
+            "description" => $request->get("description"),
+            "price" => $request->get("price")
+        ]);
+        return redirect()->to("/admin/services");
     }
     public function admin_incident() {
-        return view("admin.admin-incident");
+        $incidents = Incident::orderBy("id", "desc")->paginate(6);
+        return view("admin.admin-incident", [
+            "incidents" => $incidents
+        ]);
     }
 }

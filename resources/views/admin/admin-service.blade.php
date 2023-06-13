@@ -9,28 +9,58 @@
     <div class="row">
         <div class="col-xl-12">
             <div class="card custom-card">
-                <div class="card-header"><div class="card-title">Services</div></div>
+                <div class="card-header justify-content-between flex-wrap">
+                    <div class="card-title">Services</div>
+                    <div class="d-flex">
+                        <a href="{{url("/admin/services/create")}}" class="dropdown btn btn-primary btn-sm btn-wave waves-effect waves-light"> + Add service</a>
+                    </div>
+                </div>
                 <div class="card-body">
-                    <div id="grid-sorting">
-                        <div class="table-responsive">
-                            <table class="table table-hover text-nowrap table-bordered">
-                                <thead>
+                    <div class="table-responsive">
+                        <table class="table text-nowrap">
+                            <thead class="table-primary">
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">TITLE</th>
+                                <th scope="col">DESCRIPTION</th>
+                                <th scope="col">PRICE</th>
+                                <th scope="col">
+                                    CREATE AT
+                                    <br>
+                                    UPDATE AT
+                                </th>
+                                <th scope="col">ACTION</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach($service as $item)
                                 <tr>
-                                    <th scope="col">ID</th>
-                                    <th scope="col">Title</th>
-                                    <th scope="col">Description</th>
-                                    <th scope="col">Price</th>
+                                    <th>{{$item->id}}</th>
+                                    <td>{{$item->title}}</td>
+                                    <td>{{$item->description}}</td>
+                                    <td>{{$item->price}}</td>
+                                    <td>
+                                        {{$item->created_at}}
+                                        <br>
+                                        {{$item->updated_at}}
+                                    </td>
+                                    <td>
+                                        <div class="hstack gap-2 fs-15">
+                                            <a href="#" class="btn btn-icon btn-sm btn-info-transparent rounded-pill"><i class="ri-edit-line"></i></a>
+                                            <a href="#" class="btn btn-icon btn-sm btn-danger-transparent rounded-pill"><i class="ri-delete-bin-line"></i></a>
+                                        </div>
+                                    </td>
                                 </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Wedding Car Rental</td>
-                                    <td class="child1">This service provides beautiful and luxurious cars to serve on the wedding day.</td>
-                                    <td>$89</td>
-                                </tr>
-                                </tbody>
-                            </table>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="d-flex align-items-center">
+                        <div>Showing 6 Entries <i class="bi bi-arrow-right ms-2 fw-semibold"></i></div>
+                        <div class="ms-auto">
+                            {!! $service->appends(app("request")->input())->links("pagination::bootstrap-4") !!}
                         </div>
                     </div>
                 </div>
