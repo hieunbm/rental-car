@@ -19,14 +19,33 @@ class WebController extends Controller
     public function home() {
         return view("welcome");
     }
-    public function car_list(Car $car) {
+    public function car_list(Car $car, Request $request) {
         $cars=Car::paginate(18);
         $brand=Brand::limit(10)->get();
+        $reviews = CarReview::whereIn("car_id", $cars->pluck('id')->all())->get();
         $carType=CarType::limit(10)->get();
+
+        $rates = []; // Mảng chứa số sao cho từng xe
+        foreach ($cars as $car) {
+            $total = 0;
+            $count = 0;
+            foreach ($reviews as $item) {
+                if ($item->car_id == $car->id && isset($item->score)) {
+                    $total += $item->score;
+                    $count++;
+                }
+            }
+            if ($count > 0) {
+                $rate = $total / $count;
+                $rates[$car->id] = $rate;
+            }
+        }
         return view("web.car-list",[
             "cars"=>$cars,
             "brand"=>$brand,
             "carType"=>$carType,
+            "reviews" => $reviews,
+            "rates" => $rates,
 
         ]);
     }
