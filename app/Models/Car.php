@@ -40,4 +40,10 @@ class Car extends Model
     public function price() {
         return $this->belongsTo(RentalRate::class);
     }
+    public function carType(){
+        return $this->belongsTo(CarType::class);
+    }
+    public function brands(){
+        return $this->belongsTo(Brand::class);
+    }
 }

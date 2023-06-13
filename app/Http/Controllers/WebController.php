@@ -19,14 +19,15 @@ class WebController extends Controller
     public function home() {
         return view("welcome");
     }
-    public function car_list() {
-        $car=Car::paginate(12);
+    public function car_list(Car $car) {
+        $cars=Car::paginate(18);
         $brand=Brand::limit(10)->get();
         $carType=CarType::limit(10)->get();
         return view("web.car-list",[
-            "car"=>$car,
+            "cars"=>$cars,
             "brand"=>$brand,
             "carType"=>$carType,
+
         ]);
     }
     public function car_search(Request $request) {
