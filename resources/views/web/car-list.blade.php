@@ -26,14 +26,30 @@
                                                                 <h4>{{$c->model}}</h4>
                                                                 <div class="d-atr-group">
                                                                     <ul class="d-atr">
-                                                                        <li><span>Seats:</span>{{$c->airConditioner}}</li>
+                                                                        <li><span>Model Year:</span>{{$c->modelYear}}</li>
                                                                         <li><span>LicensePlate:</span>{{$c->license_plate}}</li>
                                                                         <li><span>Transmission:</span>{{$c->transmission}}</li>
                                                                         <li><span>Fuel:</span>{{$c->fuelType}}</li>
-                                                                        <li><span>Driver Airbag:</span>{{$c->driverAirbag}}</li>
-                                                                        <li><span>CD Player:</span>{{$c->cDPlayer}}</li>
-                                                                        <li><span>Brake Assist:</span>{{$c->brakeAssist}}</li>
-                                                                        <li><span>Reverse sensor:</span>{{$c->reverse_sensor}}</li>
+                                                                        @if($c->reverse_sensor == 1)
+                                                                            <li>Reverse sensor<i class="fa fa-check" style="color: #199e1c; margin-left: 5px" aria-hidden="true"></i></li>
+                                                                        @else
+                                                                            <li>Reverse sensor<i class="fa fa-times" style="margin-left: 5px" aria-hidden="true"></i></li>
+                                                                        @endif
+                                                                        @if($c->airConditioner == 1)
+                                                                            <li>Air Conditioner<i class="fa fa-check" style="color: #199e1c; margin-left: 5px" aria-hidden="true"></i></li>
+                                                                        @else
+                                                                            <li>Air Conditioner<i class="fa fa-times" style="margin-left: 5px" aria-hidden="true"></i></li>
+                                                                        @endif
+                                                                        @if($c->cDPlayer == 1)
+                                                                            <li>CD Player<i class="fa fa-check" style="color: #199e1c; margin-left: 5px" aria-hidden="true"></i></li>
+                                                                        @else
+                                                                            <li>CD Player<i class="fa fa-times" style="margin-left: 5px" aria-hidden="true"></i></li>
+                                                                        @endif
+                                                                        @if($c->brakeAssist == 1)
+                                                                            <li>Brake Assist<i class="fa fa-check" style="color: #199e1c; margin-left: 5px" aria-hidden="true"></i></li>
+                                                                        @else
+                                                                            <li>Brake Assist<i class="fa fa-times" style="margin-left: 5px" aria-hidden="true"></i></li>
+                                                                        @endif
                                                                     </ul>
                                                                 </div>
                                                             </div>
@@ -87,7 +103,7 @@
                                                             </div>
                                                             <div style="margin-bottom: 25px">
                                                                 Daily rate from <span>$265</span>
-                                                                <a class="btn-main" href="car-single.html">Rent Now</a>
+                                                                <a class="btn-main" href="{{url("/car",["car"=>$c->slug])}}">Rent Now</a>
                                                             </div>
                                                         </div>
                                                         <div class="clearfix"></div>
