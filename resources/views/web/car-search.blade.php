@@ -1,4 +1,5 @@
 @extends('web.layout.layout')
+@section("name","Search: ".app("request")->input('q'))
 @section("main")
     <div class="no-bottom no-top zebra" id="content">
         <div id="top"></div>
@@ -31,11 +32,14 @@
                                             <h4>{{ $item->model }}</h4>
                                             <div class="d-atr-group">
                                                 <ul class="d-atr">
-                                                    <li><span>Seats:</span>4</li>
-                                                    <li><span>Fuel Type:</span>{{ $item->fuelType }}</li>
-                                                    <li><span>Transmission:</span>{{ $item->transmission }}</li>
-                                                    <li><span>Km Limit:</span>{{ $item->km_limit }}</li>
-                                                    <li><span>Year:</span>{{ $item->modelYear }}</li>
+                                                    <li><span>Seats:</span>{{$item->airConditioner}}</li>
+                                                    <li><span>LicensePlate:</span>{{$item->license_plate}}</li>
+                                                    <li><span>Transmission:</span>{{$item->transmission}}</li>
+                                                    <li><span>Fuel:</span>{{$item->fuelType}}</li>
+                                                    <li><span>Driver Airbag:</span>{{$item->driverAirbag}}</li>
+                                                    <li><span>CD Player:</span>{{$item->cDPlayer}}</li>
+                                                    <li><span>Brake Assist:</span>{{$item->brakeAssist}}</li>
+                                                    <li><span>Reverse sensor:</span>{{$item->reverse_sensor}}</li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -110,10 +114,9 @@
                                         </div>
                                         <div style="margin-bottom: 25px">
                                             Daily rate from
-{{--                                            @foreach($priceday as $price)--}}
-{{--                                            <span>${{ $price->price }}</span>--}}
-                                                <span>$100</span>
-{{--                                            @endforeach--}}
+                                            @foreach($priceday->where('car_id', $item->id) as $price)
+                                            <span>${{ $price->price }}</span>
+                                            @endforeach
                                             <a class="btn-main" href="{{url("/car",["car"=>$item->slug])}}">Rent Now</a>
                                         </div>
                                     </div>

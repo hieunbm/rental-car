@@ -53,7 +53,7 @@ class WebController extends Controller
         $q = $request->get("q");
         $cars = Car::where("model", 'like', "%$q%")->get();
         $reviews = CarReview::whereIn("car_id", $cars->pluck('id')->all())->get();
-        $priceday = RentalRate::where("car_id", $cars->pluck('id')->all())->where("rental_type", "rent by day")->get();
+        $priceday = RentalRate::where("car_id", $cars->pluck('id')->all())->get();
 
         $rates = []; // Mảng chứa số sao cho từng xe
         foreach ($cars as $car) {
