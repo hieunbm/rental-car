@@ -42,7 +42,7 @@
                                                             <div style="margin-bottom: 15px" class="d-flex justify-content-between align-items-center">
                                                                 <div class="ratings">
                                                                 @php
-                                                                    $rate = $c->rate;
+                                                                    $rate = $rates[$c->id] ?? 0;
                                                                 @endphp
 
                                                                 @if($rate == 5)
