@@ -40,6 +40,8 @@ Route::prefix("/admin")->middleware(["auth", "admin"])->group(function () {// mi
     Route::get("/services", [App\Http\Controllers\AdminController::class, "admin_service"]);
     Route::get("/services/create", [App\Http\Controllers\AdminController::class, "admin_serviceCreate"]);
     Route::post("/services/create", [App\Http\Controllers\AdminController::class, "admin_serviceSave"]);
+    Route::get("/services/edit/{id}", [App\Http\Controllers\AdminController::class, "admin_serviceEdit"]);
+    Route::put("/services/edit/{id}", [App\Http\Controllers\AdminController::class, "admin_serviceUpdate"]);
     Route::get("/incidents", [App\Http\Controllers\AdminController::class, "admin_incident"]);
 });
 // admin end
