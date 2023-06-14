@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string("license_plate");
             $table->string("model");
             $table->string("slug");
+            $table->unsignedDecimal("price");
             $table->unsignedBigInteger("brand_id");
             $table->unsignedBigInteger("carType_id");
             $table->string("thumbnail");
@@ -34,6 +35,7 @@ return new class extends Migration
             $table->timestamps();
             $table->foreign("brand_id")->references("id")->on("brands");
             $table->foreign("carType_id")->references("id")->on("carTypes");
+            $table->softDeletesTz();
         });
     }
 

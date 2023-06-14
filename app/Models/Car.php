@@ -14,6 +14,7 @@ class Car extends Model
         'name',
         'license_plate',
         'model',
+        'price',
         'slug',
         'brand_id',
         'carType_id',
@@ -41,9 +42,13 @@ class Car extends Model
         return $this->belongsTo(RentalRate::class);
     }
     public function carType(){
-        return $this->belongsTo(CarType::class);
+        return $this->belongsTo(CarType::class,"carType_id");
     }
     public function brands(){
-        return $this->belongsTo(Brand::class);
+        return $this->belongsTo(Brand::class,"brand_id");
+    }
+    public function images()
+    {
+        return $this->hasMany(Gallery::class, 'car_id');
     }
 }

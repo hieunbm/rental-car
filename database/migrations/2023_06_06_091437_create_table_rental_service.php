@@ -18,6 +18,7 @@ return new class extends Migration
             $table->timestamps();
             $table->foreign("rental_id")->references("id")->on("rental");
             $table->foreign("service_id")->references("id")->on("service");
+            $table->softDeletesTz();
         });
     }
 

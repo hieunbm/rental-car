@@ -20,6 +20,7 @@ return new class extends Migration
             $table->timestamps();
             $table->foreign("customer_id")->references("id")->on("users");
             $table->foreign("car_id")->references("id")->on("cars");
+            $table->softDeletesTz();
         });
     }
 

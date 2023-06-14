@@ -18,6 +18,7 @@ return new class extends Migration
             $table->unsignedDecimal("price");
             $table->timestamps();
             $table->foreign("car_id")->references("id")->on("cars");
+            $table->softDeletesTz();
         });
     }
 

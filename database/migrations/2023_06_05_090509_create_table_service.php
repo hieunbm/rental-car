@@ -17,6 +17,7 @@ return new class extends Migration
             $table->text("description");
             $table->unsignedDecimal("price");
             $table->timestamps();
+            $table->softDeletesTz();
         });
     }
 
