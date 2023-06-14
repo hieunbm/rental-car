@@ -21,7 +21,6 @@ return new class extends Migration
             $table->unsignedTinyInteger("status");
             $table->timestamps();
             $table->foreign("customer_id")->references("id")->on("users");
-            $table->softDeletesTz();
         });
     }
 
