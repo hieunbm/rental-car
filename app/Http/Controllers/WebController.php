@@ -19,9 +19,10 @@ class WebController extends Controller
     public function home() {
         return view("welcome");
     }
-    public function car_list(Car $car, Request $request) {
+    public function car_list(Request $request) {
         $cars=Car::paginate(18);
         $brand=Brand::limit(10)->get();
+        $priceday = RentalRate::where("car_id", $cars->pluck('id')->all())->where("rental_type", "rent by day")->get();
         $reviews = CarReview::whereIn("car_id", $cars->pluck('id')->all())->get();
         $carType=CarType::limit(10)->get();
 
@@ -46,14 +47,14 @@ class WebController extends Controller
             "carType"=>$carType,
             "reviews" => $reviews,
             "rates" => $rates,
-
+            "priceday"=>$priceday
         ]);
     }
     public function car_search(Request $request) {
         $q = $request->get("q");
         $cars = Car::where("model", 'like', "%$q%")->get();
         $reviews = CarReview::whereIn("car_id", $cars->pluck('id')->all())->get();
-        $priceday = RentalRate::where("car_id", $cars->pluck('id')->all())->where("rental_type", "rent by day")->get();
+        $priceday = RentalRate::where("car_id", $cars->pluck('id')->all())->get();
 
         $rates = []; // Mảng chứa số sao cho từng xe
         foreach ($cars as $car) {
