@@ -116,4 +116,8 @@ class AdminController extends Controller
             ]);
         return redirect()->to("/admin/services");
     }
+    public function admin_serviceDelete(Service $service) {
+        $service->delete();
+        return redirect()->to("/admin/services");
+    }
 }
