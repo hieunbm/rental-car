@@ -94,4 +94,26 @@ class AdminController extends Controller
             "incidents" => $incidents
         ]);
     }
+    public function admin_serviceEdit($id) {
+        $service = Service::where("id", $id)->first();
+        return view("admin.admin-serviceUpdate", [
+            "service" => $service
+        ]);
+    }
+    public function admin_serviceUpdate(Request $request, $id) {
+        $request->validate([
+            "title"=>"required",
+            "description" => "required",
+            "price"=>"required|numeric|min:0",
+        ],[
+            // thong bao gi thi thong bao
+        ]);
+        Service::where("id", $id)
+            ->update([
+                "title" => $request->input("title"),
+                "description" => $request->input("description"),
+                "price" => $request->input("price")
+            ]);
+        return redirect()->to("/admin/services");
+    }
 }
