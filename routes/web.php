@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [\App\Http\Controllers\WebController::class, "home"]);
 Route::get("/car-list", [\App\Http\Controllers\WebController::class, "car_list"]);
 Route::get("/car-search", [\App\Http\Controllers\WebController::class, "car_search"]);
+Route::get("/car-filter/brand/{brand:name}", [\App\Http\Controllers\WebController::class, "car_filter_brand"]);
+Route::get("/car-filter/type/{carType:slug}", [\App\Http\Controllers\WebController::class, "car_filter_type"]);
 Route::get("/about", [\App\Http\Controllers\WebController::class, "about"]);
 Route::get("/contact", [\App\Http\Controllers\WebController::class, "contact"]);
 Route::get("/car/{car:slug}", [\App\Http\Controllers\WebController::class, "car_detail"]);

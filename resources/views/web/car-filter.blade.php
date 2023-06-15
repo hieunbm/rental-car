@@ -1,5 +1,11 @@
 @extends('web.layout.layout')
-@section("name","Search: ".app("request")->input('q'))
+@section("name")
+    @if(isset($selectedBrand))
+        Brand: {{ $selectedBrand }}
+    @elseif(isset($selectedCarType))
+        Car Type: {{ $selectedCarType }}
+    @endif
+@endsection
 @section("main")
     <div class="no-bottom no-top zebra" id="content">
         <div id="top"></div>
@@ -18,7 +24,7 @@
                     <div class="col-lg-9">
                         <div class="row">
                             <div class="col-lg-12" style="text-align: center">
-                                <p>Found {{ $count }} cars</p>
+{{--                                <p>Found {{ $count }} cars</p>--}}
                             </div>
                             @include("web.html.car.cars")
                         </div>
