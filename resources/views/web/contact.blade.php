@@ -1,7 +1,5 @@
 @extends('web.layout.layout')
-@section("name")
-    Contact
-@endsection
+@section("title","Create Contact")
 @section("main")
     <!-- content begin -->
     <div class="no-bottom no-top" id="content">
@@ -18,17 +16,18 @@
 
                         <h3>Do you have any question?</h3>
 
-                        <form name="contactForm" id="contact_form" class="form-border" method="post" action="#">
+                        <form name="contactForm" id="contact_form" class="form-border" method="post" action="{{url("contact/create")}}">
+                            @csrf
                             <div class="row">
                                 <div class="col-md-4 mb10">
                                     <div class="field-set">
-                                        <input type="text" name="Name" id="name" class="form-control"
+                                        <input type="text" name="name" id="name" class="form-control"
                                                placeholder="Your Name" required>
                                     </div>
                                 </div>
                                 <div class="col-md-4 mb10">
                                     <div class="field-set">
-                                        <input type="text" name="Email" id="email" class="form-control"
+                                        <input type="text" name="email" id="email" class="form-control"
                                                placeholder="Your Email" required>
                                     </div>
                                 </div>
@@ -62,7 +61,7 @@
                         <div class="de-box mb30">
                             <h4 style="margin-bottom: 20px">VIE Office</h4>
                             <address class="s1">
-                                <span style="margin-bottom: 25px"><i class="id-color fa fa-map-marker fa-lg"></i>No. 8A Ton That Thuyet, My Dinh, Nam Tu Liem, Hanoi, Vietnam</i></span>
+                                <span style="margin-bottom: 25px"><i class="id-color fa fa-map-marker fa-lg"></i>No. 8A Ton That Thuyet, My Dinh, Nam Tu Liem, Hanoi, Vietnam</span>
                                 <span style="margin-bottom: 25px"><i class="id-color fa fa-phone fa-lg"></i>Contact info: +1 333 9296</span>
                                 <span style="margin-bottom: 25px"><i class="id-color fa fa-envelope-o fa-lg"></i><a
                                         href="#">contact@example.com</a></span>

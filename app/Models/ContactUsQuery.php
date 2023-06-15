@@ -18,4 +18,8 @@ class ContactUsQuery extends Model
         'message',
         'status',
     ];
+
+    public function rental(){
+        return $this->belongsToMany(Rental::class, "rental_contact");
+    }
 }

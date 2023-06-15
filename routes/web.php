@@ -20,6 +20,7 @@ Route::get("/car-filter/brand/{brand:name}", [\App\Http\Controllers\WebControlle
 Route::get("/car-filter/type/{carType:slug}", [\App\Http\Controllers\WebController::class, "car_filter_type"]);
 Route::get("/about", [\App\Http\Controllers\WebController::class, "about"]);
 Route::get("/contact", [\App\Http\Controllers\WebController::class, "contact"]);
+Route::post("/contact/create", [\App\Http\Controllers\WebController::class, "contact_contactSave"]);
 Route::get("/car/{car:slug}", [\App\Http\Controllers\WebController::class, "car_detail"]);
 Route::get("/account-dashboard", [\App\Http\Controllers\WebController::class, "dashboard"]);
 Route::get("/account-profile", [\App\Http\Controllers\WebController::class, "profile"]);

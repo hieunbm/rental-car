@@ -32,25 +32,25 @@
                     <div class="col-md-3 col-sm-6 mb-sm-30">
                         <div class="de_count wow fadeInUp" data-bgcolor="#f5f5f5">
                             <h3 class="timer" data-to="15425" data-speed="3000">0</h3>
-                            Hours of Work
+                            so luong xe
                         </div>
                     </div>
                     <div class="col-md-3 col-sm-6 mb-sm-30">
                         <div class="de_count wow fadeInUp" data-bgcolor="#f5f5f5">
                             <h3 class="timer" data-to="8745" data-speed="3000">0</h3>
-                            Clients Supported
+                            so luong brand
                         </div>
                     </div>
                     <div class="col-md-3 col-sm-6 mb-sm-30">
                         <div class="de_count wow fadeInUp" data-bgcolor="#f5f5f5">
                             <h3 class="timer" data-to="235" data-speed="3000">0</h3>
-                            Awards Winning
+                            tong so don hang da dat
                         </div>
                     </div>
                     <div class="col-md-3 col-sm-6 mb-sm-30">
                         <div class="de_count wow fadeInUp" data-bgcolor="#f5f5f5">
-                            <h3 class="timer" data-to="15" data-speed="3000">0</h3>
-                            Years Experience
+                            <h3 class="timer" data-to="5" data-speed="3000">0</h3>
+
                         </div>
                     </div>
                 </div>

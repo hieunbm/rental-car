@@ -63,12 +63,11 @@
                                                     <div class="row">
                                                         <div class="col-lg-6 mb20">
                                                             <h5>Username</h5>
-                                                            <input type="text" name="username" id="username"
-                                                                   class="form-control" placeholder="Enter username"/>
+                                                            <input value="{{$user->name}}"  class="form-control" placeholder="Enter username"/>
                                                         </div>
                                                         <div class="col-lg-6 mb20">
                                                             <h5>Email Address</h5>
-                                                            <input type="text" name="email_address" id="email_address"
+                                                            <input type="text" name="email_address" value="{{$user->email}}" id="email_address"
                                                                    class="form-control" placeholder="Enter email"/>
                                                         </div>
                                                         <div class="col-lg-6 mb20">
