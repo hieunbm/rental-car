@@ -19,13 +19,12 @@ class WebController extends Controller
     public function home() {
         return view("welcome");
     }
-    public function car_list(Car $car, Request $request) {
-        $cars=Car::paginate(18);
-        $brand=Brand::limit(10)->get();
+    private function mergeCode($cars) { //Hàm này dùng để gộp code chung của trang Cars cho gọn
+        $brands = Brand::all();
+        $carTypes = CarType::all();
         $reviews = CarReview::whereIn("car_id", $cars->pluck('id')->all())->get();
-        $carType=CarType::limit(10)->get();
+        $rates = [];//mảng chứa số sao cho từng xe
 
-        $rates = []; // Mảng chứa số sao cho từng xe
         foreach ($cars as $car) {
             $total = 0;
             $count = 0;
@@ -40,55 +39,85 @@ class WebController extends Controller
                 $rates[$car->id] = $rate;
             }
         }
-        return view("web.car-list",[
-            "cars"=>$cars,
-            "brand"=>$brand,
-            "carType"=>$carType,
-            "reviews" => $reviews,
-            "rates" => $rates,
 
+        return [
+            "brands" => $brands,
+            "carTypes" => $carTypes,
+            "reviews" => $reviews,
+            "rates" => $rates
+        ];
+    }
+
+    public function car_list() {
+        $cars = Car::paginate(18);
+        $merge = $this->mergeCode($cars);
+
+        return view("web.car-list", [
+            "cars" => $cars,
+            "brands" => $merge['brands'],
+            "carTypes" => $merge['carTypes'],
+            "reviews" => $merge['reviews'],
+            "rates" => $merge['rates'],
         ]);
     }
+
     public function car_search(Request $request) {
         $q = $request->get("q");
         $cars = Car::where("model", 'like', "%$q%")->get();
-        $reviews = CarReview::whereIn("car_id", $cars->pluck('id')->all())->get();
-        $priceday = RentalRate::where("car_id", $cars->pluck('id')->all())->where("rental_type", "rent by day")->get();
+        $merge = $this->mergeCode($cars);
 
-        $rates = []; // Mảng chứa số sao cho từng xe
-        foreach ($cars as $car) {
-            $total = 0;
-            $count = 0;
-            foreach ($reviews as $item) {
-                if ($item->car_id == $car->id && isset($item->score)) {
-                    $total += $item->score;
-                    $count++;
-                }
-            }
-            if ($count > 0) {
-                $rate = $total / $count;
-                $rates[$car->id] = $rate;
-            }
-        }
+        $count = $cars->count();
 
-        $count = $cars->count(); // hiển thị số lượng xe tìm được
         return view("web.car-search", [
             "cars" => $cars,
-            "reviews" => $reviews,
-            "priceday" => $priceday,
-            "rates" => $rates,
+            "brands" => $merge['brands'],
+            "carTypes" => $merge['carTypes'],
+            "reviews" => $merge['reviews'],
+            "rates" => $merge['rates'],
             "count" => $count
         ]);
     }
+
+    public function car_filter_brand(Brand $brand) {
+        $cars = Car::where('brand_id', $brand->id)->get();
+        $merge = $this->mergeCode($cars);
+
+        return view("web.car-filter", [
+            "cars" => $cars,
+            "brands" => $merge['brands'],
+            "carTypes" => $merge['carTypes'],
+            "reviews" => $merge['reviews'],
+            "rates" => $merge['rates'],
+            "selectedBrand" => $brand->name //hiển thị name trên thanh breadcrumb
+        ]);
+    }
+
+    public function car_filter_type(CarType $carType) {
+        $cars = Car::where('carType_id', $carType->id)->get();
+        $merge = $this->mergeCode($cars);
+
+        return view("web.car-filter", [
+            "cars" => $cars,
+            "brands" => $merge['brands'],
+            "carTypes" => $merge['carTypes'],
+            "reviews" => $merge['reviews'],
+            "rates" => $merge['rates'],
+            "selectedCarType" => $carType->name
+        ]);
+    }
+
     public function booking() {
         return view("web.booking");
     }
+
     public function about() {
         return view("web.about-us");
     }
+
     public function contact() {
         return view("web.contact");
     }
+
     public function car_detail(Car $car) {
         $thumbnails = Gallery::where("car_id", $car->id)->get();
         $reviews = CarReview::where("car_id", $car->id)->get();
@@ -109,6 +138,7 @@ class WebController extends Controller
             "rentalrate" => $rentalrate
         ]);
     }
+
     public function myOrders() {
         $user = auth()->user();
         $customer_id = $user->id; // Chi lay nhung don hang cua tai khoan đang đăng nhập
@@ -129,6 +159,7 @@ class WebController extends Controller
             'cancelledOrders' => $cancelledOrders
         ]);
     }
+
     public function dashboard(User $user) {
         $rental= Rental::limit(10)->where("customer_id", auth()->user()->id)->get();
         $rentalCount=DB::table('rental')->count();
@@ -142,6 +173,7 @@ class WebController extends Controller
             "rentalCancel"=>$rentalCancel,
             ]);
     }
+
     public function profile() {
         return view("web.account-profile");
     }
