@@ -32,7 +32,7 @@ class Rental extends Model
         return $this->belongsTo(Car::class);
     }
     public function customer(){
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, "user_id");
     }
     public function incident(){
         return $this->hasMany(Incident::class);

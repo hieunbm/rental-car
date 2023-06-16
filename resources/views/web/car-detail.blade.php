@@ -230,9 +230,7 @@
                     <div class="col-lg-3">
                         <div class="de-price text-center">
                             Daily rate
-                            @foreach($priceday as $item)
-                                <h3>${{$item->price}}</h3>
-                            @endforeach
+                            <h3>${{$car->price}}</h3>
                         </div>
                         <div class="spacer-30"></div>
                         <div class="de-box mb25">

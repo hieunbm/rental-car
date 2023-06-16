@@ -49,6 +49,11 @@ Route::prefix("/admin")->middleware(["auth", "admin"])->group(function () {// mi
     Route::put("/services/edit/{id}", [App\Http\Controllers\AdminController::class, "admin_serviceUpdate"]);
     Route::get("/services/delete/{service}", [App\Http\Controllers\AdminController::class, "admin_serviceDelete"]);
     Route::get("/incidents", [App\Http\Controllers\AdminController::class, "admin_incident"]);
+    Route::get("/incidents/create", [App\Http\Controllers\AdminController::class, "admin_incidentCreate"]);
+    Route::post("/incidents/create", [App\Http\Controllers\AdminController::class, "admin_incidentSave"]);
+    Route::get("/incidents/edit/{id}", [App\Http\Controllers\AdminController::class, "admin_incidentEdit"]);
+    Route::put("/incidents/edit/{id}", [App\Http\Controllers\AdminController::class, "admin_incidentUpdate"]);
+    Route::get("/incidents/delete/{incident}", [App\Http\Controllers\AdminController::class, "admin_incidentDelete"]);
 });
 // admin end
 

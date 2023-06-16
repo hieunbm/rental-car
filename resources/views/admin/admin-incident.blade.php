@@ -38,7 +38,7 @@
                                     <td>{{$item->title}}</td>
                                     <td>{{$item->rental_id}}</td>
                                     <td>{{$item->description}}</td>
-                                    <td>{{$item->expence}}</td>
+                                    <td>{{$item->expense}}</td>
                                     <td>
                                         {{$item->created_at}}
                                         <br>

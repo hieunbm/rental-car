@@ -68,6 +68,7 @@ class AdminController extends Controller
     public function admin_customer() {
         return view("admin.admin-customers");
     }
+    // start service
     public function admin_service() {
         $service = Service::orderBy("id", "desc")->paginate(2);
         return view("admin.admin-service", [
@@ -93,12 +94,6 @@ class AdminController extends Controller
             "price" => $request->get("price")
         ]);
         return redirect()->to("/admin/services");
-    }
-    public function admin_incident() {
-        $incidents = Incident::orderBy("id", "desc")->paginate(6);
-        return view("admin.admin-incident", [
-            "incidents" => $incidents
-        ]);
     }
     public function admin_serviceEdit($id) {
         $service = Service::where("id", $id)->first();
@@ -126,4 +121,46 @@ class AdminController extends Controller
         $service->delete();
         return redirect()->to("/admin/services");
     }
+    // end service
+
+    // start incident
+    public function admin_incident() {
+        $incidents = Incident::orderBy("id", "desc")->paginate(6);
+        return view("admin.admin-incident", [
+            "incidents" => $incidents
+        ]);
+    }
+    public function admin_incidentCreate() {
+        return view("admin.admin-incidentCreate");
+    }
+    public function admin_incidentSave(Request $request) {
+        $request->validate([
+            "title"=>"required",
+            "rental_id"=>"required",
+            "description" => "required",
+            "expense"=>"required|numeric|min:0",
+        ],[
+            // thong bao gi thi thong bao
+        ]);
+        Incident::create([
+            "title" => $request->get("title"),
+            "rental_id" => $request->get("rental_id"),
+            "description" => $request->get("description"),
+            "expense" => $request->get("expense"),
+            "status" => 0,
+        ]);
+        return redirect()->to("/admin/incidents");
+
+    }
+    public function admin_incidentEdit() {
+
+    }
+    public function admin_incidentUpdate() {
+
+    }
+    public function admin_incidentDelete() {
+
+    }
+
+
 }
