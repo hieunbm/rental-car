@@ -7,12 +7,14 @@ use App\Models\Brand;
 use App\Models\Car;
 use App\Models\CarReview;
 use App\Models\CarType;
+use App\Models\ContactUsQuery;
 use App\Models\Gallery;
 use App\Models\Rental;
 use App\Models\RentalRate;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use function Webmozart\Assert\Tests\StaticAnalysis\email;
 
 class WebController extends Controller
 {
@@ -118,6 +120,29 @@ class WebController extends Controller
         return view("web.contact");
     }
 
+    public function contact_contactSave(Request $request) {
+        $request->validate([
+            "name"=>"required",
+            "email" => "required",
+            "phone"=>"required|numeric|min:0",
+            "message"=>"required",
+        ],[
+            // thong bao gi thi thong bao
+        ]);
+
+        if (!auth()->check()) {
+            return redirect('/login');
+        }
+        ContactUsQuery::create([
+            "customer_id" => auth()->user()->id,
+            "name" => $request->get("name"),
+            "email" => $request->get("email"),
+            "phone" => $request->get("phone"),
+            "message" =>$request->get("message"),
+            "status" => 0
+        ]);
+        return redirect()->to("/contact");
+    }
     public function car_detail(Car $car) {
         $thumbnails = Gallery::where("car_id", $car->id)->get();
         $reviews = CarReview::where("car_id", $car->id)->get();
@@ -175,6 +200,9 @@ class WebController extends Controller
     }
 
     public function profile() {
-        return view("web.account-profile");
+        $user = auth()->user();
+        return view("web.account-profile",[
+            'user' => $user,
+        ]);
     }
 }
