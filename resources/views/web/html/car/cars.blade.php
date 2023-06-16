@@ -10,7 +10,7 @@
                     <div class="d-atr-group">
                         <ul class="d-atr">
                             <li><span>Model Year:</span>{{$c->modelYear}}</li>
-                            <li><span>LicensePlate:</span>{{$c->license_plate}}</li>
+                            <li><span>Seats:</span>{{$c->seats}}</li>
                             <li><span>Transmission:</span>{{$c->transmission}}</li>
                             <li><span>Fuel:</span>{{$c->fuelType}}</li>
                             @if($c->reverse_sensor == 1)

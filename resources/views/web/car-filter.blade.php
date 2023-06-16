@@ -4,6 +4,10 @@
         Brand: {{ $selectedBrand }}
     @elseif(isset($selectedCarType))
         Car Type: {{ $selectedCarType }}
+    @elseif(isset($selectedCarPrice))
+        Car Price: {{ $selectedCarPrice }}
+    @elseif(isset($selectedSeats))
+        Seats : {{ $selectedSeats }}
     @endif
 @endsection
 @section("main")
@@ -23,10 +27,22 @@
 
                     <div class="col-lg-9">
                         <div class="row">
-                            <div class="col-lg-12" style="text-align: center">
-{{--                                <p>Found {{ $count }} cars</p>--}}
-                            </div>
-                            @include("web.html.car.cars")
+                            @if($cars->isEmpty())
+                                <div class="col-lg-12" style="text-align: center">
+                                    {{--thong bao neu khong tim thay xe--}}
+                                       @if(isset($selectedBrand))
+                                           <p>No car found have brand {{ $selectedBrand }}!</p>
+                                        @elseif(isset($selectedCarType))
+                                            <p>No car found have type {{ $selectedCarType }}!</p>
+                                        @elseif(isset($selectedCarPrice))
+                                           <p>No car found for {{ $selectedCarPrice }}!</p>
+                                        @elseif(isset( $selectedSeats ))
+                                            <p>No car found have {{ $selectedSeats }} seats!</p>
+                                        @endif
+                                   @else
+                                </div>
+                                @include("web.html.car.cars")
+                            @endif
                         </div>
                     </div>
                 </div>

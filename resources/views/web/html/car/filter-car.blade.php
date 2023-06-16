@@ -29,7 +29,7 @@
         <div class="de_form">
             @foreach($brands as $item)
             <div class="de_checkbox">
-                <a class="icon-link icon-link-hover" href="{{url("/car-filter/brand",["brand"=>$item->name])}}">
+                <a class="icon-link icon-link-hover" href="{{url("/car-filter/brand",["brand"=>$item->slug])}}">
                     <button type="button" class="btn btn-outline-success btn-sm">{{$item->name}}
                         <img src="{{$item->icon}}" class="img-fluid" alt="" width="28px">
                     </button>
@@ -42,36 +42,41 @@
     <div class="item_filter_group">
         <h4>Car Seats</h4>
         <div class="de_form">
-
+            @foreach($seatsOptions as $seatsOption)
+                <div class="de_checkbox">
+                    <a class="icon-link icon-link-hover" href="{{ url('/car-filter/seats', ['seats' => $seatsOption]) }}">
+                        <button type="button" class="btn btn-outline-success btn-sm">
+                            Seats: {{ $seatsOption }}
+                        </button>
+                    </a>
+                </div>
+            @endforeach
         </div>
     </div>
 
-    <div class="item_filter_group">
-        <h4>Car Engine Capacity (cc)</h4>
-        <div class="de_form">
-
-        </div>
-    </div>
 
     <div class="item_filter_group">
         <h4>Price ($)</h4>
-        <div class="price-input">
-            <div class="field">
-                <span>Min</span>
-                <input type="number" class="input-min" value="0">
+        <form action="{{ url('/car-filter/price') }}" method="get" id="price-filter-form">
+            <div class="price-input">
+                <div class="field">
+                    <span>Min:</span>
+                    <input type="number" class="input-min" name="min_price" value="{{ app('request')->input('min_price', 0) }}">
+                </div>
+                <div class="field">
+                    <span>Max:</span>
+                    <input type="number" class="input-max" name="max_price" value="{{ app('request')->input('max_price', 500) }}">
+                </div>
             </div>
-            <div class="field">
-                <span>Max</span>
-                <input type="number" class="input-max" value="2000">
+            <div class="slider">
+                <div class="progress"></div>
             </div>
-        </div>
-        <div class="slider">
-            <div class="progress"></div>
-        </div>
-        <div class="range-input">
-            <input type="range" class="range-min" min="0" max="2000" value="0" step="1">
-            <input type="range" class="range-max" min="0" max="2000" value="2000" step="1">
-        </div>
+            <div class="range-input">
+                <input type="range" class="range-min" min="0" max="500" name="min_price_range" value="{{ app('request')->input('min_price', 0) }}" step="1">
+                <input type="range" class="range-max" min="0" max="500" name="max_price_range" value="{{ app('request')->input('max_price', 500) }}" step="1">
+            </div>
+            <button type="submit" class="btn btn-primary btn-filter">Filter</button>
+        </form>
     </div>
 </div>
 <style>
@@ -88,6 +93,9 @@
     .btn-outline-success:hover {
         border-color: rgb(120,202,92);
         background-color: rgb(120,202,92);
+    }
+    .btn-filter{
+        margin-top: 15px;
     }
 </style>
 

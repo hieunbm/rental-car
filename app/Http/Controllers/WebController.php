@@ -24,6 +24,133 @@ class WebController extends Controller
             "car"=>$car
         ]);
     }
+//    private function mergeCode($cars) { //Hàm này dùng để gộp code chung của trang Cars cho gọn
+//        $brands = Brand::all();
+//        $carTypes = CarType::all();
+//        $reviews = CarReview::whereIn("car_id", $cars->pluck('id')->all())->get();
+//        $rates = [];//mảng chứa số sao cho từng xe
+//
+//        foreach ($cars as $car) {
+//            $total = 0;
+//            $count = 0;
+//            foreach ($reviews as $item) {
+//                if ($item->car_id == $car->id && isset($item->score)) {
+//                    $total += $item->score;
+//                    $count++;
+//                }
+//            }
+//            if ($count > 0) {
+//                $rate = $total / $count;
+//                $rates[$car->id] = $rate;
+//            }
+//        }
+//
+//        return [
+//            "brands" => $brands,
+//            "carTypes" => $carTypes,
+//            "reviews" => $reviews,
+//            "rates" => $rates
+//        ];
+//    }
+//
+//    public function car_list() {
+//        $cars = Car::paginate(18);
+//        $merge = $this->mergeCode($cars);
+//        $seatsOptions = [2, 4, 5, 7]; // Replace with the actual available seat options
+//
+//        return view("web.car-list", [
+//            "cars" => $cars,
+//            "brands" => $merge['brands'],
+//            "carTypes" => $merge['carTypes'],
+//            "reviews" => $merge['reviews'],
+//            "rates" => $merge['rates'],
+//            "seatsOptions" => $seatsOptions
+//        ]);
+//    }
+//
+//    public function car_search(Request $request) {
+//        $q = $request->get("q");
+//        $cars = Car::where("model", 'like', "%$q%")->get();
+//        $merge = $this->mergeCode($cars);
+//
+//        $count = $cars->count();
+//        return view("web.car-search", [
+//            "cars" => $cars,
+//            "brands" => $merge['brands'],
+//            "carTypes" => $merge['carTypes'],
+//            "reviews" => $merge['reviews'],
+//            "rates" => $merge['rates'],
+//            "count" => $count
+//        ]);
+//    }
+//
+//    public function car_filter_brand(Brand $brand) {
+//        $cars = Car::where('brand_id', $brand->id)->get();
+//        $merge = $this->mergeCode($cars);
+//        $seatsOptions = [2, 4, 5, 7]; // Replace with the actual available seat options
+//        return view("web.car-filter", [
+//            "cars" => $cars,
+//            "brands" => $merge['brands'],
+//            "carTypes" => $merge['carTypes'],
+//            "reviews" => $merge['reviews'],
+//            "rates" => $merge['rates'],
+//            "selectedBrand" => $brand->name, //hiển thị name trên thanh breadcrumb
+//            "seatsOptions" => $seatsOptions // add the seatsOptions variable
+//        ]);
+//    }
+//
+//    public function car_filter_type(CarType $carType) {
+//        $cars = Car::where('carType_id', $carType->id)->get();
+//        $merge = $this->mergeCode($cars);
+//        $seatsOptions = [2, 4, 5, 7]; // Replace with the actual available seat options
+//        return view("web.car-filter", [
+//            "cars" => $cars,
+//            "brands" => $merge['brands'],
+//            "carTypes" => $merge['carTypes'],
+//            "reviews" => $merge['reviews'],
+//            "rates" => $merge['rates'],
+//            "selectedCarType" => $carType->name,
+//            "seatsOptions" => $seatsOptions // add the seatsOptions variable
+//        ]);
+//    }
+//
+//    public function car_filter_price(Request $request) {  //Hàm này dùng để lọc xe theo giá
+//        $query = Car::query();
+//        if ($request->has('min_price') && $request->has('max_price')) {
+//            $minPrice = $request->input('min_price');
+//            $maxPrice = $request->input('max_price');
+//            $selectedCarPrice = "$$minPrice - $$maxPrice";
+//            $query->whereBetween('price', [$minPrice, $maxPrice]);
+//        }
+//
+//        $cars = $query->get();
+//        $merge = $this->mergeCode($cars);  //Lấy dữ liệu từ hàm mergeCode
+//        return view("web.car-filter", [
+//            "cars" => $cars,
+//            "brands" => $merge['brands'],
+//            "carTypes" => $merge['carTypes'],
+//            "reviews" => $merge['reviews'],
+//            "rates" => $merge['rates'],
+//            "selectedCarPrice" => $selectedCarPrice,
+//            "seatsOptions" => [2, 4, 5, 7] // Add the seatsOptions variable her
+//        ]);
+//    }
+//
+//    public function car_filter_seats($seats){
+//        $cars = Car::where('seats', $seats)->get();
+//        $merge = $this->mergeCode($cars);
+//
+//        return view("web.car-filter", [
+//            "cars" => $cars,
+//            "brands" => $merge['brands'],
+//            "carTypes" => $merge['carTypes'],
+//            "reviews" => $merge['reviews'],
+//            "rates" => $merge['rates'],
+//            "selectedSeats" => $seats,
+//            "seatsOptions" => [2, 4, 5, 7] // Add the seatsOptions variable her
+//        ]);
+//    }
+
     private function mergeCode($cars) { //Hàm này dùng để gộp code chung của trang Cars cho gọn
         $brands = Brand::all();
         $carTypes = CarType::all();
@@ -44,12 +171,13 @@ class WebController extends Controller
                 $rates[$car->id] = $rate;
             }
         }
-
+        $seatsOptions = [2, 4, 5, 7, 16, 29]; //mảng chứa số ghế ngồi của xe
         return [
             "brands" => $brands,
             "carTypes" => $carTypes,
             "reviews" => $reviews,
-            "rates" => $rates
+            "rates" => $rates,
+            "seatsOptions" => $seatsOptions
         ];
     }
 
@@ -57,12 +185,8 @@ class WebController extends Controller
         $cars = Car::paginate(18);
         $merge = $this->mergeCode($cars);
 
-        return view("web.car-list", [
-            "cars" => $cars,
-            "brands" => $merge['brands'],
-            "carTypes" => $merge['carTypes'],
-            "reviews" => $merge['reviews'],
-            "rates" => $merge['rates'],
+        return view("web.car-list", $merge,[
+            "cars" => $cars
         ]);
     }
 
@@ -71,44 +195,58 @@ class WebController extends Controller
         $cars = Car::where("model", 'like', "%$q%")->get();
         $merge = $this->mergeCode($cars);
 
-        $count = $cars->count();
-
-        return view("web.car-search", [
+        $count = $cars->count(); //hiển thị số lượng xe tìm thấy
+        return view("web.car-search", array_merge($merge, [
             "cars" => $cars,
-            "brands" => $merge['brands'],
-            "carTypes" => $merge['carTypes'],
-            "reviews" => $merge['reviews'],
-            "rates" => $merge['rates'],
             "count" => $count
-        ]);
+        ]));
     }
 
     public function car_filter_brand(Brand $brand) {
         $cars = Car::where('brand_id', $brand->id)->get();
         $merge = $this->mergeCode($cars);
 
-        return view("web.car-filter", [
+        return view("web.car-filter", array_merge($merge, [
             "cars" => $cars,
-            "brands" => $merge['brands'],
-            "carTypes" => $merge['carTypes'],
-            "reviews" => $merge['reviews'],
-            "rates" => $merge['rates'],
-            "selectedBrand" => $brand->name //hiển thị name trên thanh breadcrumb
-        ]);
+            "selectedBrand" => $brand->name
+        ]));
     }
 
     public function car_filter_type(CarType $carType) {
         $cars = Car::where('carType_id', $carType->id)->get();
         $merge = $this->mergeCode($cars);
 
-        return view("web.car-filter", [
+        return view("web.car-filter", array_merge($merge, [
             "cars" => $cars,
-            "brands" => $merge['brands'],
-            "carTypes" => $merge['carTypes'],
-            "reviews" => $merge['reviews'],
-            "rates" => $merge['rates'],
             "selectedCarType" => $carType->name
-        ]);
+        ]));
+    }
+
+    public function car_filter_price(Request $request) {
+        $query = Car::query();
+        if ($request->has('min_price') && $request->has('max_price')) {
+            $minPrice = $request->input('min_price');
+            $maxPrice = $request->input('max_price');
+            $selectedCarPrice = "$$minPrice - $$maxPrice";
+            $query->whereBetween('price', [$minPrice, $maxPrice]);
+        }
+        $cars = $query->get();
+        $merge = $this->mergeCode($cars);
+
+        return view("web.car-filter", array_merge($merge, [
+            "cars" => $cars,
+            "selectedCarPrice" => $selectedCarPrice
+        ]));
+    }
+
+    public function car_filter_seats($seats) {
+        $cars = Car::where('seats', $seats)->get();
+        $merge = $this->mergeCode($cars);
+
+        return view("web.car-filter", array_merge($merge, [
+            "cars" => $cars,
+            "selectedSeats" => $seats
+        ]));
     }
 
     public function booking() {
