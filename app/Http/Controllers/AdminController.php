@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Car;
 use App\Models\Incident;
 use App\Models\Rental;
 use App\Models\Service;
@@ -38,14 +39,19 @@ class AdminController extends Controller
         ]);
     }
     public function admin_cars() {
-        return view("admin.admin-cars");
-
+        $cars=Car::get();
+        return view("admin.admin-cars",[
+            "cars"=>$cars,
+        ]);
     }
     public function admin_cartype() {
         return view("admin.admin-cartype");
     }
     public function admin_addcar() {
         return view("admin.admin-addcar");
+    }
+    public function admin_savecar(){
+
     }
     public function admin_brand() {
         return view("admin.admin-brands");
