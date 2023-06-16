@@ -29,6 +29,7 @@ return new class extends Migration
             $table->unsignedBigInteger("driverAirbag");
             $table->unsignedBigInteger("cDPlayer");
             $table->unsignedBigInteger("brakeAssist");
+            $table->unsignedInteger("seats");
             $table->unsignedTinyInteger("status");
             $table->text("description");
             $table->float("rate");

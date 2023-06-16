@@ -30,6 +30,7 @@ class Car extends Model
         'driverAirbag',
         'cDPlayer',
         'brakeAssist',
+        'seats',
         'status',
         'description',
         'rate',
