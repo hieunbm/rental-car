@@ -19,7 +19,10 @@ use function Webmozart\Assert\Tests\StaticAnalysis\email;
 class WebController extends Controller
 {
     public function home() {
-        return view("welcome");
+        $car = Car::orderBy("id", "desc")->limit(6)->get();
+        return view("welcome",[
+            "car"=>$car
+        ]);
     }
     private function mergeCode($cars) { //Hàm này dùng để gộp code chung của trang Cars cho gọn
         $brands = Brand::all();
