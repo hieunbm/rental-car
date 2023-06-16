@@ -13,7 +13,7 @@ class CarReview extends Model
     protected $fillable=[
         'message',
         'score',
-        'customer_id',
+        'user_id',
         'car_id',
     ];
     public function customer() {

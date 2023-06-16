@@ -15,10 +15,10 @@ return new class extends Migration
             $table->id();
             $table->text("message");
             $table->unsignedBigInteger("score");
-            $table->unsignedBigInteger("customer_id");
+            $table->unsignedBigInteger("user_id");
             $table->unsignedBigInteger("car_id");
             $table->timestamps();
-            $table->foreign("customer_id")->references("id")->on("users");
+            $table->foreign("user_id")->references("id")->on("users");
             $table->foreign("car_id")->references("id")->on("cars");
         });
     }

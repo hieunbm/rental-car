@@ -11,14 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('contactusquery', function (Blueprint $table) {
+        Schema::create('driving_licenses', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger("user_id");
-            $table->string("name");
-            $table->string("email");
-            $table->string("phone",20);
-            $table->text("message");
-            $table->unsignedTinyInteger("status");
+            $table->string("license_number");
+            $table->string("thumbnail_1");
+            $table->string("thumbnail_2");
+            $table->timestamp("issue_date")->nullable()->default(null);
+            $table->timestamp("expiration_date")->nullable()->default(null);
             $table->timestamps();
             $table->foreign("user_id")->references("id")->on("users");
         });
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('contactusquery');
+        Schema::dropIfExists('driving_licenses');
     }
 };

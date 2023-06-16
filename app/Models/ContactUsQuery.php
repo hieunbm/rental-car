@@ -11,7 +11,7 @@ class ContactUsQuery extends Model
     protected $table = "contactusquery";
 
     protected $fillable=[
-        'customer_id',
+        'user_id',
         'name',
         'email',
         'phone',

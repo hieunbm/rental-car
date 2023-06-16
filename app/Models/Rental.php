@@ -11,7 +11,7 @@ class Rental extends Model
     protected $table = "rental";
 
     protected $fillable=[
-        'customer_id',
+        'user_id',
         'car_id',
         'rental_date',
         'return_date',
