@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Car;
+use App\Models\CarType;
+use App\Models\ContactUsQuery;
 use App\Models\Incident;
 use App\Models\Rental;
 use App\Models\Service;
@@ -45,7 +47,10 @@ class AdminController extends Controller
         ]);
     }
     public function admin_cartype() {
-        return view("admin.admin-cartype");
+        $carTypes = CarType::orderBy("id", "desc")->paginate(10);
+        return view("admin.admin-cartype",[
+            "carTypes"=>$carTypes
+        ]);
     }
     public function admin_addcar() {
         return view("admin.admin-addcar");
@@ -60,7 +65,10 @@ class AdminController extends Controller
         return view("admin.admin-addbrand");
     }
     public function admin_contactquery() {
-        return view("admin.admin-contactquery");
+        $contactquery = ContactUsQuery::orderBy("id","desc")->paginate(10);
+        return view("admin.admin-contactquery",[
+            "contactquery"=>$contactquery
+        ]);
     }
     public function admin_contactdetail() {
         return view("admin.admin-contactdetail");

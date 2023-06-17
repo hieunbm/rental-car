@@ -401,26 +401,26 @@
                 <div class="row text-center">
                     <div class="col-md-3 col-sm-6 mb-sm-30">
                         <div class="de_count transparent text-light wow fadeInUp">
-                            <h3 class="timer" data-to="15425" data-speed="3000">0</h3>
-                            Hours of Work
+                            <h3 class="timer" data-to="{{$countCar}}" data-speed="3000">0</h3>
+                            Cars
                         </div>
                     </div>
                     <div class="col-md-3 col-sm-6 mb-sm-30">
                         <div class="de_count transparent text-light wow fadeInUp">
-                            <h3 class="timer" data-to="8745" data-speed="3000">0</h3>
-                            Clients Supported
+                            <h3 class="timer" data-to="{{$countBrand}}" data-speed="3000">0</h3>
+                            Brands
                         </div>
                     </div>
                     <div class="col-md-3 col-sm-6 mb-sm-30">
                         <div class="de_count transparent text-light wow fadeInUp">
-                            <h3 class="timer" data-to="235" data-speed="3000">0</h3>
-                            Awards Winning
+                            <h3 class="timer" data-to="{{$countRental}}" data-speed="3000">0</h3>
+                            Rentals
                         </div>
                     </div>
                     <div class="col-md-3 col-sm-6 mb-sm-30">
                         <div class="de_count transparent text-light wow fadeInUp">
                             <h3 class="timer" data-to="15" data-speed="3000">0</h3>
-                            Years Experience
+                            Chưa biết làm gì
                         </div>
                     </div>
                 </div>

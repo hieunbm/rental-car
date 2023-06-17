@@ -20,11 +20,16 @@ class WebController extends Controller
 {
     public function home() {
         $car = Car::orderBy("id", "desc")->limit(6)->get();
+        $countCar = Car::count();
+        $countBrand = Brand::count();
+        $countRental = Rental::count();
         return view("welcome",[
-            "car"=>$car
+            "car"=>$car,
+            "countCar"=>$countCar,
+            "countBrand"=>$countBrand,
+            "countRental"=>$countRental,
         ]);
     }
-
     private function mergeCode($cars) { //Hàm này dùng để gộp code chung của trang Cars cho gọn
         $brands = Brand::all();
         $carTypes = CarType::all();

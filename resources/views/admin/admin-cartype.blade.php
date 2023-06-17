@@ -24,21 +24,22 @@
                                 <th scope="col">ID</th>
                                 <th scope="col">Name</th>
                                 <th scope="col" class="w-25">Description</th>
+                                <th scope="col">Icon</th>
                                 <th scope="col">Created At</th>
                                 <th scope="col">Update At</th>
                             </tr>
                             </thead>
                             <tbody>
+                            @foreach($carTypes as $cT)
                             <tr>
-                                <th scope="row">1</th>
-                                <td>SUV</td>
-                                <td>SUV is a multi-purpose sport vehicle that stands for Sport Utility Vehicle with a
-                                    square, powerful, muscular design with a truck-like body structure and high ground
-                                    clearance, strong engine for the ability to overtake. topographic
-                                </td>
-                                <td><span class="badge bg-outline-secondary">21,Dec 2021</span></td>
-                                <td><span class="badge bg-outline-success">22,Dec 2021</span></td>
+                                <th scope="row">{{$cT->id}}</th>
+                                <td>{{$cT->name}}</td>
+                                <td>{{$cT->description}}</td>
+                                <td><img style="width: 80px;height: 80px;object-fit: contain;" src="{{$cT->icon}}"></td>
+                                <td><span class="badge bg-outline-secondary">{{$cT->created_at}}</span></td>
+                                <td><span class="badge bg-outline-success">{{$cT->update_at}}</span></td>
                             </tr>
+                            @endforeach
                             </tbody>
                         </table>
                     </div>
