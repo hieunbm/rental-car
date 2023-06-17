@@ -15,7 +15,6 @@ return new class extends Migration
             $table->unsignedBigInteger("rental_id");
             $table->unsignedBigInteger("service_id");
             $table->unsignedDecimal("price");
-            $table->timestamps();
             $table->foreign("rental_id")->references("id")->on("rental");
             $table->foreign("service_id")->references("id")->on("service");
         });
