@@ -19,7 +19,7 @@
                             <th scope="col">Name Car</th>
                             <th scope="col">Fuel Type</th>
                             <th scope="col">Image</th>
-                            <th scope="col">Transmission</th>
+                            <th scope="col">Price</th>
                             <th scope="col">Km Limit</th>
                             <th scope="col">Model Year</th>
                             <th scope="col">Status</th>
@@ -57,7 +57,7 @@
                                 </div>
                             </td>
                             <td>
-                                {{$item->transmission}}
+                                ${{$item->price}}
                             </td>
                             <td>
                                 {{$item->km_limit}}

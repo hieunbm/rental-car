@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Brand;
 use App\Models\Car;
 use App\Models\CarType;
 use App\Models\ContactUsQuery;
@@ -53,10 +54,54 @@ class AdminController extends Controller
         ]);
     }
     public function admin_addcar() {
-        return view("admin.admin-addcar");
+        $brands=Brand::get();
+        $carTypes=CarType::get();
+        return view("admin.admin-addcar",[
+            "brands"=>$brands,
+            "carTypes"=>$carTypes,
+        ]);
     }
-    public function admin_savecar(){
+    public function admin_savecarimages(Request $request){
+            $carId = $request->input('car_id');
 
+            if ($request->hasFile('images')) {
+                $images = $request->file('images');
+
+                foreach ($images as $image) {
+                    // Thực hiện xử lý và lưu ảnh vào đây
+                }
+            }
+
+            // Thực hiện các xử lý khác, chẳng hạn như cập nhật cơ sở dữ liệu
+
+            return redirect()->back()->with('success', 'Thêm ảnh thành công');
+    }
+    public function admin_savecar(Request $request){
+        $request->validate([
+            "model"=>"required",
+            "price"=>"required|numeric|min:0",
+            "qty"=>"required|numeric|min:0"
+        ],[
+            // thong bao gi thi thong bao
+        ]);
+        $thumbnail = null;
+        if($request->hasFile("thumbnail")){
+            $file = $request->file("thumbnail");
+            $fileName = time().$file->getClientOriginalName();
+            $path = public_path("uploads");
+            $file->move($path,$fileName);
+            $thumbnail = "/uploads/".$fileName;
+        }
+        if ($request->has('reverse_sensor')) {
+            // Checkbox đã được chọn
+            $reverseSensorValue = $request->input('reverse_sensor');
+        } else {
+            // Checkbox không được chọn
+            $reverseSensorValue = "0"; // Giá trị mặc định khi checkbox không được chọn
+        }
+        Car::create([
+           "model"
+        ]);
     }
     public function admin_brand() {
         return view("admin.admin-brands");

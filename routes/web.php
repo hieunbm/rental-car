@@ -37,6 +37,8 @@ Route::prefix("/admin")->middleware(["auth", "admin"])->group(function () {// mi
     Route::get("/cars", [App\Http\Controllers\AdminController::class, "admin_cars"]);
     Route::get("/car-type", [App\Http\Controllers\AdminController::class, "admin_cartype"]);
     Route::get("/add-car", [App\Http\Controllers\AdminController::class, "admin_addcar"]);
+    Route::post("/add-car", [App\Http\Controllers\AdminController::class, "admin_savecar"]);
+    Route::post("/add-car/images", [App\Http\Controllers\AdminController::class, "admin_savecarimages"]);
     Route::get("/brands", [App\Http\Controllers\AdminController::class, "admin_brand"]);
     Route::get("/add-brand", [App\Http\Controllers\AdminController::class, "admin_addbrand"]);
     Route::get("/contact-query", [App\Http\Controllers\AdminController::class, "admin_contactquery"]);

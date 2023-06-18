@@ -17,19 +17,20 @@
                     </div>
                 </div>
 
-                <form class="row row-cols-lg-auto g-3 align-items-center">
+                <form action="{{url("/admin/add-car")}}" method="post" class="row row-cols-lg-auto g-3 align-items-center">
+                    @csrf
                     <div class="card-body">
                         <div class="row gy-4">
                             {{--                        Lisense_plate--}}
                             <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12">
                                 <label for="input-placeholder" class="form-label">Enter License Plate</label> <input
-                                    type="text" class="form-control" id="input-placeholder"
+                                    type="text" name="license_plate" class="form-control" id="input-placeholder"
                                     placeholder="Enter License Plate"/>
                             </div>
 
                             {{--                        Model--}}
                             <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12">
-                                <label for="input-placeholder" class="form-label">Enter Model</label> <input type="text"
+                                <label for="input-placeholder" class="form-label">Enter Model</label> <input name="model" type="text"
                                                                                                              class="form-control"
                                                                                                              id="input-placeholder"
                                                                                                              placeholder="Enter Model"/>
@@ -38,29 +39,28 @@
                             {{--                        Brand--}}
                             <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12">
                                 <label for="input-placeholder" class="form-label">Choose Brand</label>
-                                <select class="form-select default-pill" aria-label="Default select example">
-                                    <option value="1">Audi</option>
-                                    <option value="2">BMW</option>
-                                    <option value="3">Lexus</option>
+                                <select name="brand_id" class="form-select default-pill" aria-label="Default select example">
+                                    @foreach($brands as $br)
+                                    <option value="{{$br->id}}">{{$br->name}}</option>
+                                    @endforeach
                                 </select>
                             </div>
 
                             {{--                        Car Type--}}
                             <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12">
                                 <label for="input-placeholder" class="form-label">Choose Car Type</label>
-                                <select class="form-select default-pill" aria-label="Default select example">
-                                    <option value="1">SUV</option>
-                                    <option value="2">Coupe</option>
-                                    <option value="3">Sedan</option>
+                                <select name="carType_id" class="form-select default-pill" aria-label="Default select example">
+                                    @foreach($carTypes as $ct)
+                                        <option value="{{$ct->id}}">{{$ct->name}}</option>
+                                    @endforeach
                                 </select>
                             </div>
 
                             {{--                        Thumbnail--}}
                             <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12">
                                 <label for="input-file" class="form-label">Upload Photos</label>
-                                <input class="form-control" type="file" id="input-file" multiple/>
+                                <input class="form-control" name="thumbnail" type="file" id="input-file" multiple/>
                             </div>
-
                             {{--                        FuelType--}}
                             <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12">
                                 <label for="input-placeholder" class="form-label">Enter Fuel Type</label> <input
@@ -76,18 +76,14 @@
 
                             {{--                        reverse sensor--}}
                             <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12">
-                                <label for="input-placeholder" class="form-label">Reverse Sensor</label>
-                                <select class="form-select default-pill" aria-label="Default select example">
-                                    <option value="1">Have</option>
-                                    <option value="2">No</option>
-                                </select>
+                            <p class="mb-3 px-0 text-muted">Reverse sensor</p>
+                            <input class="form-check-input ms-2" type="checkbox" name="reverse_sensor" value="1" checked="1">
                             </div>
 
                             {{--  airConditioner  --}}
                             <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12">
-                                <label for="input-number" class="form-label">Enter Air Conditioner</label> <input
-                                    type="number" class="form-control" id="input-number"
-                                    placeholder="Enter Air Conditioner"/>
+                                <p class="mb-3 px-0 text-muted">Reverse sensor</p>
+                                <input class="form-check-input ms-2" type="checkbox" name="airConditioner" value="1" checked="1">
                             </div>
 
                             {{--                        driverAirbag--}}
