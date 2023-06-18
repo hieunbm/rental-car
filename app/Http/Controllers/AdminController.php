@@ -34,11 +34,16 @@ class AdminController extends Controller
         foreach ($services as $item){
             $total += $item->price;
         }
+        $totalFee = 0;
+        foreach ($rental->incident as $item){
+            $totalFee += $item->expense;
+        }
 
         return view("admin.admin-booking-detail", [
             "rental" => $rental,
             "numberdays" => $numberOfDays,
-            "total" => $total
+            "total" => $total,
+            "totalFee" => $totalFee
         ]);
     }
     public function admin_cars() {
@@ -205,14 +210,33 @@ class AdminController extends Controller
         return redirect()->to("/admin/incidents");
 
     }
-    public function admin_incidentEdit() {
-
+    public function admin_incidentEdit($id) {
+        $incident = Incident::find($id);
+        return view("admin.admin-incidentUpdate", [
+            "incident" => $incident
+        ]);
     }
-    public function admin_incidentUpdate() {
-
+    public function admin_incidentUpdate(Request $request, $id) {
+        $request->validate([
+            "title"=>"required",
+            "rental_id"=>"required",
+            "description" => "required",
+            "expense"=>"required|numeric|min:0",
+        ],[
+            // thong bao gi thi thong bao
+        ]);
+        Incident::where("id", $id)
+            ->update([
+                "title" => $request->get("title"),
+                "rental_id" => $request->get("rental_id"),
+                "description" => $request->get("description"),
+                "expense" => $request->get("expense"),
+            ]);
+        return redirect()->to("/admin/incidents");
     }
-    public function admin_incidentDelete() {
-
+    public function admin_incidentDelete(Incident $incident) {
+        $incident->delete();
+        return redirect()->to("/admin/incidents");
     }
 
 

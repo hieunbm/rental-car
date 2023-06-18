@@ -81,22 +81,60 @@
                                 </h6>
                                 <div class="col-xl-3"></div>
                                 <div class="col-xl-6 table-responsive">
-                                    <table class="table nowrap text-nowrap border mt-4">
-                                        <thead>
-                                        <tr>
-                                            <th>SERVICE</th>
-                                            <th>PRICE</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        @foreach($rental->service as $item)
+                                    @if($rental->service->count() > 0 )
+                                        <table class="table nowrap text-nowrap border mt-4">
+                                            <thead>
                                             <tr>
-                                                <td>{{$item->title}}</td>
-                                                <td>{{$item->price}}</td>
+                                                <th>SERVICE</th>
+                                                <th>PRICE</th>
                                             </tr>
-                                        @endforeach
-                                        </tbody>
-                                    </table>
+                                            </thead>
+                                            <tbody>
+                                            @foreach($rental->service as $item)
+                                                <tr>
+                                                    <td>{{$item->title}}</td>
+                                                    <td>{{$item->price}}</td>
+                                                </tr>
+                                            @endforeach
+                                            </tbody>
+                                        </table>
+                                    @else
+                                        <p style="text-align: center">Khoong sử dụng dịch vụ</p>
+                                    @endif
+
+                                </div>
+                                <div class="col-xl-3"></div>
+                            </div>
+
+                        </div>
+                        <div class="col-xl-12">
+                            <div class="row">
+                                <h6 class="col-12" style="text-align: center">
+                                    ADDITIONAL COSTS
+                                </h6>
+                                <div class="col-xl-3"></div>
+                                <div class="col-xl-6 table-responsive">
+                                    @if($rental->incident->count() > 0)
+                                        <table class="table nowrap text-nowrap border mt-4">
+                                            <thead>
+                                            <tr>
+                                                <th>TITLE</th>
+                                                <th>EXPENSE</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            @foreach($rental->incident as $item)
+                                                <tr>
+                                                    <td>{{$item->title}}</td>
+                                                    <td>{{$item->expense}}</td>
+                                                </tr>
+                                            @endforeach
+                                            </tbody>
+                                        </table>
+                                    @else
+                                        <p style="text-align: center">Không có chi phí phụ</p>
+                                    @endif
+
                                 </div>
                                 <div class="col-xl-3"></div>
                             </div>
@@ -149,6 +187,10 @@
                                                 <tr>
                                                     <th scope="row"><p class="mb-0">Service Total :</p></th>
                                                     <td><p class="mb-0 fw-semibold fs-15">${{$total}}</p></td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row"><p class="mb-0">Additional costs Total :</p></th>
+                                                    <td><p class="mb-0 fw-semibold fs-15">${{$totalFee}}</p></td>
                                                 </tr>
                                                 <tr>
                                                     <th scope="row"><p class="mb-0 fs-14">Total :</p></th>
