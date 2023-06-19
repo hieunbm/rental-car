@@ -29,13 +29,22 @@
                             </tr>
                             </thead>
                             <tbody>
+                            @foreach($brand as $items )
                             <tr>
-                                <th scope="row">1</th>
-                                <td>Audi</td>
-                                <td>Icon</td>
-                                <td><span class="badge bg-outline-secondary">21,Dec 2021</span></td>
-                                <td><span class="badge bg-outline-success">22,Dec 2021</span></td>
+                                <th>{{$items->id}}</th>
+                                <td>{{$items->name}}</td>
+                                <td><img src="{{$items->icon}}" style="width: 80px; height: 80px;"></td>
+                                <td><span class="badge bg-outline-secondary"> {{$items->created_at}}</span></td>
+                                <td><span class="badge bg-outline-success"> {{$items->updated_at}}</span></td>
+                                <td>
+                                    <div class="hstack gap-2 fs-15">
+                                        <a href="{{url("/admin/brand/edit", ["id" => $items->id])}}" class="btn btn-icon btn-sm btn-info-transparent rounded-pill"><i class="ri-edit-line"></i></a>
+                                        <a onclick="return confirm('Xoá sản phẩm?')" href="{{url("/admin/brand/delete",["service"=>$items->id])}}" class="btn btn-icon btn-sm btn-danger-transparent rounded-pill"><i class="ri-delete-bin-line"></i></a>
+                                    </div>
+                                </td>
                             </tr>
+
+                            @endforeach
                             </tbody>
                         </table>
                     </div>

@@ -32,19 +32,19 @@
                     <div class="col-md-3 col-sm-6 mb-sm-30">
                         <div class="de_count wow fadeInUp" data-bgcolor="#f5f5f5">
                             <h3 class="timer" data-to="15425" data-speed="3000">0</h3>
-                            so luong xe
+                            Overall quantity of vehicles
                         </div>
                     </div>
                     <div class="col-md-3 col-sm-6 mb-sm-30">
                         <div class="de_count wow fadeInUp" data-bgcolor="#f5f5f5">
                             <h3 class="timer" data-to="8745" data-speed="3000">0</h3>
-                            so luong brand
+                            Overall quantity of brands
                         </div>
                     </div>
                     <div class="col-md-3 col-sm-6 mb-sm-30">
                         <div class="de_count wow fadeInUp" data-bgcolor="#f5f5f5">
                             <h3 class="timer" data-to="235" data-speed="3000">0</h3>
-                            tong so don hang da dat
+                            Overall quantity of orders placed
                         </div>
                     </div>
                     <div class="col-md-3 col-sm-6 mb-sm-30">

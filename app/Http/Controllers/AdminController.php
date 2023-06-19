@@ -12,6 +12,7 @@ use App\Models\Rental;
 use App\Models\Service;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Str;
 
 class AdminController extends Controller
 {
@@ -109,11 +110,58 @@ class AdminController extends Controller
         ]);
     }
     public function admin_brand() {
-        return view("admin.admin-brands");
+        $brand = Brand::orderBy("id", "desc")->paginate(2);
+        return view("admin.admin-brands",[
+        "brand" => $brand
+        ]);
     }
     public function admin_addbrand() {
         return view("admin.admin-addbrand");
     }
+    public function admin_addbrandSave(Request $request) {
+        $request->validate([
+            "name"=>"required",
+        ],[
+            // thong bao gi thi thong bao
+        ]);
+        $icon = null;
+        if($request->hasFile("icon")){
+            $file = $request->file("icon");
+            $fileName = time().$file->getClientOriginalName();
+            $path = public_path("images/icons");
+            $file->move($path,$fileName);
+            $icon = "/images/icons/".$fileName;
+        }
+        Brand::create([
+            "name" => $request->get("name"),
+            "slug"=>Str::slug($request->get("name")),
+            "icon"=>$icon
+        ]);
+        return redirect()->to("/admin/brands");
+    }
+    public function admin_brandEdit($id) {
+        $brand = Brand::where("id", $id)->first();
+        return view("admin.admin-brandUpdate", [
+            "brand" => $brand
+        ]);
+    }
+    public function admin_brandUpdate(Request $request, $id) {
+        $request->validate([
+            "name"=>"required",
+        ],[
+            // thong bao gi thi thong bao
+        ]);
+        Service::where("id", $id)
+            ->update([
+                "name" => $request->input("brand"),
+            ]);
+        return redirect()->to("/admin/brands");
+    }
+    public function admin_brandDelete(Brand $brand) {
+        $brand->delete();
+        return redirect()->to("/admin/brands");
+    }
+    // end brand
     public function admin_contactquery() {
         $contactquery = ContactUsQuery::orderBy("id","desc")->paginate(10);
         return view("admin.admin-contactquery",[

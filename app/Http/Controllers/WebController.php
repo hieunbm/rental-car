@@ -133,7 +133,10 @@ class WebController extends Controller
     }
 
     public function about() {
-        return view("web.about-us");
+        $count = Car::count();
+        return view("web.about-us", [
+           ""
+        ]);
     }
 
     public function contact() {
@@ -154,7 +157,7 @@ class WebController extends Controller
             return redirect('/login');
         }
         ContactUsQuery::create([
-            "customer_id" => auth()->user()->id,
+            "user_id" => auth()->user()->id,
             "name" => $request->get("name"),
             "email" => $request->get("email"),
             "phone" => $request->get("phone"),

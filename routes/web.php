@@ -40,7 +40,11 @@ Route::prefix("/admin")->middleware(["auth", "admin"])->group(function () {// mi
     Route::post("/add-car", [App\Http\Controllers\AdminController::class, "admin_savecar"]);
     Route::post("/add-car/images", [App\Http\Controllers\AdminController::class, "admin_savecarimages"]);
     Route::get("/brands", [App\Http\Controllers\AdminController::class, "admin_brand"]);
-    Route::get("/add-brand", [App\Http\Controllers\AdminController::class, "admin_addbrand"]);
+    Route::get("/add-brand/create", [App\Http\Controllers\AdminController::class, "admin_addbrand"]);
+    Route::post("/add-brand/create", [App\Http\Controllers\AdminController::class, "admin_addbrandSave"]);
+    Route::get("/brand/edit/{id}", [App\Http\Controllers\AdminController::class, "admin_brandEdit"]);
+    Route::get("/brand/edit/{id}", [App\Http\Controllers\AdminController::class, "admin_brandUpdate"]);
+    Route::get("/brand/delete/{brand}", [App\Http\Controllers\AdminController::class, "admin_brandDelete"]);
     Route::get("/contact-query", [App\Http\Controllers\AdminController::class, "admin_contactquery"]);
     Route::get("/contact-query-detail", [App\Http\Controllers\AdminController::class, "admin_contactdetail"]);
     Route::get("/customers", [App\Http\Controllers\AdminController::class, "admin_customer"]);
