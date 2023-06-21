@@ -5,11 +5,14 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use App\Models\Car;
+use App\Models\CarReview;
 use App\Models\CarType;
 use App\Models\ContactUsQuery;
+use App\Models\DrivingLicenses;
 use App\Models\Incident;
 use App\Models\Rental;
 use App\Models\Service;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
@@ -171,9 +174,43 @@ class AdminController extends Controller
     public function admin_contactdetail() {
         return view("admin.admin-contactdetail");
     }
+
+    //start customer
     public function admin_customer() {
-        return view("admin.admin-customers");
+        $customers = User::all();
+        $license = DrivingLicenses::all();
+        return view("admin.admin-customers",[
+            "customers" => $customers,
+            "license" => $license
+        ]);
     }
+
+    public function admin_customer_detail($id) {
+        $customer = User::find($id);
+        $license = DrivingLicenses::where('user_id', $id)->first();
+        $reviews = CarReview::where('user_id', $id)->get();
+        return view("admin.admin-customers-detail",[
+            "customer" => $customer,
+            "license" => $license,
+            "reviews" => $reviews
+        ]);
+    }
+
+    public function confirm($id){
+        $customer = User::find($id);
+        $customer->status = 1;
+        $customer->save();
+        return redirect()->to("/admin/customers-detail/".$id);
+    }
+
+    public function invalid($id){
+        $customer = User::find($id);
+        $customer->status = 2;
+        $customer->save();
+        return redirect()->to("/admin/customers-detail/".$id);
+    }
+    //end customer
+
     // start service
     public function admin_service() {
         $service = Service::orderBy("id", "desc")->paginate(2);

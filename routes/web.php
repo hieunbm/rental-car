@@ -48,6 +48,9 @@ Route::prefix("/admin")->middleware(["auth", "admin"])->group(function () {// mi
     Route::get("/contact-query", [App\Http\Controllers\AdminController::class, "admin_contactquery"]);
     Route::get("/contact-query-detail", [App\Http\Controllers\AdminController::class, "admin_contactdetail"]);
     Route::get("/customers", [App\Http\Controllers\AdminController::class, "admin_customer"]);
+    Route::get("/customers-detail/{id}", [App\Http\Controllers\AdminController::class, "admin_customer_detail"]);
+    Route::get("/customers/confirm/{id}", [App\Http\Controllers\AdminController::class, "confirm"]);
+    Route::get("/customers/invalid/{id}", [App\Http\Controllers\AdminController::class, "invalid"]);
     Route::get("/services", [App\Http\Controllers\AdminController::class, "admin_service"]);
     Route::get("/services/create", [App\Http\Controllers\AdminController::class, "admin_serviceCreate"]);
     Route::post("/services/create", [App\Http\Controllers\AdminController::class, "admin_serviceSave"]);

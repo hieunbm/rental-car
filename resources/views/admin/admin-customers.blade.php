@@ -19,34 +19,42 @@
                                     <th scope="col">ID</th>
                                     <th scope="col">Name, Email</th>
                                     <th scope="col">Phone</th>
-                                    <th scope="col">Address</th>
+                                    <th scope="col">License Number</th>
                                     <th scope="col">Status</th>
-                                    <th scope="col">Car Review</th>
+                                    <th scope="col">See More</th>
                                 </tr>
                                 </thead>
                                 <tbody>
+                                @foreach($customers as $item)
                                 <tr>
-                                    <td>1</td>
+                                    <td>{{ $item->id }}</td>
                                     <td>
                                         <div class="d-flex align-items-center lh-1">
                                             <div>
-                                                <span class="d-block fw-semibold mb-1">Rena Mark</span>
-                                                <span class="text-muted fs-12">renamark123@demo</span></div>
+                                                <span class="d-block fw-semibold mb-1">{{ $item->name }}</span>
+                                                <span class="text-muted fs-12">{{ $item->email }}</span></div>
                                             </div>
                                     </td>
-                                    <td>098765432456</td>
-                                    <td>Address, City, Country</td>
+                                    <td>{{ $item->phone }}</td>
                                     <td>
-                                        <span class="badge bg-success">Already Rented</span>
+                                        @foreach($license as $number)
+                                            @if($number->user_id == $item->id)
+                                                {{ $number->license_number }}
+                                            @endif
+                                        @endforeach
                                     </td>
                                     <td>
-                                        <p style="font-weight: bold">Scope:
-                                            <span style="font-weight: 100">5</span>
-                                        </p>
-                                        <p style="font-weight: bold">Message:
-                                            <span style="font-weight: 100">Lorem Ipsum is simply dummy text</span>
-                                        </p>
-                                    </td></tr>
+                                        @switch ($item->status)
+                                            @case(0)<span class="badge bg-warning">Unconfirmed</span>@break
+                                            @case(1)<span class="badge bg-success">Verified</span>@break
+                                            @case(2)<span class="badge bg-danger">Invalid</span>@break
+                                        @endswitch
+                                    </td>
+                                    <td>
+                                        <a href="{{url("/admin/customers-detail", ["id" => $item->id])}}" class="badge bg-info">View</a>
+                                    </td>
+                                </tr>
+                                @endforeach
                                 </tbody>
                             </table>
                         </div>
