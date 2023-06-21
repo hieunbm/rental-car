@@ -257,23 +257,27 @@
                     </b>
                     @switch($rental->status)
                         @case(0)
-                            <a href="#" class="btn btn-success float-right">
+                            <a href="{{url("admin/booking/comfirm", ["rental" => $rental->id])}}" class="btn btn-success float-right">
                                 <i class="far fa-credit-card"></i>
                                 Confirm
                             </a>
-                            <a href="#" class="btn btn-danger float-right">
+                            <a href="{{url("admin/booking/cancel", ["rental" => $rental->id])}}" class="btn btn-danger float-right">
                                 <i class="far fa-credit-card"></i>
                                 Cancel
                             </a>
                             @break
                         @case(1)
-                            <a href="#" class="btn btn-danger float-right">
+                            <a href="{{url("admin/booking/in-progress", ["rental" => $rental->id])}}" class="btn btn-success float-right">
+                                <i class="far fa-credit-card"></i>
+                                In Progress
+                            </a>
+                            <a href="{{url("admin/booking/cancel", ["rental" => $rental->id])}}" class="btn btn-danger float-right">
                                 <i class="far fa-credit-card"></i>
                                 Cancel
                             </a>
                             @break
                         @case(2)
-                            <a href="#" class="btn btn-success float-right"><i class="far fa-credit-card"></i> Submit
+                            <a href="{{url("admin/booking/complete", ["rental" => $rental->id])}}" class="btn btn-success float-right"><i class="far fa-credit-card"></i> Submit
                                 Completed
                             </a>
                             <a href="#" class="btn btn-danger float-right"><i class="far fa-credit-card"></i> Submit

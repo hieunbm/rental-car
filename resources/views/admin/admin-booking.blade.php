@@ -87,7 +87,7 @@
                                         @endif
                                     </td>
                                     <td>
-                                        @switch($item->satus)
+                                        @switch($item->status)
                                             @case(0) <span
                                                 class="text text-dark">Pending</span>@break
                                             @case(1) <span

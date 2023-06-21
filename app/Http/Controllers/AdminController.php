@@ -22,6 +22,7 @@ class AdminController extends Controller
     public function admin_dashboard() {
         return view("admin.dashboard");
     }
+    // start booking
     public function admin_booking() {
         $rentals = Rental::orderBy("id", "asc")->paginate(12);
         return view("admin.admin-booking", [
@@ -50,6 +51,35 @@ class AdminController extends Controller
             "totalFee" => $totalFee
         ]);
     }
+    public function confirmOrder(Rental $rental){
+        // cập nhật status cuả order thành 1 (cònfirm)
+        $rental->update(["status"=>1]);
+        // gửi email cho khách báo đơn đã đc chuyển trạng thái
+
+        return redirect()->to("/admin/booking-detail/".$rental->id);
+    }
+    public function inProgress(Rental $rental){
+        // cập nhật status cuả order thành 1 (cònfirm)
+        $rental->update(["status"=>2]);
+        // gửi email cho khách báo đơn đã đc chuyển trạng thái
+
+        return redirect()->to("/admin/booking-detail/".$rental->id);
+    }
+    public function complete(Rental $rental){
+        // cập nhật status cuả order thành 1 (cònfirm)
+        $rental->update(["status"=>3]);
+        // gửi email cho khách báo đơn đã đc chuyển trạng thái
+
+        return redirect()->to("/admin/booking-detail/".$rental->id);
+    }
+    public function cancel(Rental $rental){
+        // cập nhật status cuả order thành 1 (cònfirm)
+        $rental->update(["status"=>4]);
+        // gửi email cho khách báo đơn đã đc chuyển trạng thái
+
+        return redirect()->to("/admin/booking-detail/".$rental->id);
+    }
+    // start booking
     public function admin_cars() {
         $cars=Car::get();
         return view("admin.admin-cars",[
