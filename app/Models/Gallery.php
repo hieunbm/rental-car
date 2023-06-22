@@ -13,7 +13,6 @@ class Gallery extends Model
     protected $table = "gallery";
 
     protected $fillable=[
-        'name',
         'thumbnail',
         'car_id'
     ];

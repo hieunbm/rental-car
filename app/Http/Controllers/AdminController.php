@@ -8,6 +8,7 @@ use App\Models\Car;
 use App\Models\CarReview;
 use App\Models\CarType;
 use App\Models\ContactUsQuery;
+use App\Models\Gallery;
 use App\Models\DrivingLicenses;
 use App\Models\Incident;
 use App\Models\Rental;
@@ -143,33 +144,45 @@ class AdminController extends Controller
         return redirect()->to("/admin/carTypes");
     }
     public function admin_addcar() {
+        $cars=Car::get();
         $brands=Brand::get();
         $carTypes=CarType::get();
         return view("admin.admin-addcar",[
             "brands"=>$brands,
             "carTypes"=>$carTypes,
+            "cars"=>$cars,
+        ]);
+    }
+    public function admin_addcarimages(){
+        $cars=Car::get();
+        return view("admin.admin-addcar-images",[
+            "cars"=>$cars
         ]);
     }
     public function admin_savecarimages(Request $request){
-            $carId = $request->input('car_id');
+        $request->validate([
+            'thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
 
-            if ($request->hasFile('images')) {
-                $images = $request->file('images');
+        $thumbnailPath = null;
+        if ($request->hasFile('thumbnail')) {
+            $thumbnail = $request->file('thumbnail');
+            $thumbnailName = time() . '.' . $thumbnail->getClientOriginalExtension();
+            $thumbnail->move(public_path('images/gallery'), $thumbnailName);
+            $thumbnailPath = 'images/gallery/' . $thumbnailName;
+        }
 
-                foreach ($images as $image) {
-                    // Thực hiện xử lý và lưu ảnh vào đây
-                }
-            }
+        Gallery::create([
+            'thumbnail' => $thumbnailPath,
+            'car_id'=>$request->get("car_id")
+        ]);
 
-            // Thực hiện các xử lý khác, chẳng hạn như cập nhật cơ sở dữ liệu
-
-            return redirect()->back()->with('success', 'Thêm ảnh thành công');
+        return redirect()->to("/admin/cars");
     }
     public function admin_savecar(Request $request){
         $request->validate([
             "model"=>"required",
             "price"=>"required|numeric|min:0",
-            "qty"=>"required|numeric|min:0"
         ],[
             // thong bao gi thi thong bao
         ]);
@@ -177,20 +190,33 @@ class AdminController extends Controller
         if($request->hasFile("thumbnail")){
             $file = $request->file("thumbnail");
             $fileName = time().$file->getClientOriginalName();
-            $path = public_path("uploads");
+            $path = public_path("images/cars");
             $file->move($path,$fileName);
-            $thumbnail = "/uploads/".$fileName;
-        }
-        if ($request->has('reverse_sensor')) {
-            // Checkbox đã được chọn
-            $reverseSensorValue = $request->input('reverse_sensor');
-        } else {
-            // Checkbox không được chọn
-            $reverseSensorValue = "0"; // Giá trị mặc định khi checkbox không được chọn
+            $thumbnail = "/images/cars/".$fileName;
         }
         Car::create([
-           "model"
+            'license_plate'=>$request->get("license_plate"),
+            'model'=>$request->get("model"),
+            'price'=>$request->get("price"),
+            'slug'=>Str::slug($request->get("name")),
+            'brand_id'=>$request->get("brand_id"),
+            'carType_id'=>$request->get("carType_id"),
+            'thumbnail'=>$thumbnail,
+            'fuelType'=>$request->get("fuelType"),
+            'transmission'=>$request->get("transmission"),
+            'km_limit'=>$request->get("km_limit"),
+            'modelYear'=>$request->get("modelYear"),
+            'reverse_sensor'=>$request->get("reverse_sensor"),
+            'airConditioner'=>$request->get("airConditioner"),
+            'driverAirbag'=>$request->get("driverAirbag"),
+            'cDPlayer'=>$request->get("cDPlayer"),
+            'brakeAssist'=>$request->get("brakeAssist"),
+            'seats'=>$request->get("seats"),
+            'status'=>$request->get("status"),
+            'description'=>$request->get("description"),
+            'rate'=>$request->get("rate"),
         ]);
+        return redirect()->to("/admin/cars");
     }
     public function admin_brand() {
         $brand = Brand::orderBy("id", "desc")->paginate(2);

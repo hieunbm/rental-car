@@ -211,8 +211,8 @@ class WebController extends Controller
     }
 
     public function dashboard(User $user) {
-        $rental= Rental::limit(10)->where("customer_id", auth()->user()->id)->get();
-        $rentalCount=DB::table('rental')->count();
+        $rental= Rental::limit(10)->where("user_id", auth()->user()->id)->get();
+        $rentalCount=DB::table('rental')->where("user_id", auth()->user()->id)->count();
         $rentalUpComing=DB::table('rental')->where("status",0)->count();
         $rentalCancel=DB::table('rental')->where("status",0)->count();
         return view("web.account-dashboard",[
