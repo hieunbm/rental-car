@@ -92,6 +92,56 @@ class AdminController extends Controller
             "carTypes"=>$carTypes
         ]);
     }
+    public function admin_addcartype() {
+        return view("admin.admin-addcartype");
+    }
+    public function admin_addCarTypeSave(Request $request) {
+        $request->validate([
+            "name"=>"required",
+            "description"=>"required"
+        ],[
+            // thong bao gi thi thong bao
+        ]);
+        $icon = null;
+        if($request->hasFile("icon")){
+            $file = $request->file("icon");
+            $fileName = time().$file->getClientOriginalName();
+            $path = public_path("images/icons");
+            $file->move($path,$fileName);
+            $icon = "/images/select-form/".$fileName;
+        }
+        CarType::create([
+            "name" => $request->get("name"),
+            "slug"=>Str::slug($request->get("name")),
+            "icon"=>$icon,
+            "description"=>$request->get("description")
+        ]);
+        return redirect()->to("/admin/carTypes");
+    }
+    public function admin_CarTypeEdit($id) {
+        $cartype = CarType::where("id", $id)->first();
+        return view("admin.admin-cartypeUpdate", [
+            "carTypes" => $cartype
+        ]);
+    }
+    public function admin_cartypeUpdate(Request $request, $id) {
+        $request->validate([
+            "name"=>"required",
+            "description"=>"required"
+        ],[
+            // thong bao gi thi thong bao
+        ]);
+        CarType::where("id", $id)
+            ->update([
+                "name" => $request->input("cartype"),
+                "description" => $request->get("description")
+            ]);
+        return redirect()->to("/admin/carTypes");
+    }
+    public function admin_cartypeDelete(CarType $carType) {
+        $carType->delete();
+        return redirect()->to("/admin/carTypes");
+    }
     public function admin_addcar() {
         $brands=Brand::get();
         $carTypes=CarType::get();

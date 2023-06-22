@@ -40,6 +40,7 @@ Route::prefix("/admin")->middleware(["auth", "admin"])->group(function () {// mi
     Route::get("/booking/cancel/{rental}", [App\Http\Controllers\AdminController::class, "cancel"]);
     Route::get("/cars", [App\Http\Controllers\AdminController::class, "admin_cars"]);
     Route::get("/car-type", [App\Http\Controllers\AdminController::class, "admin_cartype"]);
+    Route::get("/add-cartype", [App\Http\Controllers\AdminController::class, "admin_addcartype"]);
     Route::get("/add-car", [App\Http\Controllers\AdminController::class, "admin_addcar"]);
     Route::post("/add-car", [App\Http\Controllers\AdminController::class, "admin_savecar"]);
     Route::post("/add-car/images", [App\Http\Controllers\AdminController::class, "admin_savecarimages"]);
