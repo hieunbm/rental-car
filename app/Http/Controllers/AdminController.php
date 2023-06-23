@@ -93,10 +93,10 @@ class AdminController extends Controller
             "carTypes"=>$carTypes
         ]);
     }
-    public function admin_addcartype() {
+    public function admin_cartypeCreate() {
         return view("admin.admin-addcartype");
     }
-    public function admin_addCarTypeSave(Request $request) {
+    public function admin_cartypeSave(Request $request) {
         $request->validate([
             "name"=>"required",
             "description"=>"required"
@@ -107,7 +107,7 @@ class AdminController extends Controller
         if($request->hasFile("icon")){
             $file = $request->file("icon");
             $fileName = time().$file->getClientOriginalName();
-            $path = public_path("images/icons");
+            $path = public_path("images/select-form");
             $file->move($path,$fileName);
             $icon = "/images/select-form/".$fileName;
         }
@@ -117,31 +117,17 @@ class AdminController extends Controller
             "icon"=>$icon,
             "description"=>$request->get("description")
         ]);
-        return redirect()->to("/admin/carTypes");
+        return redirect()->to("/admin/car-type");
     }
-    public function admin_CarTypeEdit($id) {
-        $cartype = CarType::where("id", $id)->first();
-        return view("admin.admin-cartypeUpdate", [
-            "carTypes" => $cartype
-        ]);
+    public function admin_cartypeEdit($id) {
+
     }
     public function admin_cartypeUpdate(Request $request, $id) {
-        $request->validate([
-            "name"=>"required",
-            "description"=>"required"
-        ],[
-            // thong bao gi thi thong bao
-        ]);
-        CarType::where("id", $id)
-            ->update([
-                "name" => $request->input("cartype"),
-                "description" => $request->get("description")
-            ]);
-        return redirect()->to("/admin/carTypes");
+
     }
     public function admin_cartypeDelete(CarType $carType) {
         $carType->delete();
-        return redirect()->to("/admin/carTypes");
+        return redirect()->to("/admin/car-type");
     }
     public function admin_addcar() {
         $cars=Car::get();

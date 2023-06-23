@@ -40,7 +40,11 @@ Route::prefix("/admin")->middleware(["auth", "admin"])->group(function () {// mi
     Route::get("/booking/cancel/{rental}", [App\Http\Controllers\AdminController::class, "cancel"]);
     Route::get("/cars", [App\Http\Controllers\AdminController::class, "admin_cars"]);
     Route::get("/car-type", [App\Http\Controllers\AdminController::class, "admin_cartype"]);
-    Route::get("/add-cartype", [App\Http\Controllers\AdminController::class, "admin_addcartype"]);
+    Route::get("/cartype/create", [App\Http\Controllers\AdminController::class, "admin_cartypeCreate"]);
+    Route::post("/cartype/create", [App\Http\Controllers\AdminController::class, "admin_cartypeSave"]);
+    Route::get("/cartype/edit/{id}", [App\Http\Controllers\AdminController::class, "admin_cartypeEdit"]);
+    Route::put("/cartype/edit/{id}", [App\Http\Controllers\AdminController::class, "admin_cartypeUpdate"]);
+    Route::get("/cartype/delete/{carType}", [App\Http\Controllers\AdminController::class, "admin_cartypeDelete"]);
     Route::get("/add-car", [App\Http\Controllers\AdminController::class, "admin_addcar"]);
     Route::post("/add-car", [App\Http\Controllers\AdminController::class, "admin_savecar"]);
     Route::get("/add-car/images", [App\Http\Controllers\AdminController::class, "admin_addcarimages"]);

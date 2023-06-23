@@ -40,8 +40,8 @@
                                 <td><span class="badge bg-outline-success">{{$cT->updated_at}}</span></td>
                                 <td>
                                     <div class="hstack gap-2 fs-15">
-                                        <a href="{{url("/admin/car-type/edit", ["id" => $cT->id])}}" class="btn btn-icon btn-sm btn-info-transparent rounded-pill"><i class="ri-edit-line"></i></a>
-                                        <a onclick="return confirm('Xoá loại xe ?')" href="{{url("/admin/car-type/delete",["service"=>$cT->id])}}" class="btn btn-icon btn-sm btn-danger-transparent rounded-pill"><i class="ri-delete-bin-line"></i></a>
+                                        <a href="{{url("/admin/cartype/edit", ["id" => $cT->id])}}" class="btn btn-icon btn-sm btn-info-transparent rounded-pill"><i class="ri-edit-line"></i></a>
+                                        <a onclick="return confirm('Xoá loại xe ?')" href="{{url("/admin/cartype/delete",["carType"=>$cT->id])}}" class="btn btn-icon btn-sm btn-danger-transparent rounded-pill"><i class="ri-delete-bin-line"></i></a>
                                     </div>
                                 </td>
                             </tr>

@@ -16,7 +16,7 @@
                                 class="ri-code-line ms-2 d-inline-block align-middle"></i></button>
                     </div>
                 </div>
-                <form  method="post" action="{{url("/admin/add-cartype/create")}}" enctype="multipart/form-data"  class="row row-cols-lg-auto g-3 align-items-center">
+                <form  method="post" action="{{url("/admin/cartype/create")}}" enctype="multipart/form-data"  class="row row-cols-lg-auto g-3 align-items-center">
                     @csrf
                     <div class="card-body">
                         <div class="row gy-4">
