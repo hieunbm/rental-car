@@ -108,6 +108,7 @@ class WebController extends Controller
             $maxPrice = $request->input('max_price');
             $selectedCarPrice = "$$minPrice - $$maxPrice";
             $query->whereBetween('price', [$minPrice, $maxPrice]);
+
         }
         $cars = $query->get();
         $merge = $this->mergeCode($cars);
@@ -135,9 +136,13 @@ class WebController extends Controller
     }
 
     public function about() {
-        $count = Car::count();
+        $OverallQuantityOfVehicles = Car::orderBy("id", "desc")->limit(6)->get();
+        $OverallQuantityOfBrands = Brand::count();
+        $OverallQuantityOfRental = Rental::count();
         return view("web.about-us", [
-           ""
+            "OverallQuantityOfVehicles"=>$OverallQuantityOfVehicles,
+            "OverallQuantityOfBrands"=>$OverallQuantityOfBrands,
+            "OverallQuantityOfRental"=>$OverallQuantityOfRental,
         ]);
     }
 

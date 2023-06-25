@@ -31,13 +31,13 @@
                 <div class="row text-center">
                     <div class="col-md-3 col-sm-6 mb-sm-30">
                         <div class="de_count wow fadeInUp" data-bgcolor="#f5f5f5">
-                            <h3 class="timer" data-to="15425" data-speed="3000">0</h3>
+                            <h3 class="timer" data-to="{{$OverallQuantityOfVehicles}}" data-speed="3000">0</h3>
                             Overall quantity of vehicles
                         </div>
                     </div>
                     <div class="col-md-3 col-sm-6 mb-sm-30">
                         <div class="de_count wow fadeInUp" data-bgcolor="#f5f5f5">
-                            <h3 class="timer" data-to="8745" data-speed="3000">0</h3>
+                            <h3 class="timer" data-to="{{$OverallQuantityOfBrands}}" data-speed="3000">0</h3>
                             Overall quantity of brands
                         </div>
                     </div>
