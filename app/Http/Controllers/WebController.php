@@ -11,9 +11,12 @@ use App\Models\ContactUsQuery;
 use App\Models\Gallery;
 use App\Models\Rental;
 use App\Models\RentalRate;
+use App\Models\Service;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 use function Webmozart\Assert\Tests\StaticAnalysis\email;
 
 class WebController extends Controller
@@ -129,10 +132,92 @@ class WebController extends Controller
         ]));
     }
 
+    public function checkCar(Request $request) {
+        $car_id = $request->get("car_id");
+        $rental_dayString = $request->get("rental_date");
+        $rental_timeString = $request->get("rental_time");
+        $return_dayString = $request->get("return_date");
+        $return_timeString = $request->get("return_time");
+        $rental_day = Carbon::createFromFormat('F j, Y', $rental_dayString);
+        $rental_time = Carbon::createFromFormat('H:i', $rental_timeString);
+
+        $return_day = Carbon::createFromFormat('F j, Y', $return_dayString);
+        $return_time = Carbon::createFromFormat('H:i', $return_timeString);
+
+        $rental_date = $rental_day->setTime($rental_time->hour, $rental_time->minute, $rental_time->second);
+        $return_date = $return_day->setTime($return_time->hour, $return_time->minute, $return_time->second);
+
+        $rentals = Rental::where('car_id', $car_id)
+            ->where(function ($query) use ($rental_date, $return_date) {
+                $query->whereBetween('rental_date', [$rental_date, $return_date])
+                    ->orWhereBetween('return_date', [$rental_date, $return_date])
+                    ->orWhere(function ($query) use ($rental_date, $return_date) {
+                        $query->where('rental_date', '<=', $rental_date)
+                            ->where('return_date', '>=', $return_date);
+                    });
+            })
+            ->count();
+        $car = Car::find($car_id);
+        if ($rentals > 0) {
+            return redirect()->to("/car-list");
+        } else {
+            Session::put('car', $car);
+            Session::put('rental_date', $rental_date);
+            Session::put('return_date', $return_date);
+            return redirect()->to("/booking");
+        }
+    }
+
     public function booking() {
+        if (!auth()->check()) {
+            return redirect('/login');
+        }
+        if (Session::has('car')){
+            $car = Session::get('car');
+            $services = Service::all();
+            $thumbnails = Gallery::where("car_id", $car->id)->limit(2)->get();
+            $rental_date = Session::get('rental_date');
+            $return_date = Session::get('return_date');
+
+            $rental_day = $rental_date->format('F j, Y');
+            $rental_time = $rental_date->format('H:i');
+            $return_day = $return_date->format('F j, Y');
+            $return_time = $return_date->format('H:i');
+
+            $rentalrate = RentalRate::where("car_id", $car->id)->get();
+//            dd($rentalrate);
+
+        } else {
+            return redirect('/car-list');
+        }
+
+
         return view("web.booking", [
+            "car" => $car,
+            "services" => $services,
+            "thumbnails" => $thumbnails,
+            "rentalrate" => $rentalrate,
+            "rental_day" => $rental_day,
+            "rental_time" => $rental_time,
+            "return_day" => $return_day,
+            "return_time" => $return_time
+        ]);
+    }
+    public function placeOrder(Request $request) {
+        $request->validate([// mảng các quy tắt
+            "rental_date" => "required",
+            "return_date" => "required",
+            "pickup_location" => "required",
+            "address" => "required",
+            "telephone" => "required|min:10|max:12",// ít nhất 10 và nhiều nhất 12
+            "email" => "required",
+            "payment_method" => "required",
+            "rental_type" => "required",
+            "car_price" => "required|numeric|min:0",
+        ], [// mảng các thông điệp
 
         ]);
+
     }
 
     public function about() {
@@ -176,7 +261,6 @@ class WebController extends Controller
     public function car_detail(Car $car) {
         $thumbnails = Gallery::where("car_id", $car->id)->get();
         $reviews = CarReview::where("car_id", $car->id)->orderBy("id", "desc")->paginate(3);
-        $priceday = RentalRate::where("car_id", $car->id)->where("rental_type", "rent by day")->get();
         $rate = 0;
         $totals = 0;
         foreach ($reviews as $item) {
@@ -188,7 +272,6 @@ class WebController extends Controller
             "car" => $car,
             "thumbnails" => $thumbnails,
             "reviews" => $reviews,
-            "priceday" => $priceday,
             "rate" => $rate,
             "rentalrate" => $rentalrate
         ]);

@@ -150,13 +150,10 @@
                                     <div style="margin-top: 10px">
                                         {!! $reviews->appends(app("request")->input())->links("pagination::bootstrap-5") !!}
                                     </div>
-
                                 </div>
                             </div>
                         </div>
-
                     </div>
-
                     <div class="col-lg-3">
                         <h3>{{$car->model}}</h3>
                         <style>
@@ -252,12 +249,9 @@
                                 <spam class="d-value">{{$car->license_plate}}</spam>
                             </div>
                         </div>
-
                         <div class="spacer-single"></div>
-
                         <h4>Features</h4>
                         <ul style="list-style: none; padding-left: 0">
-
                             <li>
                                 @if($car->reverse_sensor == 1)
                                     <i style="color: #199e1c; margin-right: 10px;" class="fa fa-fw" aria-hidden="true"
@@ -301,7 +295,6 @@
 
                         </ul>
                     </div>
-
                     <div class="col-lg-3">
                         <div class="de-price text-center">
                             Daily rate
@@ -309,68 +302,21 @@
                         </div>
                         <div class="spacer-30"></div>
                         <div class="de-box mb25">
-                            <form name="contactForm" id='contact_form' method="post">
+                            <form action="{{url("/car/check")}}" method="POST">
+                                @csrf
                                 <h4>Booking this car</h4>
 
-                                <div class="spacer-20"></div>
+                                <div class="spacer-20">
+                                    <input type="hidden" name="car_id" value="{{$car->id}}"/>
+                                </div>
 
                                 <div class="row">
-                                    <div class="col-lg-12 mb20">
-                                        <h5>Email</h5>
-                                        <input type="text" name="email" placeholder="sample@yourcompany.com" autocomplete="off" class="form-control">
-                                        <div class="jls-address-preview jls-address-preview--hidden">
-                                            <div class="jls-address-preview__header">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-12 mb20">
-                                        <h5>Telephone</h5>
-                                        <input type="text" name="telephone" placeholder="+66-4353434" autocomplete="off" class="form-control">
-                                        <div class="jls-address-preview jls-address-preview--hidden">
-                                            <div class="jls-address-preview__header">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-12 mb20">
-                                        <h5>Address</h5>
-                                        <textarea type="text" name="address" id="autocomplete" autocomplete="off" class="form-control"></textarea>
-                                        <div class="jls-address-preview jls-address-preview--hidden">
-                                            <div class="jls-address-preview__header">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-12 mb20">
-                                        <h5>Pick Up Location</h5>
-                                        <select name="PickupLocation" id="mySelect" class="form-control">
-                                            <option>Chose Location</option>
-                                            <option>pick up the car at the store</option>
-                                            <option>pick up car at home (only 15km radius)</option>
-                                        </select>
-                                        <div class="jls-address-preview jls-address-preview--hidden">
-                                            <div class="jls-address-preview__header">
-                                            </div>
-                                        </div>
-                                    </div>
 
-                                    <div class="col-lg-12 mb20">
-                                        <h5>Choose a rental type</h5>
-                                        <select name="rental rate" id="mySelect2" class="form-control"
-                                                onchange="updateInput()">
-                                            <option selected>Choose Rental Type</option>
-                                            @foreach($rentalrate as $rt)
-                                                <option value="{{$rt->id}}">{{$rt->rental_type}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="col-lg-12 mb20">
-                                        <h5>Price</h5>
-                                        <input type="text" id="myLable" readonly/>
-                                    </div>
                                     <div class="col-lg-12 mb20">
                                         <h5>Pick Up Date & Time</h5>
                                         <div class="date-time-field">
-                                            <input type="text" id="date-picker" name="Pick Up Date" value="">
-                                            <select name="Pick Up Time" id="pickup-time">
+                                            <input type="text" id="date-picker" name="rental_date" value="">
+                                            <select name="rental_time" id="pickup-time">
                                                 <option selected disabled value="Select time">Time</option>
                                                 <option value="00:00">00:00</option>
                                                 <option value="00:30">00:30</option>
@@ -426,8 +372,8 @@
                                     <div class="col-lg-12 mb20">
                                         <h5>Return Date & Time</h5>
                                         <div class="date-time-field">
-                                            <input type="text" id="date-picker-2" name="Collection Date" value="">
-                                            <select name="Collection Time" id="collection-time">
+                                            <input type="text" id="date-picker-2" name="return_date" value="">
+                                            <select name="return_time" id="collection-time">
                                                 <option selected disabled value="Select time">Time</option>
                                                 <option value="00:00">00:00</option>
                                                 <option value="00:30">00:30</option>
@@ -499,7 +445,6 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </section>
@@ -507,18 +452,4 @@
     <!-- content close -->
     <a href="#" id="back-to-top"></a>
 @endsection
-<script>
-    var rentalMethodData = {
-        @foreach ($rentalrate as $rentalMethod)
-        "{{ $rentalMethod->id }}": "{{ $rentalMethod->price }}",
-        @endforeach
-    };
 
-    function updateInput() {
-        var select = document.getElementById("mySelect2");
-        var lable = document.getElementById("myLable");
-        var selectedRentalMethodId = select.value;
-
-        lable.value = rentalMethodData[selectedRentalMethodId];
-    }
-</script>

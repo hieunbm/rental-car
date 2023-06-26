@@ -36,13 +36,13 @@ class Car extends Model
         'rate',
     ];
     public function gallery() {
-        return $this->belongsTo(Gallery::class);
+        return $this->hasMany(Gallery::class, "car_id");
     }
     public function reviewcar() {
         return $this->belongsTo(CarReview::class);
     }
     public function price() {
-        return $this->belongsTo(RentalRate::class);
+        return $this->hasMany(RentalRate::class, "car_id");
     }
     public function carType(){
         return $this->belongsTo(CarType::class,"carType_id");
