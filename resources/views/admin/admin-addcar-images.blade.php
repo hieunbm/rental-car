@@ -9,13 +9,18 @@
     <div class="row">
         <div class="col-xl-12">
             <div class="card custom-card">
-                <div class="card-header justify-content-between">
-                    <div class="card-title">Add Gallery</div>
-                    <div class="prism-toggle">
-                        <button class="btn btn-sm btn-primary-light">Show<i
-                                class="ri-code-line ms-2 d-inline-block align-middle"></i></button>
-                    </div>
-                </div>
+                <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <div class="card-header justify-content-between">
+                            <div class="card-title"><a href="{{url("/admin/add-car")}}">Add Car Details</a></div>
+                        </div>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <div class="card-header justify-content-between">
+                            <div class="card-title"><a href="{{url("/admin/add-car/images")}}">Add Gallery</a></div>
+                        </div>
+                    </li>
+                </ul>
 
                 <form action="{{url("admin/add-car/images")}}" method="POST" enctype="multipart/form-data">
                     @csrf
