@@ -37,15 +37,18 @@
                             <td><span class="badge bg-success">{{$item->fuelType}}</span></td>
                             <td>
                                 <div class="avatar-list-stacked">
-                                    @if($item->images->count() > 3)
-                                        @foreach($item->images->take(3) as $tb)
+                                    <span class="avatar avatar-sm avatar-rounded">
+                                                <img src="{{$item->thumbnail}}" alt="img">
+                                            </span>
+                                    @if($item->images->count() > 2)
+                                        @foreach($item->images->take(2) as $tb)
                                             <span class="avatar avatar-sm avatar-rounded">
                                                 <img src="{{$tb->thumbnail}}" alt="img">
                                             </span>
                                         @endforeach
                                     <a class="avatar avatar-sm bg-primary text-fixed-white avatar-rounded"
                                        href="javascript:void(0);">
-                                        +{{$item->images->count()-3}}
+                                        +{{$item->images->count()-2}}
                                     </a>
                                     @else
                                         @foreach($item->images as $tb)
@@ -70,8 +73,8 @@
                             </td>
                             <td>
                                 <div class="hstack gap-2 fs-15">
-                                    <a href="#" class="btn btn-icon btn-sm btn-info-transparent rounded-pill"><i class="ri-edit-line"></i></a>
-                                    <a onclick="return confirm('Xoá sản phẩm?')" href="{{url("/admin/cars/delete",["cars"=>$item->id])}}" class="btn btn-icon btn-sm btn-danger-transparent rounded-pill"><i class="ri-delete-bin-line"></i></a>
+                                    <a href="{{url("/admin/cars/edit", ["id" => $item->id])}}" class="btn btn-icon btn-sm btn-info-transparent rounded-pill"><i class="ri-edit-line"></i></a>
+                                    <a onclick="return confirm('Xoá sản phẩm?')" href="{{url("/admin/cars/delete",["car"=>$item->id])}}" class="btn btn-icon btn-sm btn-danger-transparent rounded-pill"><i class="ri-delete-bin-line"></i></a>
                                 </div>
                             </td>
                         </tr>

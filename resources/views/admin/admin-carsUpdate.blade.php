@@ -1,5 +1,5 @@
 @extends("admin.layout.layout")
-@section("title","Add Car")
+@section("title","Update Car")
 @section("main")
     <!-- Page Header -->
     @include("admin.html.content-header")
@@ -9,20 +9,14 @@
     <div class="row">
         <div class="col-xl-12">
             <div class="card custom-card">
-                <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
                     <li class="nav-item" role="presentation">
                         <div class="card-header justify-content-between">
-                            <div class="card-title"><a href="{{url("/admin/add-car")}}">Add Car Details</a></div>
+                            <div class="card-title">Update Car</div>
                         </div>
                     </li>
-                    <li class="nav-item" role="presentation">
-                        <div class="card-header justify-content-between">
-                            <div class="card-title"><a href="{{url("/admin/add-car/images")}}">Add Gallery</a></div>
-                        </div>
-                    </li>
-                </ul>
-                <form action="{{url("/admin/add-car")}}" method="post" class="row row-cols-lg-auto g-3 align-items-center" enctype="multipart/form-data">
+                <form action="{{url("/admin/cars/edit", $cars->id)}}" method="post" class="row row-cols-lg-auto g-3 align-items-center" enctype="multipart/form-data">
                     @csrf
+                    @method('PUT')
                     <div class="card-body">
                         <div class="row gy-4">
                             {{--                        Lisense_plate--}}
@@ -43,9 +37,9 @@
                             {{--                        Price--}}
                             <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12">
                                 <label for="input-number" class="form-label">Enter Price</label> <input name="price" type="number"
-                                                                                                       class="form-control"
-                                                                                                       id="input-number"
-                                                                                                       placeholder="Enter Price"/>
+                                                                                                        class="form-control"
+                                                                                                        id="input-number"
+                                                                                                        placeholder="Enter Price"/>
                             </div>
 
                             {{--                        Brand--}}
@@ -53,7 +47,7 @@
                                 <label for="input-placeholder" class="form-label">Choose Brand</label>
                                 <select name="brand_id" class="form-select default-pill" aria-label="Default select example">
                                     @foreach($brands as $br)
-                                    <option value="{{$br->id}}">{{$br->name}}</option>
+                                        <option value="{{$br->id}}">{{$br->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -90,9 +84,9 @@
                             {{--                        KmLimit--}}
                             <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12">
                                 <label for="input-number" class="form-label">Enter Km Limit</label> <input name="km_limit" type="number"
-                                                                                                       class="form-control"
-                                                                                                       id="input-number"
-                                                                                                       placeholder="Enter Km Limit"/>
+                                                                                                           class="form-control"
+                                                                                                           id="input-number"
+                                                                                                           placeholder="Enter Km Limit"/>
                             </div>
 
                             {{--                        modelYear--}}
@@ -133,7 +127,7 @@
                             {{--                        reverse sensor--}}
                             <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12">
                                 <input class="form-check-input ms-2" type="checkbox" name="reverse_sensor" value="1" checked="1">
-                            <span class="mb-3 px-0 text-muted">Reverse sensor</span>
+                                <span class="mb-3 px-0 text-muted">Reverse sensor</span>
 
                                 <br>
                                 <input class="form-check-input ms-2" type="checkbox" name="airConditioner" value="1" checked="1">
@@ -157,13 +151,13 @@
                             </div>
                             <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12">
                                 <label for="input-number" class="form-label">Price Rent By Day</label> <input name="rentalrate_price" type="number"
-                                                                                                       class="form-control"
-                                                                                                       id="input-number"
-                                                                                                       placeholder="Enter Rate"/>
+                                                                                                              class="form-control"
+                                                                                                              id="input-number"
+                                                                                                              placeholder="Enter Rate"/>
                             </div>
 
                             <div class="col-12">
-                                <button type="submit" class="btn btn-primary">Add Car</button>
+                                <button type="submit" class="btn btn-primary">Update Car</button>
                             </div>
                         </div>
                     </div>

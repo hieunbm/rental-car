@@ -12,6 +12,7 @@ use App\Models\Gallery;
 use App\Models\DrivingLicenses;
 use App\Models\Incident;
 use App\Models\Rental;
+use App\Models\RentalRate;
 use App\Models\Service;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -87,7 +88,7 @@ class AdminController extends Controller
             "cars"=>$cars,
         ]);
     }
-    public function carsDelete(Car $car){
+    public function admin_carsDelete(Car $car){
         $car->delete();
         return redirect()->to("/admin/cars");
     }
@@ -206,6 +207,33 @@ class AdminController extends Controller
             'description'=>$request->get("description"),
             'rate'=>$request->get("rate"),
         ]);
+        RentalRate::create([
+            'car_id'=>$request->get('car_id'),
+            'rental_type'=>$request->get('rental_type'),
+            'price'=>$request->get('rentalrate_price'),
+        ]);
+        return redirect()->to("/admin/cars");
+    }
+    public function admin_carsEdit($id){
+        $cars = Car::where("id", $id)->first();
+        $brands=Brand::get();
+        $carTypes=CarType::get();
+        return view("admin.admin-carsUpdate", [
+            "cars" => $cars,
+            'brands'=>$brands,
+            'carTypes'=>$carTypes,
+        ]);
+    }
+    public function admin_carsUpdate(Request $request, $id) {
+        $request->validate([
+            "name"=>"required",
+        ],[
+            // thong bao gi thi thong bao
+        ]);
+        Car::where("id", $id)
+            ->update([
+                "name" => $request->input("car"),
+            ]);
         return redirect()->to("/admin/cars");
     }
     public function admin_brand() {
