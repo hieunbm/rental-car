@@ -300,14 +300,23 @@ class AdminController extends Controller
     }
 
     //start customer
-    public function admin_customer() {
+    public function admin_customer(Request $request) {
+        $status = $request->get('status');
+
         $customers = User::all();
         $license = DrivingLicenses::all();
-        return view("admin.admin-customers",[
+
+        //Loc theo status
+        if ($status !== null) {
+            $customers = $customers->where('status', $status);
+        }
+
+        return view("admin.admin-customers", [
             "customers" => $customers,
             "license" => $license
         ]);
     }
+
 
     public function admin_customer_detail($id) {
         $customer = User::find($id);
@@ -322,14 +331,14 @@ class AdminController extends Controller
 
     public function confirm($id){
         $customer = User::find($id);
-        $customer->status = 1;
+        $customer->status = 2;
         $customer->save();
         return redirect()->to("/admin/customers-detail/".$id);
     }
 
     public function invalid($id){
         $customer = User::find($id);
-        $customer->status = 2;
+        $customer->status = 3;
         $customer->save();
         return redirect()->to("/admin/customers-detail/".$id);
     }

@@ -9,7 +9,24 @@
     <div class="row">
         <div class="col-xl-12">
             <div class="card custom-card">
-                <div class="card-header"><div class="card-title">Customers</div></div>
+                <div class="card-header justify-content-between">
+                    <div class="card-title">Customers</div>
+
+                    <div class="d-flex flex-wrap">
+                        <div class="dropdown my-1">
+                            <a href="javascript:void(0);" class="btn btn-primary btn-sm btn-wave waves-effect waves-light" data-bs-toggle="dropdown" aria-expanded="false">
+                                Sort By<i class="ri-arrow-down-s-line align-middle ms-1 d-inline-block"></i>
+                            </a>
+                            <ul class="dropdown-menu" role="menu" style="width: 180px">
+                                <li><a class="dropdown-item" href="{{ url('/admin/customers?status=0') }}">Unconfirmed</a></li>
+                                <li><a class="dropdown-item" href="{{ url('/admin/customers?status=1') }}">Awaiting Confirmation</a></li>
+                                <li><a class="dropdown-item" href="{{ url('/admin/customers?status=2') }}">Verified</a></li>
+                                <li><a class="dropdown-item" href="{{ url('/admin/customers?status=3') }}">Invalid</a></li>
+                                <li><a class="dropdown-item" href="{{ url('/admin/customers') }}">All</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
                 <div class="card-body">
                     <div id="grid-sorting">
                         <div class="table-responsive">
@@ -46,8 +63,9 @@
                                     <td>
                                         @switch ($item->status)
                                             @case(0)<span class="badge bg-warning">Unconfirmed</span>@break
-                                            @case(1)<span class="badge bg-success">Verified</span>@break
-                                            @case(2)<span class="badge bg-danger">Invalid</span>@break
+                                            @case(1)<span class="badge bg-info-gradient">Awaiting Confirmation</span>@break
+                                            @case(2)<span class="badge bg-success">Verified</span>@break
+                                            @case(3)<span class="badge bg-danger">Invalid</span>@break
                                         @endswitch
                                     </td>
                                     <td>

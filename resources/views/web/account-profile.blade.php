@@ -22,17 +22,16 @@
                                 </div>
                                 <div class="profile_name">
                                     <h4>
-                                        Monica Lucas
-                                        <span class="profile_username text-gray">monica@rentaly.com</span>
+                                        {{auth()->user()->name}}
+                                        <span class="profile_username text-gray">{{auth()->user()->email}}</span>
                                     </h4>
                                 </div>
                             </div>
                             <div class="spacer-20"></div>
                             <ul class="menu-col">
-                                <li><a href="account-dashboard.html"><i class="fa fa-home"></i>Dashboard</a></li>
-                                <li><a href="account-profile.html" class="active"><i class="fa fa-user"></i>My
-                                        Profile</a></li>
-                                <li><a href="account-booking.html"><i class="fa fa-calendar"></i>My Orders</a></li>
+                                <li><a href="{{url("/account-dashboard")}}"><i class="fa fa-home"></i>Dashboard</a></li>
+                                <li><a href="{{url("/account-profile")}}" class="active"><i class="fa fa-user"></i>My Profile</a></li>
+                                <li><a href="{{url("/account-booking")}}"><i class="fa fa-calendar"></i>My Orders</a></li>
                                 <li>
                                     <form action="{{route("logout")}}" method="post">
                                         @csrf
@@ -45,141 +44,196 @@
                         </div>
                     </div>
 
+                    {{--Update Infomation Profile--}}
                     <div class="col-lg-9">
                         <div class="card p-4  rounded-5">
                             <div class="row">
                                 <div class="col-lg-12">
-                                    <form id="form-create-item" class="form-border" method="post"
-                                          action="https://www.madebydesignesia.com/themes/rentaly/email.php">
+                                    <form id="form-create-item" class="form-border" method="post" action="{{url("/account-profile")}}" enctype="multipart/form-data">
+                                        @csrf
                                         <div class="de_tab tab_simple">
 
-                                            <ul class="de_nav">
-                                                <li class="active"><span>Profile</span></li>
-                                                <li><span>Notifications</span></li>
+                                            <ul class="menu-content">
+                                                <li class="menu-content-profile"><h4>Profile</h4></li>
+                                                <li class="menu-content-licenses"><h4><a href="{{url("/account-profile-licenses")}}">Driving license</a></h4></li>
+                                                @error('success')
+                                                <span class="text-danger">( {{ $message }} )</span>
+                                                @enderror
                                             </ul>
+
+                                            @if(session('success'))
+                                                <div class="col-lg-6 mb20">
+                                                    <div class="alert alert-success">
+                                                        {{ session('success') }}
+                                                        <span class="close-icon"><i class="fa-solid fa-xmark"></i></span>
+                                                    </div>
+                                                </div>
+                                            @endif
 
                                             <div class="de_tab_content">
                                                 <div class="tab-1">
                                                     <div class="row">
                                                         <div class="col-lg-6 mb20">
                                                             <h5>Username</h5>
-                                                            <input value="{{$user->name}}"  class="form-control" placeholder="Enter username"/>
+                                                            <input type="text" name="name" value="{{$user->name}}"  class="form-control"/>
                                                         </div>
                                                         <div class="col-lg-6 mb20">
-                                                            <h5>Email Address</h5>
-                                                            <input type="text" name="email_address" value="{{$user->email}}" id="email_address"
-                                                                   class="form-control" placeholder="Enter email"/>
-                                                        </div>
-                                                        <div class="col-lg-6 mb20">
-                                                            <h5>New Password</h5>
-                                                            <input type="Password" name="user_password"
-                                                                   id="user_password" class="form-control"
-                                                                   placeholder="********"/>
-                                                        </div>
-                                                        <div class="col-lg-6 mb20">
-                                                            <h5>Re-enter Password</h5>
-                                                            <input type="Password" name="user_password_re-enter"
-                                                                   id="user_password_re-enter" class="form-control"
-                                                                   placeholder="********"/>
+                                                            <h5>Email Address
+                                                                @error('email')
+                                                                <span class="text-danger">( {{ $message }} )</span>
+                                                                @enderror</h5>
+                                                            <input type="text" name="email" value="{{$user->email}}" class="form-control"/>
                                                         </div>
                                                         <div class="col-md-6 mb20">
-                                                            <h5>Language</h5>
-                                                            <p class="p-info">Select your prefered language.</p>
-                                                            <div id="select_lang" class="dropdown fullwidth">
-                                                                <a href="#" class="btn-selector">English</a>
-                                                                <ul>
-                                                                    <li class="active"><span>English</span></li>
-                                                                    <li><span>France</span></li>
-                                                                    <li><span>German</span></li>
-                                                                    <li><span>Japan</span></li>
-                                                                    <li><span>Italy</span></li>
-                                                                </ul>
-                                                            </div>
+                                                            <h5>Phone Number
+                                                                @error('phone')
+                                                                <span class="text-danger">( {{ $message }} )</span>
+                                                                @enderror
+                                                            </h5>
+                                                            <input type="text" name="phone" value="{{$user->phone}}" class="form-control"/>
                                                         </div>
-                                                        <div class="col-md-6 mb20">
-                                                            <h5>Hour Format</h5>
-                                                            <p class="p-info">Select your prefered language.</p>
-                                                            <div id="select_hour_format" class="dropdown fullwidth">
-                                                                <a href="#" class="btn-selector">24-hour</a>
-                                                                <ul>
-                                                                    <li class="active"><span>24-hour</span></li>
-                                                                    <li><span>12-hour</span></li>
-                                                                </ul>
-                                                            </div>
+                                                        <div class="col-lg-6 mb20">
+                                                            <h5>Old Password
+                                                                @error('old_password')
+                                                                <span class="text-danger">( {{ $message }} )</span>
+                                                                @enderror
+                                                            </h5>
+                                                            <input type="password" name="old_password" id="old_password" class="form-control" placeholder="********" value="{{ old('old_password') }}"/>
+                                                            <i class="fa-solid fa-eye" id="toggle-old-password" onclick="togglePasswordVisibility('old_password', 'toggle-old-password')"></i>
                                                         </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="tab-2">
-                                                    <div class="row">
-                                                        <div class="col-md-6 mb-sm-20">
-                                                            <div class="switch-with-title s2">
-                                                                <h5>Discount Notifications</h5>
-                                                                <div class="de-switch">
-                                                                    <input type="checkbox" id="notif-item-sold"
-                                                                           class="checkbox">
-                                                                    <label for="notif-item-sold"></label>
-                                                                </div>
-                                                                <div class="clearfix"></div>
-                                                                <p class="p-info">You'll get notification while new
-                                                                    discount available.</p>
-                                                            </div>
-
-                                                            <div class="spacer-20"></div>
-
-                                                            <div class="switch-with-title s2">
-                                                                <h5>New Product Notification</h5>
-                                                                <div class="de-switch">
-                                                                    <input type="checkbox" id="notif-bid-activity"
-                                                                           class="checkbox">
-                                                                    <label for="notif-bid-activity"></label>
-                                                                </div>
-                                                                <div class="clearfix"></div>
-                                                                <p class="p-info">You'll get notification while new
-                                                                    product available.</p>
-                                                            </div>
+                                                        <div class="col-lg-6 mb20">
+                                                            <h5>New Password
+                                                                @error('new_password')
+                                                                <span class="text-danger">( {{ $message }} )</span>
+                                                                @enderror</h5>
+                                                            <input type="password" name="new_password" id="new_password" class="form-control" placeholder="********" value="{{ old('new_password') }}"/>
+                                                            <i class="fa-solid fa-eye" id="toggle-new-password" onclick="togglePasswordVisibility('new_password', 'toggle-new-password')"></i>
                                                         </div>
-                                                        <div class="col-md-6">
-                                                            <div class="switch-with-title s2">
-                                                                <h5>Daily Reports</h5>
-                                                                <div class="de-switch">
-                                                                    <input type="checkbox" id="notif-auction-expiration"
-                                                                           class="checkbox">
-                                                                    <label for="notif-auction-expiration"></label>
-                                                                </div>
-                                                                <div class="clearfix"></div>
-                                                                <p class="p-info">We will send you a report
-                                                                    everyday.</p>
-                                                            </div>
-                                                            <div class="spacer-20"></div>
-                                                            <div class="switch-with-title s2">
-                                                                <h5>Monthly Reports</h5>
-                                                                <div class="de-switch">
-                                                                    <input type="checkbox" id="notif-outbid"
-                                                                           class="checkbox">
-                                                                    <label for="notif-outbid"></label>
-                                                                </div>
-                                                                <div class="clearfix"></div>
-                                                                <p class="p-info">We will send you a report each
-                                                                    month.</p>
-                                                            </div>
+                                                        <div class="col-lg-6 mb20">
+                                                            <h5>Re-enter New Password
+                                                                @error('new_password')
+                                                                <span class="text-danger">( {{ $message }} )</span>
+                                                                @enderror
+                                                            </h5>
+                                                            <input type="password" name="new_password_confirmation" id="new_password_confirmation" class="form-control" placeholder="********"/>
+                                                            <i class="fa-solid fa-eye" id="toggle-confirm-password" onclick="togglePasswordVisibility('new_password_confirmation', 'toggle-confirm-password')"></i>
                                                         </div>
-                                                        <div class="spacer-20"></div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <input type="button" id="submit" class="btn-main" value="Update profile">
+                                        <button type="submit" id="submit" class="btn-main">Update profile</button>
                                     </form>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    {{--End Update Infomation Profile--}}
                 </div>
             </div>
         </section>
     </div>
     <!-- content close -->
 
+
+    <style>
+        .menu-content{
+            list-style: none;
+            display: flex;
+        }
+        .menu-content-profile{
+            margin-left: -32px;
+        }
+        .menu-content-profile h4{
+            color: #189E1C;
+        }
+        .menu-content-licenses a{
+            padding-left: 30px;
+            color: #ACACAC;
+        }
+        .de_tab_content{
+            margin-top: -30px;
+        }
+        .text-danger{
+            font-size: 12px;
+        }
+        .fa-eye{
+            position: absolute;
+            margin-top: -41px;
+            margin-left: 400px;
+        }
+        .fa-eye-slash{
+            position: absolute;
+            margin-top: -41px;
+            margin-left: 400px;
+        }
+        .close-icon{
+            cursor: pointer;
+            padding-left: 160px;
+        }
+        .alert.alert-success {
+            position: relative;
+            border-radius: 5px;
+            padding: 10px;
+            animation-name: fadeOut;
+            animation-duration: 0.5s;
+            animation-delay: 4.5s;
+            animation-fill-mode: forwards;
+        }
+
+        @keyframes fadeOut {
+            0% {
+                opacity: 1;
+                transform: scale(1);
+                border-color: #189E1C;
+            }
+
+            50% {
+                opacity: 0.5;
+                transform: scale(1.1);
+                border-color: #189E1C;
+            }
+
+            100% {
+                opacity: 0;
+                transform: scale(1.2);
+                border-color: transparent;
+            }
+        }
+    </style>
     <a href="#" id="back-to-top"></a>
+    <script>
+        function togglePasswordVisibility(inputId, iconId) { //nhấn icon eye để hiển thị mật khẩu
+            var input = document.getElementById(inputId);
+            var icon = document.getElementById(iconId);
+
+            if (input.type === "password") {
+                input.type = "text";
+                icon.classList.remove("fa-eye");
+                icon.classList.add("fa-eye-slash");
+            } else {
+                input.type = "password";
+                icon.classList.remove("fa-eye-slash");
+                icon.classList.add("fa-eye");
+            }
+        }
+
+        var closeIcons = document.querySelectorAll('.close-icon'); //đóng thông báo
+        closeIcons.forEach(function(icon) {
+            icon.addEventListener('click', function() {
+                var alert = this.parentElement;
+                alert.style.display = 'none';
+            });
+        });
+        setTimeout(function() {
+            var alert = document.querySelector('.alert.alert-success'); //sau 5s tu dong mat
+            if (alert) {
+                alert.style.animationName = 'fadeOut';
+                setTimeout(function() {
+                    alert.remove();
+                }, 500);
+            }
+        }, 5000);
+    </script>
+
 @endsection

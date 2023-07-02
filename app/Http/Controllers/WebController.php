@@ -8,6 +8,8 @@ use App\Models\Car;
 use App\Models\CarReview;
 use App\Models\CarType;
 use App\Models\ContactUsQuery;
+use Illuminate\Support\Facades\Hash;
+use App\Models\DrivingLicenses;
 use App\Models\Gallery;
 use App\Models\Rental;
 use App\Models\RentalRate;
@@ -33,6 +35,8 @@ class WebController extends Controller
             "countRental"=>$countRental,
         ]);
     }
+
+    //Start CarList
     private function mergeCode($cars) { //Hàm này dùng để gộp code chung của trang Cars cho gọn
         $brands = Brand::all();
         $carTypes = CarType::all();
@@ -131,6 +135,7 @@ class WebController extends Controller
             "selectedSeats" => $seats
         ]));
     }
+    //End CarList
 
     public function checkCar(Request $request) {
         $car_id = $request->get("car_id");
@@ -277,26 +282,27 @@ class WebController extends Controller
         ]);
     }
 
+
+    //Start account-booking
     public function myOrders() {
         $user = auth()->user();
         $customer_id = $user->id; // Chi lay nhung don hang cua tai khoan đang đăng nhập
 
         $pendingOrders = Rental::where('status', 0)->where('user_id', $customer_id)->orderBy('id')->get();
         $confirmedOrders = Rental::where('status', 1)->where('user_id', $customer_id)->orderBy('id')->get();
-        $shippingOrders = Rental::where('status', 2)->where('user_id', $customer_id)->orderBy('id')->get();
-        $shippedOrders = Rental::where('status', 3)->where('user_id', $customer_id)->orderBy('id')->get();
-        $completedOrders = Rental::where('status', 4)->where('user_id', $customer_id)->orderBy('id')->get();
-        $cancelledOrders = Rental::where('status', 5)->where('user_id', $customer_id)->orderBy('id')->get();
+        $inProgress = Rental::where('status', 2)->where('user_id', $customer_id)->orderBy('id')->get();
+        $completedOrders = Rental::where('status', 3)->where('user_id', $customer_id)->orderBy('id')->get();
+        $cancelledOrders = Rental::where('status', 4)->where('user_id', $customer_id)->orderBy('id')->get();
         return view("web.account-booking",[
             'user' => $user,
             'pendingOrders' => $pendingOrders,
             'confirmedOrders' => $confirmedOrders,
-            'shippingOrders' => $shippingOrders,
-            'shippedOrders' => $shippedOrders,
+            'inProgress' => $inProgress,
             'completedOrders' => $completedOrders,
             'cancelledOrders' => $cancelledOrders
         ]);
     }
+    //End account-booking
 
     public function dashboard(User $user) {
         $rental= Rental::limit(10)->where("user_id", auth()->user()->id)->get();
@@ -312,10 +318,127 @@ class WebController extends Controller
             ]);
     }
 
+    //Start account profile
     public function profile() {
         $user = auth()->user();
         return view("web.account-profile",[
             'user' => $user,
         ]);
     }
+
+    public function updateProfileSave(Request $request) {
+        $request->validate([
+            "name" => "required",
+            "email" => "required|email",
+            "phone" => "required|min:10|max:12",
+            "old_password" => "required",
+            "new_password" => "required|min:8|confirmed",
+        ], [
+            "email.email" => "Please enter the correct email format",
+            "min" => "Phone number must be more than :min characters",
+            "max" => "Phone number must be less than :max characters",
+            "new_password.min" => "Password must be more than :min characters",
+            "confirmed" => "The new password confirmation does not match.",
+        ]);
+
+        $user = auth()->user();
+        if (!Hash::check($request->old_password, $user->password)) { //kiểm tra mật khẩu cũ xem đúng chưa
+            return redirect()->back()->withErrors(["old_password" => "The old password is incorrect"]);
+        }
+        if (Hash::check($request->new_password, $user->password)) { //nếu mật khẩu mới trùng với mật khẩu cũ thì hiện thông báo
+            return redirect()->back()->withErrors(["new_password" => "Old and new passwords match"]);
+        }
+
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->phone = $request->phone;
+
+        if ($request->new_password) { //lưu mật khẩu mới
+            $user->password = Hash::make($request->new_password);
+        }
+        $user->save();
+
+        return redirect()->to("/account-profile")->with("success", "Profile updated successfully");
+    }
+
+    public function profileLicenses() {
+        $user = auth()->user();
+        return view("web.account-profile-licenses",[
+            'user' => $user,
+        ]);
+    }
+
+    public function updateLicensesSave(Request $request){
+        $request->validate([
+            'name' => 'required',
+            'license_number' => 'required|min:10|max:14',
+            'issue_date' => 'required|date_format:Y-m-d',
+            'expiration_date' => 'required|date_format:Y-m-d',
+            'thumbnail_1' => 'required|image',
+            'thumbnail_2' => 'required|image',
+        ], [
+            'required' => 'Please complete all information',
+            'min' => 'Must enter at least :min characters',
+            'max' => 'Enter a value not exceeding :max characters',
+            'image' => 'The file must be an image',
+            'date_format' => 'You entered the wrong date format',
+        ]);
+
+        //Cap nhap lai ten nguoi dung neu can
+        $user = auth()->user();
+        $user->name = $request->input('name');
+        $user->save();
+
+        //Thong bao nếu người dùng điền quá 10 năm
+        $expirationDate = Carbon::createFromFormat('Y-m-d', $request->input('expiration_date'));
+        $currentDate = Carbon::now();
+        if ($expirationDate->diffInYears($currentDate) > 10 || $expirationDate->diffInYears($currentDate) < 0) {
+            return redirect()->back()->withErrors(['expiration_date' => 'Your license term exceeds 10 years']);
+        }
+        //Thông báo nếu người dùng điền ngày phát hành lớn hơn ngày hết hạn
+        $issueDate = Carbon::createFromFormat('Y-m-d', $request->input('issue_date'));
+        if ($expirationDate <= $issueDate) {
+            return redirect()->back()->withErrors(['expiration_date' => 'The expiration date must be greater than the issue date']);
+        }
+
+
+        //Lưu chữ thông tin giấy phép lái xe được tạo mới hoặc cập nhập -> rồi lưu vào database
+        $drivingLicense = DrivingLicenses::firstOrNew(['user_id' => auth()->id()]);
+        $drivingLicense->license_number = $request->input('license_number');
+        $drivingLicense->issue_date = Carbon::createFromFormat('Y-m-d', $request->input('issue_date'));
+        $drivingLicense->expiration_date = $expirationDate;
+
+        //Tạo thư mục uploadLicenses
+        $path = public_path('uploadLicenses');
+        if (!file_exists($path)) {
+            mkdir($path, 0755, true);
+        }
+
+        //Lưu ảnh vào uploadLicenses
+        $thumbnail1Uploaded = $request->file('thumbnail_1');
+        $thumbnail1Name = $thumbnail1Uploaded->getClientOriginalName();
+        $thumbnail1Uploaded->move($path, $thumbnail1Name);
+        $drivingLicense->thumbnail_1 = 'uploadLicenses/' . $thumbnail1Name;
+
+        $thumbnail2Uploaded = $request->file('thumbnail_2');
+        $thumbnail2Name = $thumbnail2Uploaded->getClientOriginalName();
+        $thumbnail2Uploaded->move($path, $thumbnail2Name);
+        $drivingLicense->thumbnail_2 = 'uploadLicenses/' . $thumbnail2Name;
+
+        $drivingLicense->save();
+
+        //Cập nhập trạng thái
+        if ($user->status == 0) {
+            $user->status = 1;
+        } elseif ($user->status == 2) {
+            $user->status = 1;
+        } elseif ($user->status == 3) {
+            $user->status = 1;
+        }
+
+        $user->save();
+
+        return redirect()->to('/account-profile-licenses')->with("success", "Your driver's license information has been updated successfully");
+    }
+    //End account profile
 }

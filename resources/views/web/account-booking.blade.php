@@ -29,9 +29,9 @@
                             </div>
                             <div class="spacer-20"></div>
                             <ul class="menu-col">
-                                <li><a href="account-dashboard.html"><i class="fa fa-home"></i>Dashboard</a></li>
-                                <li><a href="account-profile.html"><i class="fa fa-user"></i>My Profile</a></li>
-                                <li><a href="#" class="active"><i class="fa fa-calendar"></i>My Orders</a></li>
+                                <li><a href="{{url("/account-dashboard")}}"><i class="fa fa-home"></i>Dashboard</a></li>
+                                <li><a href="{{url("/account-profile")}}"><i class="fa fa-user"></i>My Profile</a></li>
+                                <li><a href="{{url("/account-booking")}}" class="active"><i class="fa fa-calendar"></i>My Orders</a></li>
                                 <li>
                                     <form action="{{route("logout")}}" method="post">
                                         @csrf
@@ -132,8 +132,8 @@
 
 {{--                        Shipping--}}
                         <div class="card p-4 rounded-5 mb25">
-                            <h4 class="rounded-pill" style="width: 180px;background-color: rgb(255,192,8);color: white;text-align: center">Shipping Orders</h4>
-                            @if($shippingOrders->isEmpty())
+                            <h4 class="rounded-pill" style="width: 180px;background-color: rgb(255,192,8);color: white;text-align: center">In Progress Orders</h4>
+                            @if($inProgress->isEmpty())
                                 <p class="text-center" style="margin-top: 20px;">If there is an order in this status, it will be displayed here!</p>
                             @else
                             <table class="table de-table">
@@ -149,7 +149,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($shippingOrders as $order)
+                                @foreach($inProgress as $order)
                                     <tr>
                                         <td><div class="badge bg-gray-100 text-dark">#{{ $order->id }}</div></td>
                                         <td><span class="bold">{{ $order->car->model }}</span></td>
@@ -172,49 +172,6 @@
                         </div>
 
                         {{--                        End Shipping--}}
-
-{{--                        Shipped--}}
-                        <div class="card p-4 rounded-5 mb25">
-                            <h4 class="rounded-pill" style="width: 180px;background-color: rgb(255,192,8);color: white;text-align: center">Shipped Orders</h4>
-                            @if($shippedOrders->isEmpty())
-                                <p class="text-center" style="margin-top: 20px;">If there is an order in this status, it will be displayed here!</p>
-                            @else
-                            <table class="table de-table">
-                                <thead>
-                                <tr>
-                                    <th scope="col"><span class="text-uppercase fs-12 text-gray">Order ID</span></th>
-                                    <th scope="col"><span class="text-uppercase fs-12 text-gray">Car Name</span></th>
-                                    <th scope="col"><span class="text-uppercase fs-12 text-gray">Pick Up Location</span></th>
-                                    <th scope="col"><span class="text-uppercase fs-12 text-gray">Pick Up Date</span></th>
-                                    <th scope="col"><span class="text-uppercase fs-12 text-gray">Return Date</span></th>
-                                    <th scope="col"><span class="text-uppercase fs-12 text-gray">Total Amount</span></th>
-                                    <th scope="col"><span class="text-uppercase fs-12 text-gray">Pay</span></th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                @foreach($shippedOrders as $order)
-                                    <tr>
-                                        <td><div class="badge bg-gray-100 text-dark">#{{ $order->id }}</div></td>
-                                        <td><span class="bold">{{ $order->car->model }}</span></td>
-                                        <td>{{ $order->address }}, {{ $order->pickup_location }}</td>
-                                        <td>{{ \Carbon\Carbon::parse($order->rental_date)->format('m/d/Y') }}</td>
-                                        <td>{{ \Carbon\Carbon::parse($order->return_date)->format('m/d/Y') }}</td>
-                                        <td>${{ $order->total_amount }}</td>
-                                        <td>
-                                            @if($order->is_paid)
-                                                <span class="text-success">Paid</span>
-                                            @else
-                                                <span class="text-danger">unPaid</span>
-                                            @endif
-                                        </td>
-                                    </tr>
-                                @endforeach
-                                </tbody>
-                            </table>
-                            @endif
-                        </div>
-
-                        {{--                        End Shipped--}}
 
 {{--                        Completed--}}
                         <div class="card p-4 rounded-5 mb25">

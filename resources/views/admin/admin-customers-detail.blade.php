@@ -22,8 +22,9 @@
                     <div class="ms-auto mt-md-0 mt-2">
                         @switch ($customer->status)
                             @case(0)<span class="btn btn-warning-light btn-wave">Unconfirmed</span>@break
-                            @case(1)<span class="btn btn-success-light btn-wave">Verified</span>@break
-                            @case(2)<span class="btn btn-danger-light btn-wave">Invalid</span>@break
+                            @case(1)<span class="btn btn-info-light btn-wave">Awaiting Confirmation</span>@break
+                            @case(2)<span class="btn btn-success-light btn-wave">Verified</span>@break
+                            @case(3)<span class="btn btn-danger-light btn-wave">Invalid</span>@break
                         @endswitch
                     </div>
                 </div>
@@ -39,19 +40,18 @@
                             <p class="fw-bold mb-1">Full Name:  {{ $customer->name }} </p>
                             <p class="text-muted mb-1">Phone:  {{ $customer->phone }} </p>
                             <p class="text-muted mb-1">Email:  {{ $customer->email }}</p>
-                            <p class="text-muted">License Number:
+                        </div>
+                        <div class="information-user-date col-xl-4 col-lg-4 col-md-6 col-sm-6 ms-auto mt-sm-0 mt-3">
+                            <p class="fw-bold mb-1">License Number:
                                 @if($license)
                                     {{ $license->license_number }}
                                 @else
                                     No license found
                                 @endif
                             </p>
-                        </div>
-
-                        <div class="information-user-date col-xl-4 col-lg-4 col-md-6 col-sm-6 ms-auto mt-sm-0 mt-3">
                             @if($license)
-                                <p class="text-muted mb-1">Issue Date: {{ \Carbon\Carbon::parse($license->issue_date)->format('m/d/Y') }}</p>
-                                <p class="text-muted mb-1">Expiration Date: {{ \Carbon\Carbon::parse($license->expiration_date)->format('m/d/Y') }}</p>
+                                <p class="text-muted mb-1">Issue Date: {{ \Carbon\Carbon::parse($license->issue_date)->format('d/m/Y') }}</p>
+                                <p class="text-muted mb-1">Expiration Date: {{ \Carbon\Carbon::parse($license->expiration_date)->format('d/m/Y') }}</p>
                             @else
                                 <p class="text-muted mb-1">Issue Date: No Data</p>
                                 <p class="text-muted mb-1">Expiration Date: No Data</p>
@@ -62,7 +62,7 @@
                     <div class="images-licenses">
                         <figure class="figure" style="margin-left: 40px">
                             @if($license && $license->thumbnail_1)
-                                <img class="images-licenses-front" src="{{ $license->thumbnail_1 }}" width="320px" height="200px">
+                                <img class="images-licenses-front" src="{{ $license->thumbnail_1 }}" width="320px" height="200px" style="object-fit: cover">
                                 <div class="zoomed-image">
                                     <span class="close-icon">&times;</span>
                                     <img src="{{ $license->thumbnail_1 }}">
@@ -76,7 +76,7 @@
 
                         <figure class="figure float-end" style="margin-right: 40px">
                             @if($license && $license->thumbnail_2)
-                                <img class="images-licenses-back" src="{{ $license->thumbnail_2 }}" width="320px" height="200px">
+                                <img class="images-licenses-back" src="{{ $license->thumbnail_2 }}" width="320px" height="200px" style="object-fit: cover">
                                 <div class="zoomed-image">
                                     <span class="close-icon">&times;</span>
                                     <img src="{{ $license->thumbnail_2 }}">
@@ -95,23 +95,23 @@
                     <b style="float: left">
                         Status:
                         @switch($customer->status)
-                            @case(0) <span
-                                class="text text-warning">Unconfirmed</span>@break
-                            @case(1) <span
-                                class="text text-success">Verified</span>@break
-                            @case(2) <span
-                                class="text text-danger">Invalid</span>@break
+                            @case(0)<span class="text text-warning">Unconfirmed</span>@break
+                            @case(1)<span class="text text-info">Awaiting Confirmation</span>@break
+                            @case(2)<span class="text text-success">Verified</span>@break
+                            @case(3)<span class="text text-danger">Invalid</span>@break
                         @endswitch
                     </b>
                     @switch ($customer->status)
                         @case(0)
+                            @break
+                        @case(1)
                             <a href="{{url("/admin/customers/confirm", ['id' => $customer->id])}}" class="btn bg-success">Confirmed</a>
                             <a href="{{url("/admin/customers/invalid", ['id' => $customer->id])}}" class="btn bg-danger">Invalid</a>
                             @break
-                        @case(1)
-                            @break
                         @case(2)
-                            <a href="" class="btn bg-teal">Submit a reconfirmation request</a>
+                            @break
+                        @case(3)
+                            <a href="{{url("/admin/customers/confirm", ['id' => $customer->id])}}" class="btn bg-success">Confirmed</a>
                             @break
                     @endswitch
                 </div>
@@ -215,13 +215,13 @@
             var zoomedImage = figure.querySelector('.zoomed-image');
             var closeIcon = figure.querySelector('.close-icon');
 
-            // Sự kiện click để phóng to ảnh
+            // click để phóng to ảnh
             img.addEventListener('click', function () {
                 figure.classList.add('zoomed');
                 document.body.style.overflow = 'hidden';
             });
 
-            // Sự kiện click để đóng ảnh
+            //click để đóng ảnh
             closeIcon.addEventListener('click', function () {
                 figure.classList.remove('zoomed');
                 document.body.style.overflow = 'auto';

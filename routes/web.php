@@ -29,7 +29,14 @@ Route::post("/contact/create", [\App\Http\Controllers\WebController::class, "con
 Route::get("/car/{car:slug}", [\App\Http\Controllers\WebController::class, "car_detail"]);
 Route::match(['get', 'post'],"/car/check", [\App\Http\Controllers\WebController::class, "checkCar"]);
 Route::get("/account-dashboard", [\App\Http\Controllers\WebController::class, "dashboard"]);
+
+//Account Profile Start
 Route::get("/account-profile", [\App\Http\Controllers\WebController::class, "profile"]);
+Route::post("/account-profile", [\App\Http\Controllers\WebController::class, "updateProfileSave"]);
+Route::get("/account-profile-licenses", [\App\Http\Controllers\WebController::class, "profileLicenses"]);
+Route::post("/account-profile-licenses", [\App\Http\Controllers\WebController::class, "updateLicensesSave"]);
+//Account Profile End
+
 Route::get("/account-booking", [\App\Http\Controllers\WebController::class, "myOrders"]);
 // website end
 
