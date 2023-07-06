@@ -152,21 +152,25 @@ class AdminController extends Controller
     }
     public function admin_savecarimages(Request $request){
         $request->validate([
-            'thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'thumbnail' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        $thumbnailPath = null;
-        if ($request->hasFile('thumbnail')) {
-            $thumbnail = $request->file('thumbnail');
-            $thumbnailName = time() . '.' . $thumbnail->getClientOriginalExtension();
-            $thumbnail->move(public_path('images/gallery'), $thumbnailName);
-            $thumbnailPath = 'images/gallery/' . $thumbnailName;
+        $gallery = $request->file('gallery');
+
+        if ($gallery) {
+            foreach ($gallery as $image) {
+                if ($image->isValid()) {
+                    $imageName = time() . '_' . $image->getClientOriginalName();
+                    $image->move(public_path('images/gallery'), $imageName);
+
+                    // Tạo dữ liệu cho bảng Gallery
+                    Gallery::create([
+                        'thumbnail' => 'images/gallery/' . $imageName,
+                        'car_id' => $request->get("car_id")
+                    ]);
+                }
+            }
         }
-
-        Gallery::create([
-            'thumbnail' => $thumbnailPath,
-            'car_id'=>$request->get("car_id")
-        ]);
 
         return redirect()->to("/admin/cars");
     }
