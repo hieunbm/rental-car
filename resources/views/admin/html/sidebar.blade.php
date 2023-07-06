@@ -65,7 +65,7 @@
                     <a href="javascript:void(0);" class="side-menu__item"> <i class="fa-solid fa-building side-menu__icon"></i> <span class="side-menu__label">Brands</span> <i class="fe fe-chevron-right side-menu__angle"></i> </a>
                     <ul class="slide-menu child1 mega-menu">
                         <li class="slide"><a href="{{url("/admin/brands")}}" class="side-menu__item">Brands</a></li>
-                        <li class="slide"><a href="{{url("/admin/add-brand/create")}}" class="side-menu__item">Add Brands</a></li>
+                        <li class="slide"><a href="{{url("/admin/add-brand")}}" class="side-menu__item">Add Brands</a></li>
                     </ul>
                 </li>
                 <!-- End::slide -->
