@@ -28,3 +28,6 @@
 <link rel="stylesheet" href="../dashboard/libs/@simonwep/pickr/themes/nano.min.css" />
 <!-- Choices Css -->
 <link rel="stylesheet" href="../dashboard/libs/choices.js/public/dashboard/styles/choices.min.css" />
+<!-- Thêm tệp CSS -->
+<link href="https://unpkg.com/filepond/dist/filepond.min.css" rel="stylesheet">
+

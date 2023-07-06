@@ -155,8 +155,16 @@
                                 <label for="text-area" class="form-label">Enter Car Description</label>
                                 <textarea name="description" class="form-control" id="text-area" rows="1"></textarea>
                             </div>
-                            <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12">
-                                <label for="input-number" class="form-label">Price Rent By Day</label> <input name="rentalrate_price" type="number"
+                            {{--                                Rent by Day--}}
+                                <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12">
+                                <label for="input-number" class="form-label">Price Rent By Day</label> <input name="rentalrate_price_day" type="number"
+                                                                                                       class="form-control"
+                                                                                                       id="input-number"
+                                                                                                       placeholder="Enter Rate"/>
+                            </div>
+                            {{--                                Rent by hour--}}
+                                <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12">
+                                <label for="input-number" class="form-label">Price Rent By Hours</label> <input name="rentalrate_price_hours" type="number"
                                                                                                        class="form-control"
                                                                                                        id="input-number"
                                                                                                        placeholder="Enter Rate"/>

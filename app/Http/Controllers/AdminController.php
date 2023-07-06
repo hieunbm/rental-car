@@ -185,33 +185,44 @@ class AdminController extends Controller
             $file->move($path,$fileName);
             $thumbnail = "/images/cars/".$fileName;
         }
-        Car::create([
-            'license_plate'=>$request->get("license_plate"),
-            'model'=>$request->get("model"),
-            'price'=>$request->get("price"),
-            'slug'=>Str::slug($request->get("name")),
-            'brand_id'=>$request->get("brand_id"),
-            'carType_id'=>$request->get("carType_id"),
-            'thumbnail'=>$thumbnail,
-            'fuelType'=>$request->get("fuelType"),
-            'transmission'=>$request->get("transmission"),
-            'km_limit'=>$request->get("km_limit"),
-            'modelYear'=>$request->get("modelYear"),
-            'reverse_sensor'=>$request->get("reverse_sensor"),
-            'airConditioner'=>$request->get("airConditioner"),
-            'driverAirbag'=>$request->get("driverAirbag"),
-            'cDPlayer'=>$request->get("cDPlayer"),
-            'brakeAssist'=>$request->get("brakeAssist"),
-            'seats'=>$request->get("seats"),
-            'status'=>$request->get("status"),
-            'description'=>$request->get("description"),
-            'rate'=>$request->get("rate"),
+        $car = Car::create([
+            'license_plate' => $request->get("license_plate"),
+            'model' => $request->get("model"),
+            'price' => $request->get("price"),
+            'slug' => Str::slug($request->get("name")),
+            'brand_id' => $request->get("brand_id"),
+            'carType_id' => $request->get("carType_id"),
+            'thumbnail' => $thumbnail,
+            'fuelType' => $request->get("fuelType"),
+            'transmission' => $request->get("transmission"),
+            'km_limit' => $request->get("km_limit"),
+            'modelYear' => $request->get("modelYear"),
+            'reverse_sensor' => $request->get("reverse_sensor"),
+            'airConditioner' => $request->get("airConditioner"),
+            'driverAirbag' => $request->get("driverAirbag"),
+            'cDPlayer' => $request->get("cDPlayer"),
+            'brakeAssist' => $request->get("brakeAssist"),
+            'seats' => $request->get("seats"),
+            'status' => $request->get("status"),
+            'description' => $request->get("description"),
+            'rate' => $request->get("rate"),
         ]);
+
+        $carId = $car->id;
+
         RentalRate::create([
-            'car_id'=>$request->get('car_id'),
-            'rental_type'=>$request->get('rental_type'),
-            'price'=>$request->get('rentalrate_price'),
+            'car_id' => $carId,
+            'rental_type' => 'rental by day',
+            'price' => $request->get('rentalrate_price_day'),
         ]);
+
+        RentalRate::create([
+            'car_id' => $carId,
+            'rental_type' => 'rental by hours',
+            'price' => $request->get('rentalrate_price_hours'),
+        ]);
+
+
         return redirect()->to("/admin/cars");
     }
     public function admin_carsEdit($id){
