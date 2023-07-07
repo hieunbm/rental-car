@@ -20,10 +20,63 @@
                             <div class="p-4 rounded-3 shadow-soft" data-bgcolor="#ffffff">
                                 <div id='contact_form'>
                                     <div id="step-1" class="row">
-                                        <div class="col-lg-12">
+                                        <div class="col-lg-6 mb30">
                                             <div class="row">
-                                                <div class="col-lg-3"></div>
-                                                <div class="col-lg-3 mb50">
+                                                <div class="col-lg-6 mb20">
+                                                    <h5>Full Name</h5>
+                                                    <input class="form-control" value="{{auth()->user()->name}}"
+                                                           type="text" readonly/>
+                                                    <div class="jls-address-preview jls-address-preview--hidden">
+                                                        <div class="jls-address-preview__header">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 mb20">
+                                                    <h5>Pick Up Location</h5>
+                                                    <select name="pickup_location" id="pickup_location" onchange="showAddressInput()" class="form-control">
+                                                        <option>Chose Location</option>
+                                                        <option value="pick up the car at the store">pick up the car at the store</option>
+                                                        <option value="pick up car at home (only 15km radius)">pick up car at home (only 15km radius)</option>
+                                                    </select>
+                                                    <div class="jls-address-preview jls-address-preview--hidden">
+                                                        <div class="jls-address-preview__header">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 mb20">
+                                                    <h5>Email</h5>
+                                                    <input type="text" name="email" placeholder="sample@yourcompany.com"
+                                                           autocomplete="off" class="form-control">
+                                                    <div class="jls-address-preview jls-address-preview--hidden">
+                                                        <div class="jls-address-preview__header">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 mb20">
+                                                    <h5>Telephone</h5>
+                                                    <input type="text" name="telephone" placeholder="+66-4353434"
+                                                           autocomplete="off" class="form-control">
+                                                    <div class="jls-address-preview jls-address-preview--hidden">
+                                                        <div class="jls-address-preview__header">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-6 mb20">
+                                                    <h5>Choose a rental type</h5>
+                                                    <select name="rental_rate" id="mySelect2" class="form-control"
+                                                            onchange="updateInput()">
+                                                        @foreach($rentalrate as $rt)
+                                                            <option value="{{$rt->rental_type}}" >{{$rt->rental_type}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                                <div class="col-lg-6 mb20">
+                                                    <h5>Price</h5>
+                                                    <input name="car_price" class="form-control" type="text" id="myLable" readonly/>
+                                                </div>
+                                                <div class="col-lg-6 mb20">
                                                     <h5>Pick Up Date & Time</h5>
                                                     <div class="date-time-field">
                                                         <input type="text" id="date-picker" name="rental_date"
@@ -225,276 +278,15 @@
                                                         </select>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-3 mb50">
-                                                    <h5>Return Date & Time</h5>
-                                                    <div class="date-time-field">
-                                                        <input type="text" id="date-picker-2" name="return_date"
-                                                               value="{{$return_day}}">
-                                                        <select name="return_time" id="collection-time">
-                                                            <option selected disabled value="Select time">Time</option>
-                                                            <option
-                                                                {{ $return_time == '00:00' ? 'selected' : '' }} value="00:00">
-                                                                00:00
-                                                            </option>
-                                                            <option
-                                                                {{ $return_time == '00:30' ? 'selected' : '' }}  value="00:30">
-                                                                00:30
-                                                            </option>
-                                                            <option
-                                                                {{ $return_time == '01:00' ? 'selected' : '' }}  value="01:00">
-                                                                01:00
-                                                            </option>
-                                                            <option
-                                                                {{ $return_time == '01:30' ? 'selected' : '' }}  value="01:30">
-                                                                01:30
-                                                            </option>
-                                                            <option
-                                                                {{ $return_time == '02:00' ? 'selected' : '' }}  value="02:00">
-                                                                02:00
-                                                            </option>
-                                                            <option
-                                                                {{ $return_time == '02:30' ? 'selected' : '' }}  value="02:30">
-                                                                02:30
-                                                            </option>
-                                                            <option
-                                                                {{ $return_time == '03:00' ? 'selected' : '' }}  value="03:00">
-                                                                03:00
-                                                            </option>
-                                                            <option
-                                                                {{ $return_time == '03:30' ? 'selected' : '' }}  value="03:30">
-                                                                03:30
-                                                            </option>
-                                                            <option
-                                                                {{ $return_time == '04:00' ? 'selected' : '' }}  value="04:00">
-                                                                04:00
-                                                            </option>
-                                                            <option
-                                                                {{ $return_time == '04:30' ? 'selected' : '' }}  value="04:30">
-                                                                04:30
-                                                            </option>
-                                                            <option
-                                                                {{ $return_time == '05:00' ? 'selected' : '' }}  value="05:00">
-                                                                05:00
-                                                            </option>
-                                                            <option
-                                                                {{ $return_time == '05:30' ? 'selected' : '' }}  value="05:30">
-                                                                05:30
-                                                            </option>
-                                                            <option
-                                                                {{ $return_time == '06:00' ? 'selected' : '' }} value="06:00">
-                                                                06:00
-                                                            </option>
-                                                            <option
-                                                                {{ $return_time == '06:30' ? 'selected' : '' }} value="06:30">
-                                                                06:30
-                                                            </option>
-                                                            <option
-                                                                {{ $return_time == '07:00' ? 'selected' : '' }} value="07:00">
-                                                                07:00
-                                                            </option>
-                                                            <option
-                                                                {{ $return_time == '07:30' ? 'selected' : '' }} value="07:30">
-                                                                07:30
-                                                            </option>
-                                                            <option
-                                                                {{ $return_time == '08:00' ? 'selected' : '' }} value="08:00">
-                                                                08:00
-                                                            </option>
-                                                            <option
-                                                                {{ $return_time == '08:30' ? 'selected' : '' }} value="08:30">
-                                                                08:30
-                                                            </option>
-                                                            <option
-                                                                {{ $return_time == '09:00' ? 'selected' : '' }} value="09:00">
-                                                                09:00
-                                                            </option>
-                                                            <option
-                                                                {{ $return_time == '09:30' ? 'selected' : '' }} value="09:30">
-                                                                09:30
-                                                            </option>
-                                                            <option
-                                                                {{ $return_time == '10:00' ? 'selected' : '' }} value="10:00">
-                                                                10:00
-                                                            </option>
-                                                            <option
-                                                                {{ $return_time == '10:30' ? 'selected' : '' }} value="10:30">
-                                                                10:30
-                                                            </option>
-                                                            <option
-                                                                {{ $return_time == '11:00' ? 'selected' : '' }} value="11:00">
-                                                                11:00
-                                                            </option>
-                                                            <option
-                                                                {{ $return_time == '11:30' ? 'selected' : '' }} value="11:30">
-                                                                11:30
-                                                            </option>
-                                                            <option
-                                                                {{ $return_time == '12:00' ? 'selected' : '' }} value="12:00">
-                                                                12:00
-                                                            </option>
-                                                            <option
-                                                                {{ $return_time == '12:30' ? 'selected' : '' }} value="12:30">
-                                                                12:30
-                                                            </option>
-                                                            <option
-                                                                {{ $return_time == '13:00' ? 'selected' : '' }} value="13:00">
-                                                                13:00
-                                                            </option>
-                                                            <option
-                                                                {{ $return_time == '13:30' ? 'selected' : '' }} value="13:30">
-                                                                13:30
-                                                            </option>
-                                                            <option
-                                                                {{ $return_time == '14:00' ? 'selected' : '' }} value="14:00">
-                                                                14:00
-                                                            </option>
-                                                            <option
-                                                                {{ $return_time == '14:30' ? 'selected' : '' }} value="14:30">
-                                                                14:30
-                                                            </option>
-                                                            <option
-                                                                {{ $return_time == '15:00' ? 'selected' : '' }} value="15:00">
-                                                                15:00
-                                                            </option>
-                                                            <option
-                                                                {{ $return_time == '15:30' ? 'selected' : '' }} value="15:30">
-                                                                15:30
-                                                            </option>
-                                                            <option
-                                                                {{ $return_time == '16:00' ? 'selected' : '' }} value="16:00">
-                                                                16:00
-                                                            </option>
-                                                            <option
-                                                                {{ $return_time == '16:30' ? 'selected' : '' }} value="16:30">
-                                                                16:30
-                                                            </option>
-                                                            <option
-                                                                {{ $return_time == '17:00' ? 'selected' : '' }} value="17:00">
-                                                                17:00
-                                                            </option>
-                                                            <option
-                                                                {{ $return_time == '17:30' ? 'selected' : '' }} value="17:30">
-                                                                17:30
-                                                            </option>
-                                                            <option
-                                                                {{ $return_time == '18:00' ? 'selected' : '' }} value="18:00">
-                                                                18:00
-                                                            </option>
-                                                            <option
-                                                                {{ $return_time == '18:30' ? 'selected' : '' }} value="18:30">
-                                                                18:30
-                                                            </option>
-                                                            <option
-                                                                {{ $return_time == '19:00' ? 'selected' : '' }} value="19:00">
-                                                                19:00
-                                                            </option>
-                                                            <option
-                                                                {{ $return_time == '19:30' ? 'selected' : '' }} value="19:30">
-                                                                19:30
-                                                            </option>
-                                                            <option
-                                                                {{ $return_time == '20:00' ? 'selected' : '' }} value="20:00">
-                                                                20:00
-                                                            </option>
-                                                            <option
-                                                                {{ $return_time == '20:30' ? 'selected' : '' }} value="20:30">
-                                                                20:30
-                                                            </option>
-                                                            <option
-                                                                {{ $return_time == '21:00' ? 'selected' : '' }} value="21:00">
-                                                                21:00
-                                                            </option>
-                                                            <option
-                                                                {{ $return_time == '21:30' ? 'selected' : '' }} value="21:30">
-                                                                21:30
-                                                            </option>
-                                                            <option
-                                                                {{ $return_time == '22:00' ? 'selected' : '' }} value="22:00">
-                                                                22:00
-                                                            </option>
-                                                            <option
-                                                                {{ $return_time == '22:30' ? 'selected' : '' }} value="22:30">
-                                                                22:30
-                                                            </option>
-                                                            <option
-                                                                {{ $return_time == '23:00' ? 'selected' : '' }} value="23:00">
-                                                                23:00
-                                                            </option>
-                                                            <option
-                                                                {{ $return_time == '23:30' ? 'selected' : '' }} value="23:30">
-                                                                23:30
-                                                            </option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-3"></div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6 mb30">
-                                            <div class="row">
                                                 <div class="col-lg-6 mb20">
-                                                    <h5>Full Name</h5>
-                                                    <input class="form-control" value="{{auth()->user()->name}}"
-                                                           type="text" readonly/>
-                                                    <div class="jls-address-preview jls-address-preview--hidden">
-                                                        <div class="jls-address-preview__header">
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-lg-6 mb20">
-                                                    <h5>Pick Up Location</h5>
-                                                    <select name="pickup_location" id="mySelect" class="form-control">
-                                                        <option>Chose Location</option>
-                                                        <option value="pick up the car at the store">pick up the car at the store</option>
-                                                        <option value="pick up car at home (only 15km radius)">pick up car at home (only 15km radius)</option>
-                                                    </select>
-                                                    <div class="jls-address-preview jls-address-preview--hidden">
-                                                        <div class="jls-address-preview__header">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-6 mb20">
-                                                    <h5>Email</h5>
-                                                    <input type="text" name="email" placeholder="sample@yourcompany.com"
-                                                           autocomplete="off" class="form-control">
-                                                    <div class="jls-address-preview jls-address-preview--hidden">
-                                                        <div class="jls-address-preview__header">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-6 mb20">
-                                                    <h5>Telephone</h5>
-                                                    <input type="text" name="telephone" placeholder="+66-4353434"
-                                                           autocomplete="off" class="form-control">
-                                                    <div class="jls-address-preview jls-address-preview--hidden">
-                                                        <div class="jls-address-preview__header">
-                                                        </div>
-                                                    </div>
+                                                    <h5>Expected number of days/hours</h5>
+                                                    <input onchange="updateInput()" name="expected" id="expected" value="{{$expected}}" class="form-control" type="number"/>
                                                 </div>
                                             </div>
-                                            <div class="row">
-                                                <div class="col-lg-6 mb20">
-                                                    <h5>Choose a rental type</h5>
-                                                    <select name="rental_rate" id="mySelect2" class="form-control"
-                                                            onchange="updateInput()">
-                                                        <option selected>Choose Rental Type</option>
-                                                        @foreach($rentalrate as $rt)
-                                                            <option value="{{$rt->rental_type}}" >{{$rt->rental_type}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-
-                                                <div class="col-lg-6 mb20">
-                                                    <h5>Price</h5>
-                                                    <input name="car_price" class="form-control" type="text" id="myLable" readonly/>
-                                                </div>
-
-                                            </div>
-                                            <div class="col-lg-12 mb30">
+                                            <div class="col-lg-12 mb30" id="address_input" style="display: none;">
                                                 <h5>Address</h5>
-                                                <textarea type="text" name="address" id="autocomplete"
-                                                          autocomplete="off" class="form-control"></textarea>
+                                                <input type="text" name="address" id="address"
+                                                       autocomplete="off" class="form-control"/>
                                                 <div class="jls-address-preview jls-address-preview--hidden">
                                                     <div class="jls-address-preview__header">
                                                     </div>
@@ -516,10 +308,10 @@
                                                         @foreach($services as $item)
                                                             <div class="de_checkbox">
                                                                 <input id="vehicle_type_{{$item->id}}"
-                                                                       name="{{$item->id}}" type="checkbox"
-                                                                       value="{{$item->id}}">
+                                                                       name="services[]" type="checkbox"
+                                                                       value="{{$item->price}}" onchange="calculateTotal()">
                                                                 <label
-                                                                    for="vehicle_type_{{$item->id}}">{{$item->title}}</label>
+                                                                    for="vehicle_type_{{$item->id}}">{{$item->title}} (${{$item->price}})</label>
                                                             </div>
                                                         @endforeach
                                                     </div>
@@ -530,7 +322,7 @@
                                             <div class="d-flex justify-content-between mb-3 userdetails">
                                                 <p class="fw-bold">{{$car->model}}</p>
                                                 <p class="fw-lighter"><span
-                                                        class="fas fa-dollar-sign"></span>${{$car->price}}</p>
+                                                        class="fas fa-dollar-sign"></span>{{$car->price}}</p>
                                             </div>
                                             <div id="my" class="carousel slide carousel-fade img-details"
                                                  data-bs-ride="carousel"
@@ -714,17 +506,18 @@
                                                 <div class="p-3 bg-light bg-opacity-10">
                                                     <h6 class="card-title mb-3">Order Summary</h6>
                                                     <div class="d-flex justify-content-between mb-1 small">
-                                                        <span>Subtotal</span> <span>$214.50</span>
+                                                        <span>Subtotal</span> <span id="subtotal">$0.00</span>
                                                     </div>
                                                     <div class="d-flex justify-content-between mb-1 small">
-                                                        <span>Shipping</span> <span>$20.00</span>
+                                                        <span>Service</span> <span id="service">$0.00</span>
                                                     </div>
-                                                    <div class="d-flex justify-content-between mb-1 small">
-                                                        <span>Coupon (Code: NEWYEAR)</span> <span class="text-danger">-$10.00</span>
-                                                    </div>
+
                                                     <hr>
                                                     <div class="d-flex justify-content-between mb-4 small">
-                                                        <span>TOTAL</span> <strong class="text-dark">$224.50</strong>
+                                                        <span>TOTAL</span> <strong class="text-dark" id="total">$0.00</strong>
+                                                    </div>
+                                                    <div class="d-flex justify-content-between mb-4 small">
+                                                        <span>DEPOSIT</span> <strong class="text-dark" id="deposit">$0.00</strong>
                                                     </div>
                                                     <div class="form-check mb-1 small">
                                                         <input class="form-check-input" type="checkbox" value="" id="tnc">
@@ -738,7 +531,7 @@
                                                             Get emails about product updates and events. If you change your mind, you can unsubscribe at any time. <a href="#">Privacy Policy</a>
                                                         </label>
                                                     </div>
-                                                    <button class="btn btn-primary w-100 mt-2">Place order</button>
+                                                    <button type="submit" class="btn btn-primary w-100 mt-2">Car Deposit</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -813,6 +606,57 @@
             var selectedId = select.value;
 
             lable.value = rentalMethodData[selectedId];
+
+            var carPrice = document.getElementById('myLable').value;
+            var days = parseFloat(document.getElementById('expected').value);
+
+            console.log(days);
+            // Calculate subtotal based on pickup date and car price
+            var subtotal = parseFloat(days) * parseFloat(carPrice);
+
+            console.log(subtotal)
+            // Update the subtotal value on the UI
+            document.getElementById('subtotal').textContent = '$' + subtotal.toFixed(2);
+
+            // Recalculate the total whenever the subtotal changes
+            calculateTotal();
+        }
+
+        function showAddressInput() {
+            var pickupLocation = document.getElementById('pickup_location').value;
+            var addressInput = document.getElementById('address_input');
+
+            if (pickupLocation === 'pick up car at home (only 15km radius)') {
+                addressInput.style.display = 'block';
+            } else {
+                addressInput.style.display = 'none';
+            }
+        }
+
+        function calculateTotal() {
+            var subtotal = parseFloat(document.getElementById('subtotal').textContent.replace('$', ''));
+
+            // Calculate additional services total
+            var additionalServicesTotal = 0;
+
+            @foreach($services as $item)
+            if (document.getElementById('vehicle_type_{{$item->id}}').checked) {
+                additionalServicesTotal += {{$item->price}};
+            }
+            @endforeach
+
+
+            // Calculate the total by adding subtotal and additional services total
+            var total = 0;
+
+            total = subtotal + additionalServicesTotal;
+            var deposit = 0;
+
+            deposit = total * (30/100);
+            // Update the total value on the UI
+            document.getElementById('total').textContent = '$' + total.toFixed(2);
+            document.getElementById('service').textContent = '$' + additionalServicesTotal.toFixed(2);
+            document.getElementById('deposit').textContent = '$' + deposit.toFixed(2);
         }
     </script>
 @endsection
