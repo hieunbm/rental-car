@@ -28,6 +28,6 @@
 <link rel="stylesheet" href="../dashboard/libs/@simonwep/pickr/themes/nano.min.css" />
 <!-- Choices Css -->
 <link rel="stylesheet" href="../dashboard/libs/choices.js/public/dashboard/styles/choices.min.css" />
-<!-- Thêm tệp CSS -->
-<link href="https://unpkg.com/filepond/dist/filepond.min.css" rel="stylesheet">
-
+{{--Add Libary DropZone--}}
+<script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />

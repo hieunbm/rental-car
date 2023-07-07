@@ -23,8 +23,3 @@
 <script src="../dashboard/js/custom.js"></script>
 <!-- Fontawesome -->
 <script src="https://kit.fontawesome.com/5c282fdeb6.js" crossorigin="anonymous"></script>
-
-<!-- Thêm các tệp JavaScript -->
-<script src="https://unpkg.com/filepond/dist/filepond.min.js"></script>
-<script src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.min.js"></script>
-<script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.min.js"></script>

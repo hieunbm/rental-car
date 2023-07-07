@@ -151,28 +151,29 @@ class AdminController extends Controller
         ]);
     }
     public function admin_savecarimages(Request $request){
-        $request->validate([
-            'thumbnail' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
-        ]);
+        $carId = $request->input("car_id");
 
-        $gallery = $request->file('gallery');
-
-        if ($gallery) {
-            foreach ($gallery as $image) {
-                if ($image->isValid()) {
-                    $imageName = time() . '_' . $image->getClientOriginalName();
-                    $image->move(public_path('images/gallery'), $imageName);
-
-                    // Tạo dữ liệu cho bảng Gallery
-                    Gallery::create([
-                        'thumbnail' => 'images/gallery/' . $imageName,
-                        'car_id' => $request->get("car_id")
-                    ]);
-                }
+        $thumbnails = [];
+        if ($request->hasFile('thumbnail')) {
+            foreach ($request->file('thumbnail') as $thumbnail) {
+                $thumbnailExtension = $thumbnail->getClientOriginalExtension();
+                $thumbnailName = uniqid() . '.' . $thumbnailExtension;
+                $thumbnail->move(public_path('images/gallery'), $thumbnailName);
+                $thumbnailPath = 'images/gallery/' . $thumbnailName;
+                $thumbnails[] = $thumbnailPath;
             }
         }
 
-        return redirect()->to("/admin/cars");
+        // Lưu các đối tượng thumbnail vào cơ sở dữ liệu
+        foreach ($thumbnails as $thumbnailPath) {
+            Gallery::create([
+                'thumbnail' => $thumbnailPath,
+                'car_id' => $carId
+            ]);
+        }
+
+        // Trả về phản hồi JSON cho Dropzone
+        return response()->json(['success' => true]);
     }
     public function admin_savecar(Request $request){
         $request->validate([
@@ -213,6 +214,7 @@ class AdminController extends Controller
         ]);
 
         $carId = $car->id;
+
 
         RentalRate::create([
             'car_id' => $carId,
