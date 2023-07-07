@@ -21,9 +21,10 @@ Route::get("/car-filter/type/{carType:slug}", [\App\Http\Controllers\WebControll
 Route::get("/car-filter/price", [\App\Http\Controllers\WebController::class, "car_filter_price"]);
 Route::get("/car-filter/seats/{seats}", [\App\Http\Controllers\WebController::class, "car_filter_seats"]);
 Route::get("/about", [\App\Http\Controllers\WebController::class, "about"]);
-//Route::get("/check-car/{car}", [\App\Http\Controllers\WebController::class, "checkCar"]);
-Route::post("/booking", [\App\Http\Controllers\WebController::class, "placeOrder"]);
+
 Route::get("/booking", [\App\Http\Controllers\WebController::class, "booking"]);
+Route::post("/booking", [\App\Http\Controllers\WebController::class, "placeOrder"]);
+
 Route::get("/contact", [\App\Http\Controllers\WebController::class, "contact"]);
 Route::post("/contact/create", [\App\Http\Controllers\WebController::class, "contact_contactSave"]);
 Route::get("/car/{car:slug}", [\App\Http\Controllers\WebController::class, "car_detail"]);
@@ -35,8 +36,10 @@ Route::get("/account-profile", [\App\Http\Controllers\WebController::class, "pro
 Route::post("/account-profile", [\App\Http\Controllers\WebController::class, "updateProfileSave"]);
 Route::get("/account-profile-licenses", [\App\Http\Controllers\WebController::class, "profileLicenses"]);
 Route::post("/account-profile-licenses", [\App\Http\Controllers\WebController::class, "updateLicensesSave"]);
+// 2 cái này dùng cho paypal
+Route::get('/success-transaction/{rental}', [\App\Http\Controllers\WebController::class, 'successTransaction'])->name('successTransaction');
+Route::get('/cancel-transaction/{renatl}', [\App\Http\Controllers\WebController::class, 'cancelTransaction'])->name('cancelTransaction');
 //Account Profile End
-
 Route::get("/account-booking", [\App\Http\Controllers\WebController::class, "myOrders"]);
 // website end
 
