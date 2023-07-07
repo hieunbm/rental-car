@@ -39,7 +39,7 @@
                         </div>
                     </div>
                     <button type="submit" class="btn btn-primary">Submit</button>
-                    <span id="error-message">Please choose a photo</span>
+                    <span id="error-message">Please choose a photo for gallery</span>
                 </form>
             </div>
         </div>

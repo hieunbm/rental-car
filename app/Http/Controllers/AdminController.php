@@ -215,24 +215,6 @@ class AdminController extends Controller
 
         $carId = $car->id;
 
-        $thumbnails = [];
-        if ($request->hasFile('thumbnail')) {
-            foreach ($request->file('thumbnail') as $thumbnail) {
-                $thumbnailExtension = $thumbnail->getClientOriginalExtension();
-                $thumbnailName = uniqid() . '.' . $thumbnailExtension;
-                $thumbnail->move(public_path('images/gallery'), $thumbnailName);
-                $thumbnailPath = 'images/gallery/' . $thumbnailName;
-                $thumbnails[] = $thumbnailPath;
-            }
-        }
-
-        // Lưu các đối tượng thumbnail vào cơ sở dữ liệu
-        foreach ($thumbnails as $thumbnailPath) {
-            Gallery::create([
-                'thumbnail' => $thumbnailPath,
-                'car_id' => $carId
-            ]);
-        }
 
         RentalRate::create([
             'car_id' => $carId,
