@@ -19,6 +19,6 @@ class Service extends Model
         'price',
     ];
     public function rental(){
-        return $this->belongsToMany(Rental::class, "rental_service");
+        return $this->belongsToMany(Rental::class, "rental_service")->withPivot('price');
     }
 }

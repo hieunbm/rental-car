@@ -19,6 +19,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use Srmklive\PayPal\Services\PayPal as PayPalClient;
 use function Webmozart\Assert\Tests\StaticAnalysis\email;
 
 class WebController extends Controller
@@ -206,15 +207,125 @@ class WebController extends Controller
             "pickup_location" => "required",
             "telephone" => "required|min:10|max:12",// ít nhất 10 và nhiều nhất 12
             "email" => "required",
-            "payment_method" => "required",
             "rental_type" => "required",
             "car_price" => "required|numeric|min:0",
         ], [// mảng các thông điệp
 
         ]);
-        Rental::create([
-            "user_id" => auth()->user()->id,
-        ]);
+
+        if (!auth()->check()) {
+            return redirect('/login');
+        }
+        // reset rental_date and expected
+        $rental_dayString = $request->get("rental_date");
+        $rental_timeString = $request->get("rental_time");
+        $expected = $request->get("expected");
+        $rental_day = Carbon::createFromFormat('F j, Y', $rental_dayString);
+        $rental_time = Carbon::createFromFormat('H:i', $rental_timeString);
+        $rental_date = $rental_day->setTime($rental_time->hour, $rental_time->minute, $rental_time->second);
+        Session::put('rental_date', $rental_date);
+        Session::put('expected', $expected);
+
+        if (Session::has('car')) {
+            $car = Session::get('car');
+            $rental_date = Session::get('rental_date');
+            $expected = Session::get('expected');
+        } else {
+            return redirect('/car-list');
+        }
+        // lưu trữ rental
+        $rental = new Rental();
+        $rental->user_id = auth()->user()->id;
+        $rental->car_id = $car->id;
+        $rental->rental_date = $rental_date;
+        $rental->expected = $expected;
+        $rental->pickup_location = $request->get("pickup_location");
+        $rental->email = $request->get("email");
+        $rental->telephone = $request->get("telephone");
+        $rental->rental_type = $request->get("rental_type");
+        $rental->car_price = $request->get("car_price");
+        $rental->car_price = $request->get("car_price");
+        $rental->desposit_type = $request->get("desposit_type");
+        $rental->desposit_amount = $request->get("desposit_amount");
+        $rental->total_amount = $request->get("total_amount");
+        $rental->status = 0;
+        $rental->save();
+        // Lưu dữ liệu từ checkbox vào bảng trung gian service_rental
+        if ($request->has('services')) {
+            $selectedServices = $request->input('services');
+
+            $services = Service::whereIn('id', $selectedServices)->get();
+
+            foreach ($services as $service) {
+                $rental->service()->attach($service->id, ['price' => $service->price]);
+            }
+        }
+
+        // Kiểm tra và lưu message vào bảng rentals
+        $message = $request->input('message');
+        if ($message) {
+            $rental->message = $message;
+            $rental->save();
+        }
+        // Kiểm tra và lưu address vào bảng rentals
+        $address = $request->input('address');
+        if ($address) {
+            $rental->address = $address;
+            $rental->save();
+        }
+
+        // thanh toan bang paypal
+        if ($rental->desposit_type == "PAYPAL") {
+            $provider = new PayPalClient;
+            $provider->setApiCredentials(config('paypal'));
+            $paypalToken = $provider->getAccessToken();
+
+            $response = $provider->createOrder([
+                "intent" => "CAPTURE",
+                "application_context" => [
+                    "return_url" => route('successTransaction', ["rental" => $rental->id]),
+                    "cancel_url" => route('cancelTransaction', ["rental" => $rental->id]),
+                ],
+                "purchase_units" => [
+                    0 => [
+                        "amount" => [
+                            "currency_code" => "USD",
+                            "value" => number_format($rental->desposit_amount, 2, ".", "")
+                        ]
+                    ]
+                ]
+            ]);
+
+            if (isset($response['id']) && $response['id'] != null) {
+
+                // redirect to approve href
+                foreach ($response['links'] as $links) {
+                    if ($links['rel'] == 'approve') {
+                        return redirect()->away($links['href']);
+                    }
+                }
+
+            }
+        } else if ($rental->desposit_type == "VNPAY") {
+            // thanh toan = vnpay
+        }
+        // xóa session
+        session()->forget("car");
+        session()->forget("rental_date");
+        session()->forget("expected");
+        // chuyển đến trang home
+        return redirect()->to("/");
+    }
+
+    public function successTransaction(Rental $rental, Request $request)
+    {
+        $rental->update(["is_desposit_paid" => true, "status" => 1]);// đã thanh toán, trạng thái về xác nhận
+//        return redirect()->to("/thank-you/" . $order->id);
+    }
+
+    public function cancelTransaction(Request $request)
+    {
+        return "error";
     }
 
     public function about()

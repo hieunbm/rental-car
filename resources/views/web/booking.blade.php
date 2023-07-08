@@ -13,7 +13,8 @@
 
         <section id="section-hero" aria-label="section" class="no-top mt-80 sm-mt-0">
             <div class="container">
-                <form>
+                <form method="POST" action="{{url("/booking")}}">
+                    @csrf
                     <div class="row align-items-center">
                         <div class="col-lg-12">
                             <div class="spacer-single sm-hide"></div>
@@ -65,7 +66,7 @@
                                             <div class="row">
                                                 <div class="col-lg-6 mb20">
                                                     <h5>Choose a rental type</h5>
-                                                    <select name="rental_rate" id="mySelect2" class="form-control"
+                                                    <select name="rental_type" id="mySelect2" class="form-control"
                                                             onchange="updateInput()">
                                                         @foreach($rentalrate as $rt)
                                                             <option value="{{$rt->rental_type}}" >{{$rt->rental_type}}</option>
@@ -309,7 +310,7 @@
                                                             <div class="de_checkbox">
                                                                 <input id="vehicle_type_{{$item->id}}"
                                                                        name="services[]" type="checkbox"
-                                                                       value="{{$item->price}}" onchange="calculateTotal()">
+                                                                       value="{{ $item->id }}" onchange="calculateTotal()">
                                                                 <label
                                                                     for="vehicle_type_{{$item->id}}">{{$item->title}} (${{$item->price}})</label>
                                                             </div>
@@ -471,30 +472,29 @@
                                                         <h4>Payment Method</h4>
                                                         <div class="row">
                                                             <div class="col-md-auto col-sm-auto ">
-                                                                <div
-                                                                    class="custom-control custom-radio custom-control-inline ">
-                                                                    <input id="customRadioInline11" type="radio"
-                                                                           name="customRadioInline11"
-                                                                           class="custom-control-input" checked="true">
-                                                                    <label for="customRadioInline11"
-                                                                           class="custom-control-label label-radio">
-                                                                        <img
-                                                                            src="https://img.icons8.com/color/48/000000/visa.png"
-                                                                            class="card-image">
+                                                                <div class="checkout__input__checkbox">
+                                                                    <label for="payment">
+                                                                        VN Pay
+                                                                        <input name="desposit_type" type="radio" id="payment" value="VNPAY">
+                                                                        <span class="checkmark"></span>
                                                                     </label>
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-auto col-sm">
-                                                                <div
-                                                                    class="custom-control custom-radio custom-control-inline ">
-                                                                    <input id="customRadioInline22" type="radio"
-                                                                           name="customRadioInline11"
-                                                                           class="custom-control-input">
-                                                                    <label for="customRadioInline22"
-                                                                           class="custom-control-label label-radio">
-                                                                        <img
-                                                                            src="https://img.icons8.com/officel/48/000000/discover.png"
-                                                                            class="card-image">
+                                                                <div class="checkout__input__checkbox">
+                                                                    <label for="paypal">
+                                                                        Paypal
+                                                                        <input name="desposit_type" type="radio" id="paypal" value="PAYPAL">
+                                                                        <span class="checkmark"></span>
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-auto col-sm">
+                                                                <div class="checkout__input__checkbox">
+                                                                    <label for="COD">
+                                                                        COD
+                                                                        <input name="desposit_type" type="radio" id="COD" value="COD">
+                                                                        <span class="checkmark"></span>
                                                                     </label>
                                                                 </div>
                                                             </div>
@@ -531,6 +531,8 @@
                                                             Get emails about product updates and events. If you change your mind, you can unsubscribe at any time. <a href="#">Privacy Policy</a>
                                                         </label>
                                                     </div>
+                                                    <input type="hidden" value="" id="desposit_amount" name="desposit_amount" />
+                                                    <input type="hidden" value="" id="total_amount" name="total_amount" />
                                                     <button type="submit" class="btn btn-primary w-100 mt-2">Car Deposit</button>
                                                 </div>
                                             </div>
@@ -610,11 +612,9 @@
             var carPrice = document.getElementById('myLable').value;
             var days = parseFloat(document.getElementById('expected').value);
 
-            console.log(days);
             // Calculate subtotal based on pickup date and car price
             var subtotal = parseFloat(days) * parseFloat(carPrice);
 
-            console.log(subtotal)
             // Update the subtotal value on the UI
             document.getElementById('subtotal').textContent = '$' + subtotal.toFixed(2);
 
@@ -657,6 +657,11 @@
             document.getElementById('total').textContent = '$' + total.toFixed(2);
             document.getElementById('service').textContent = '$' + additionalServicesTotal.toFixed(2);
             document.getElementById('deposit').textContent = '$' + deposit.toFixed(2);
+            document.getElementById('desposit_amount').value = deposit;
+            document.getElementById('total_amount').value = total;
+
         }
+
+
     </script>
 @endsection
