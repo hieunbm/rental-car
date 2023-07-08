@@ -491,6 +491,15 @@
                                                             </div>
                                                             <div class="col-md-auto col-sm">
                                                                 <div class="checkout__input__checkbox">
+                                                                    <label for="momo">
+                                                                        MoMo
+                                                                        <input name="desposit_type" type="radio" id="momo" value="MOMO">
+                                                                        <span class="checkmark"></span>
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-auto col-sm">
+                                                                <div class="checkout__input__checkbox">
                                                                     <label for="COD">
                                                                         COD
                                                                         <input name="desposit_type" type="radio" id="COD" value="COD">
