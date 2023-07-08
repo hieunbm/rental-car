@@ -309,8 +309,8 @@ class WebController extends Controller
     {
         $rental = Rental::limit(10)->where("user_id", auth()->user()->id)->get();
         $rentalCount = DB::table('rental')->where("user_id", auth()->user()->id)->count();
-        $rentalUpComing = DB::table('rental')->where("status", 0)->count();
-        $rentalCancel = DB::table('rental')->where("status", 0)->count();
+        $rentalUpComing = DB::table('rental')->where("user_id", auth()->user()->id)->where("status", 0)->count();
+        $rentalCancel = DB::table('rental')->where("user_id", auth()->user()->id)->where("status", 2)->count();
         return view("web.account-dashboard", [
             'rentalCount' => $rentalCount,
             'user' => $user,

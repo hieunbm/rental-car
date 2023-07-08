@@ -194,7 +194,7 @@ class AdminController extends Controller
             'license_plate' => $request->get("license_plate"),
             'model' => $request->get("model"),
             'price' => $request->get("price"),
-            'slug' => Str::slug($request->get("name")),
+            'slug' => Str::slug($request->get("model")),
             'brand_id' => $request->get("brand_id"),
             'carType_id' => $request->get("carType_id"),
             'thumbnail' => $thumbnail,
@@ -243,13 +243,40 @@ class AdminController extends Controller
     }
     public function admin_carsUpdate(Request $request, $id) {
         $request->validate([
-            "name"=>"required",
+            "model"=>"required",
         ],[
             // thong bao gi thi thong bao
         ]);
+        $thumbnail = null;
+        if($request->hasFile("thumbnail")){
+            $file = $request->file("thumbnail");
+            $fileName = time().$file->getClientOriginalName();
+            $path = public_path("images/cars");
+            $file->move($path,$fileName);
+            $thumbnail = "/images/cars/".$fileName;
+        }
         Car::where("id", $id)
             ->update([
-                "name" => $request->input("car"),
+                'license_plate' => $request->get("license_plate"),
+                'model' => $request->get("model"),
+                'price' => $request->get("price"),
+                'slug' => Str::slug($request->get("model")),
+                'brand_id' => $request->get("brand_id"),
+                'carType_id' => $request->get("carType_id"),
+                'thumbnail' => $thumbnail,
+                'fuelType' => $request->get("fuelType"),
+                'transmission' => $request->get("transmission"),
+                'km_limit' => $request->get("km_limit"),
+                'modelYear' => $request->get("modelYear"),
+                'reverse_sensor' => $request->get("reverse_sensor"),
+                'airConditioner' => $request->get("airConditioner"),
+                'driverAirbag' => $request->get("driverAirbag"),
+                'cDPlayer' => $request->get("cDPlayer"),
+                'brakeAssist' => $request->get("brakeAssist"),
+                'seats' => $request->get("seats"),
+                'status' => $request->get("status"),
+                'description' => $request->get("description"),
+                'rate' => $request->get("rate"),
             ]);
         return redirect()->to("/admin/cars");
     }
