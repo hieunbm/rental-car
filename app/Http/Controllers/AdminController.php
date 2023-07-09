@@ -125,10 +125,34 @@ class AdminController extends Controller
         return redirect()->to("/admin/car-type");
     }
     public function admin_cartypeEdit($id) {
-
+        $carType = CarType::where("id", $id)->first();
+        return view("admin.admin-cartypeUpdate", [
+            "carTypes" => $carType
+        ]);
     }
     public function admin_cartypeUpdate(Request $request, $id) {
-
+        $request->validate([
+            "name"=>"required",
+            "description"=>"required"
+        ],[
+            // thong bao gi thi thong bao
+        ]);
+        $icon = null;
+        if($request->hasFile("icon")){
+            $file = $request->file("icon");
+            $fileName = time().$file->getClientOriginalName();
+            $path = public_path("images/select-form");
+            $file->move($path,$fileName);
+            $icon = "/images/select-form/".$fileName;
+        }
+        CarType::where("id", $id)
+            ->update([
+                "name" => $request->input("name"),
+                "slug"=>Str::slug($request->input("name")),
+                "icon"=>$icon,
+                "description"=>$request->input("description")
+            ]);
+        return redirect()->to("/admin/car-type");
     }
     public function admin_cartypeDelete(CarType $carType) {
         $carType->delete();
