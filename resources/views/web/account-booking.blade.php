@@ -32,6 +32,7 @@
                                 <li><a href="{{url("/account-dashboard")}}"><i class="fa fa-home"></i>Dashboard</a></li>
                                 <li><a href="{{url("/account-profile")}}"><i class="fa fa-user"></i>My Profile</a></li>
                                 <li><a href="{{url("/account-booking")}}" class="active"><i class="fa fa-calendar"></i>My Orders</a></li>
+                                <li><a href="{{url("/account-favorite-cars")}}"><i class="fa fa-heart"></i>My Favorite Cars</a></li>
                                 <li>
                                     <form action="{{route("logout")}}" method="post">
                                         @csrf

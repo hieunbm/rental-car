@@ -57,9 +57,11 @@
                                         <ul>
                                             <li><a class="menu-item" href="{{url("/account-dashboard")}}">Dashboard</a>
                                             </li>
-                                            <li><a class="menu-item" href="{{url("/account-profile")}}">My profile</a>
+                                            <li><a class="menu-item" href="{{url("/account-profile")}}">My Profile</a>
                                             </li>
-                                            <li><a class="menu-item" href="{{url("/account-booking")}}">My orders</a>
+                                            <li><a class="menu-item" href="{{url("/account-booking")}}">My Orders</a>
+                                            </li>
+                                            <li><a class="menu-item" href="{{url("/account-favorite-cars")}}">My Favorite Cars</a>
                                             </li>
                                             <li>
                                                 <form action="{{route("logout")}}" method="post">

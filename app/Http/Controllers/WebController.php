@@ -7,7 +7,9 @@ use App\Models\Brand;
 use App\Models\Car;
 use App\Models\CarReview;
 use App\Models\CarType;
+use App\Models\Category;
 use App\Models\ContactUsQuery;
+use App\Models\Product;
 use Illuminate\Support\Facades\Hash;
 use App\Models\DrivingLicenses;
 use App\Models\Gallery;
@@ -614,4 +616,36 @@ class WebController extends Controller
         return redirect()->to('/account-profile-licenses')->with("success", "Your driver's license information has been updated successfully");
     }
     //End account profile
+    public function favoriteCar()  {
+//        $products = session()->has("cart")?session()->get("cart"):[];
+//        $categories = Category::limit(10)->get();
+//        $total = 0;
+//        foreach ($products as $item){
+//            $total+= $item->price * $item->buy_qty;
+//        }
+//        return view("cart",[
+//            "products"=>$products,
+//            "categories"=>$categories,
+//            "total"=>$total
+//        ]);
+        $cars = session()->has("favoriteCar")?\session()->get("favoriteCar"):[];
+        return view("web.account-favorite-cars",[
+            "cars"=>$cars
+        ]);
+    }
+    public function addFavoriteCar(Car $car,Request $request)  {
+        $favorite = session()->has("favoriteCar")?session()->get("favoriteCar"):[];
+        $qty = $request->has("qty")?$request->get("qty"):1;
+        foreach ($favorite as $item){
+            if($item->id == $car->id){
+                $item->buy_qty = $item->buy_qty+$qty;
+                session(["favoriteCar"=>$favorite]);
+                return redirect()->to("/account-favorite-cars");
+            }
+        }
+        $car->buy_qty = $qty;
+        $favorite[] = $car;
+        session(["favoriteCar"=>$favorite]);
+        return redirect()->to("/account-favorite-cars");
+    }
 }
