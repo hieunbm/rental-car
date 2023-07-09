@@ -41,7 +41,7 @@ Route::get("/account-profile-licenses", [\App\Http\Controllers\WebController::cl
 Route::post("/account-profile-licenses", [\App\Http\Controllers\WebController::class, "updateLicensesSave"]);
 // 2 cái này dùng cho paypal
 Route::get('/success-transaction/{rental}', [\App\Http\Controllers\WebController::class, 'successTransaction'])->name('successTransaction');
-Route::get('/cancel-transaction/{renatl}', [\App\Http\Controllers\WebController::class, 'cancelTransaction'])->name('cancelTransaction');
+Route::get('/cancel-transaction/{rental}', [\App\Http\Controllers\WebController::class, 'cancelTransaction'])->name('cancelTransaction');
 //Account Profile End
 Route::get("/account-booking", [\App\Http\Controllers\WebController::class, "myOrders"]);
 // website end
