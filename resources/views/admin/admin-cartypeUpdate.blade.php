@@ -11,10 +11,6 @@
             <div class="card custom-card">
                 <div class="card-header justify-content-between">
                     <div class="card-title">Update Car Type</div>
-                    <div class="prism-toggle">
-                        <button class="btn btn-sm btn-primary-light">Show<i
-                                class="ri-code-line ms-2 d-inline-block align-middle"></i></button>
-                    </div>
                 </div>
                 <form  method="post" action="{{url("/admin/cartype/edit", $carTypes->id)}}" enctype="multipart/form-data"  class="row row-cols-lg-auto g-3 align-items-center">
                     @csrf
@@ -30,7 +26,8 @@
                             {{--                        icon--}}
                             <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12">
                                 <label for="input-file" class="form-label">Upload Icon</label>
-                                <input value="{{$carTypes->icons}}" name="icon" class="form-control" type="file" id="input-file" />
+                                <input value="{{$carTypes->icon}}" name="icon" class="form-control" type="file" id="input-file" />
+                                <span style="display: flex;justify-content: center"><img style="width: 250px;height: 200px;object-fit: contain;" src="{{$carTypes->icon}}"></span>
                             </div>
 
                             {{--                        Description--}}
