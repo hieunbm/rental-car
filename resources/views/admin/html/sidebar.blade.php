@@ -52,8 +52,18 @@
                     <ul class="slide-menu child1 mega-menu">
                         <li class="slide"><a href="{{url("/admin/cars")}}" class="side-menu__item">Cars</a></li>
                         <li class="slide"><a href="{{url("/admin/add-car")}}" class="side-menu__item">Add Cars</a></li>
+                    </ul>
+                </li>
+                <!-- End::slide -->
+
+                <!-- Start::slide__category -->
+                <li class="slide__category"><span class="category-name">Car Type</span></li>
+                <!-- End::slide__category -->
+                <!-- Start::slide -->
+                <li class="slide has-sub">
+                    <a href="javascript:void(0);" class="side-menu__item"> <i class="fa-solid fa-car side-menu__icon"></i> <span class="side-menu__label">Car Type</span> <i class="fe fe-chevron-right side-menu__angle"></i> </a>
+                    <ul class="slide-menu child1 mega-menu">
                         <li class="slide"><a href="{{url("/admin/car-type")}}" class="side-menu__item">Car Type</a></li>
-                        <li class="slide"><a href="{{url("/admin/cartype/create")}}" class="side-menu__item">Add Car Type</a></li>
                     </ul>
                 </li>
                 <!-- End::slide -->

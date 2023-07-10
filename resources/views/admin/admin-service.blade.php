@@ -20,16 +20,16 @@
                         <table class="table text-nowrap">
                             <thead class="table-primary">
                             <tr>
-                                <th scope="col">ID</th>
-                                <th scope="col">TITLE</th>
-                                <th scope="col">DESCRIPTION</th>
-                                <th scope="col">PRICE</th>
+                                <th scope="col">Id</th>
+                                <th scope="col">Title</th>
+                                <th scope="col">Description</th>
+                                <th scope="col">Price</th>
                                 <th scope="col">
-                                    CREATE AT
+                                    Create at
                                     <br>
-                                    UPDATE AT
+                                    Update at
                                 </th>
-                                <th scope="col">ACTION</th>
+                                <th scope="col">Action</th>
                             </tr>
                             </thead>
                             <tbody>
