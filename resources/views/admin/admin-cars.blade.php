@@ -69,7 +69,21 @@
                                 {{$item->modelYear}}
                             </td>
                             <td>
-                                {{$item->status}}
+                                @if($item->status==0)
+                                    New
+                                @elseif($item->status==1)
+                                    Used
+                                @elseif($item->status==2)
+                                    Excellent
+                                @elseif($item->status==3)
+                                    Good
+                                @elseif($item->status==4)
+                                    Fair
+                                @elseif($item->status==5)
+                                    Poor
+                                @elseif($item->status==6)
+                                    Salvage
+                                @endif
                             </td>
                             <td>
                                 <div class="hstack gap-2 fs-15">
