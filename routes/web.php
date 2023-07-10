@@ -24,6 +24,11 @@ Route::get("/about", [\App\Http\Controllers\WebController::class, "about"]);
 
 Route::get("/booking", [\App\Http\Controllers\WebController::class, "booking"]);
 Route::post("/booking", [\App\Http\Controllers\WebController::class, "placeOrder"]);
+Route::post("/bookings/{rental}/pay", [\App\Http\Controllers\WebController::class, "pay"]);
+Route::post("/bookings/{rental}/return", [\App\Http\Controllers\WebController::class, "return"]);
+Route::post("/bookings/{rental}/refund", [\App\Http\Controllers\WebController::class, "refund"]);
+Route::get("/order-invoice/{rental}", [\App\Http\Controllers\WebController::class, "detailRental"]);
+
 
 Route::get("/contact", [\App\Http\Controllers\WebController::class, "contact"]);
 Route::post("/contact/create", [\App\Http\Controllers\WebController::class, "contact_contactSave"]);

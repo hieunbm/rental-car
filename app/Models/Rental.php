@@ -36,7 +36,7 @@ class Rental extends Model
         'is_reviewed',
     ];
     public function car(){
-        return $this->belongsTo(Car::class);
+        return $this->belongsTo(Car::class, "car_id");
     }
     public function customer(){
         return $this->belongsTo(User::class, "user_id");

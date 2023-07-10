@@ -367,6 +367,18 @@ class WebController extends Controller
         return "error";
     }
 
+    public function pay(Request $request, Rental $rental) {
+
+    }
+
+    public function return(Request $request, Rental $rental) {
+
+    }
+
+    public function refund(Request $request, Rental $rental) {
+
+    }
+
     public function execPostRequest($url, $data)
     {
         $ch = curl_init($url);
@@ -426,6 +438,14 @@ class WebController extends Controller
             "status" => 0
         ]);
         return redirect()->to("/contact");
+    }
+
+    public function detailRental(Rental $rental) {
+        $user = auth()->user();
+        return view("web.invoice", [
+            'user' => $user,
+            "rental" => $rental
+        ]);
     }
 
     public function car_detail(Car $car)

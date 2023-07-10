@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Mail\OrderMail;
 use App\Models\Brand;
 use App\Models\Car;
 use App\Models\CarReview;
@@ -17,6 +18,7 @@ use App\Models\Service;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
 class AdminController extends Controller
@@ -57,7 +59,7 @@ class AdminController extends Controller
         // cập nhật status cuả order thành 1 (cònfirm)
         $rental->update(["status"=>1]);
         // gửi email cho khách báo đơn đã đc chuyển trạng thái
-
+        Mail::to($rental->email)->send(new OrderMail($rental));
         return redirect()->to("/admin/booking-detail/".$rental->id);
     }
     public function inProgress(Rental $rental){

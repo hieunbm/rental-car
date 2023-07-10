@@ -134,7 +134,6 @@
                                     @else
                                         <p style="text-align: center">Không có chi phí phụ</p>
                                     @endif
-
                                 </div>
                                 <div class="col-xl-3"></div>
                             </div>

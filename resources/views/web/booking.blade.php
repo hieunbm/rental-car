@@ -35,7 +35,6 @@
                                                 <div class="col-lg-6 mb20">
                                                     <h5>Pick Up Location</h5>
                                                     <select name="pickup_location" id="pickup_location" onchange="showAddressInput()" class="form-control">
-                                                        <option>Chose Location</option>
                                                         <option value="pick up the car at the store">pick up the car at the store</option>
                                                         <option value="pick up car at home (only 15km radius)">pick up car at home (only 15km radius)</option>
                                                     </select>
@@ -52,6 +51,9 @@
                                                         <div class="jls-address-preview__header">
                                                         </div>
                                                     </div>
+                                                    @error("email")
+                                                    <p class="text-danger"><i>{{$message}}</i></p>
+                                                    @enderror
                                                 </div>
                                                 <div class="col-lg-6 mb20">
                                                     <h5>Telephone</h5>
@@ -61,6 +63,9 @@
                                                         <div class="jls-address-preview__header">
                                                         </div>
                                                     </div>
+                                                    @error("telephone")
+                                                    <p class="text-danger"><i>{{$message}}</i></p>
+                                                    @enderror
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -508,6 +513,9 @@
                                                                 </div>
                                                             </div>
                                                         </div>
+                                                        @error("desposit_type")
+                                                        <p class="text-danger"><i>{{$message}}</i></p>
+                                                        @enderror
                                                     </div>
                                                 </div>
                                             </div>
