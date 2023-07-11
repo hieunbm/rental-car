@@ -36,6 +36,9 @@ Route::get("/car/{car:slug}", [\App\Http\Controllers\WebController::class, "car_
 Route::match(['get', 'post'],"/car/check", [\App\Http\Controllers\WebController::class, "checkCar"]);
 Route::get("/account-dashboard", [\App\Http\Controllers\WebController::class, "dashboard"]);
 
+Route::get("/receive/{rental}", [\App\Http\Controllers\WebController::class, "receive"]);
+Route::post("/receive/{rental}", [\App\Http\Controllers\WebController::class, "receiveSave"]);
+
 Route::get("/account-favorite-cars", [\App\Http\Controllers\WebController::class, "favoriteCar"]);
 Route::get("/add-favorite-cars/{car}", [\App\Http\Controllers\WebController::class, "addFavoriteCar"]);
 

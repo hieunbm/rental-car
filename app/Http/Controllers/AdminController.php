@@ -59,7 +59,7 @@ class AdminController extends Controller
         // cập nhật status cuả order thành 1 (cònfirm)
         $rental->update(["status"=>1]);
         // gửi email cho khách báo đơn đã đc chuyển trạng thái
-        Mail::to($rental->email)->send(new OrderMail($rental));
+//        Mail::to($rental->email)->send(new OrderMail($rental));
         return redirect()->to("/admin/booking-detail/".$rental->id);
     }
     public function inProgress(Rental $rental){

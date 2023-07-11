@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use App\Models\Car;
 use App\Models\CarReview;
+use App\Models\CarStatuses;
 use App\Models\CarType;
 use App\Models\Category;
 use App\Models\ContactUsQuery;
@@ -367,6 +368,58 @@ class WebController extends Controller
         return "error";
     }
 
+    public function receive(Request $request, Rental $rental) {
+        if ($rental->status == 3) {
+            return view("web.receiveCar", [
+                "rental" => $rental
+            ]);
+        } else {
+            return abort(404);
+        }
+
+    }
+    public function receiveSave(Request $request, Rental $rental) {
+
+        $request->validate([// mảng các quy tắt
+            "thumbnail_1" => "required",
+            "thumbnail_2" => "required",
+            "note" => "required",
+        ], [// mảng các thông điệp
+
+        ]);
+        if ($rental->status == 3) {
+            $thumbnail_1 = null;
+            $thumbnail_2 = null;
+
+            if($request->hasFile("thumbnail_1")){
+                $file = $request->file("thumbnail_1");
+                $fileName = time().$file->getClientOriginalName();
+                $path = public_path("images/car-status");
+                $file->move($path,$fileName);
+                $thumbnail_1 = "/images/car-status/".$fileName;
+            }
+            if($request->hasFile("thumbnail_2")){
+                $file = $request->file("thumbnail_2");
+                $fileName = time().$file->getClientOriginalName();
+                $path = public_path("images/car-status");
+                $file->move($path,$fileName);
+                $thumbnail_2 = "/images/car-status/".$fileName;
+            }
+//        dd($thumbnail_1);
+            CarStatuses::create([
+                "rental_id" =>$rental->id ,
+                "note" => $request->get("note"),
+                "thumbnail_1"=>$thumbnail_1,
+                "thumbnail_2"=>$thumbnail_2,
+            ]);
+            session()->flash('success', 'Nhận xe thành công.');
+            return redirect()->to("/order-invoice/".$rental->id);
+        } else {
+            return abort(404);
+        }
+
+
+    }
     public function pay(Request $request, Rental $rental) {
 
     }

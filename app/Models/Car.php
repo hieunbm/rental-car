@@ -17,6 +17,7 @@ class Car extends Model
         'license_plate',
         'model',
         'price',
+        'desposit',
         'slug',
         'brand_id',
         'carType_id',

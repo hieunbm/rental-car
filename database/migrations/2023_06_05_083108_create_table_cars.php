@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string("model");
             $table->string("slug");
             $table->unsignedDecimal("price");
+            $table->unsignedDecimal("desposit");
             $table->unsignedBigInteger("brand_id");
             $table->unsignedBigInteger("carType_id");
             $table->string("thumbnail");
