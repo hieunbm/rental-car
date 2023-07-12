@@ -11,6 +11,7 @@ use App\Models\CarType;
 use App\Models\Category;
 use App\Models\ContactUsQuery;
 use App\Models\Product;
+use App\Utilities\VNPay;
 use Illuminate\Support\Facades\Hash;
 use App\Models\DrivingLicenses;
 use App\Models\Gallery;
@@ -311,6 +312,12 @@ class WebController extends Controller
             }
         } else if ($rental->desposit_type == "VNPAY") {
             // thanh toan = vnpay
+            $data_url= VNPay::vnpay_create_payment([
+                'vnp_TxnRef'=>$rental->id,
+                'vnp_OrderInfo' => 'Mô tá don hang à dây...',
+                'vnp_Amount'=> $rental->total_amount*23000
+            ]);
+            return redirect()->to($data_url);
         } else if ($rental->desposit_type == "MOMO") {
             // thanh toan bang momo
             $endpoint = "https://test-payment.momo.vn/v2/gateway/api/create";
@@ -355,6 +362,21 @@ class WebController extends Controller
         session()->forget("expected");
         // chuyển đến trang home
         return redirect()->to("/");
+    }
+    public function vnPayCheck(Request $request,Rental $rental){
+        $vnp_ResponseCode= $request->get('vnp_ResponseCode');
+        $vnp_TxnRef=$request->get('vnp_TxnRef');
+        $vnp_Amount=$request->get('vnp_Amount');
+        if($vnp_ResponseCode==00) {
+            Rental::destroy();
+            $rental->update(["is_desposit_paid" => true, "status" => 1]);
+            // đã thanh toán, trạng thái về xác nhận
+        return redirect()->to("/thank-you/" . $rental->id)->with('notification','Success! Has paid online');
+        }
+        else{
+            $rental->update(["is_desposit_paid" => true, "status" => 0]);
+            return redirect()->to("/thank-you/" . $rental->id)->with('notification','ERROR: Payment failed or canceled');
+        }
     }
 
     public function successTransaction(Rental $rental, Request $request)
