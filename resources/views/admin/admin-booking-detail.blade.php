@@ -56,7 +56,9 @@
                                 <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 ms-auto mt-sm-0 mt-3">
                                     <p class="text-muted mb-2">TENDER (Party B) : </p>
                                     <p class="fw-bold mb-1">Full Name: {{$rental->customer->name}} </p>
-                                    <p class="text-muted mb-1">Address: {{$rental->address}} </p>
+                                    @if($rental->address != null)
+                                        <p class="text-muted mb-1">Address: {{$rental->address}} </p>
+                                    @endif
                                     <p class="text-muted mb-1">Email: {{$rental->email}} </p>
                                     <p class="text-muted">Phone: {{$rental->customer->phone}} </p></div>
                             </div>
@@ -99,7 +101,7 @@
                                             </tbody>
                                         </table>
                                     @else
-                                        <p style="text-align: center">Khoong sử dụng dịch vụ</p>
+                                        <p style="text-align: center">Do not use the service</p>
                                     @endif
 
                                 </div>
@@ -132,7 +134,7 @@
                                             </tbody>
                                         </table>
                                     @else
-                                        <p style="text-align: center">Không có chi phí phụ</p>
+                                        <p style="text-align: center">No extra costs</p>
                                     @endif
                                 </div>
                                 <div class="col-xl-3"></div>
@@ -148,8 +150,7 @@
                                     <thead>
                                     <tr>
                                         <th>CAR</th>
-                                        <th>RENTAL DATE</th>
-                                        <th>RETURN DATE</th>
+                                        <th>CAR PRICE</th>
                                         <th>PICKUP LOCATION</th>
                                         <th>TOTAL DAYS</th>
                                         <th>TOTAL CAR BOOKING</th>
@@ -158,11 +159,10 @@
                                     <tbody>
                                     <tr>
                                         <td>{{$rental->car->model}}</td>
-                                        <td>{{$rental->rental_date}}</td>
-                                        <td>{{$rental->return_date}}</td>
+                                        <td>{{$rental->car_price}}</td>
                                         <td>{{$rental->pickup_location}}</td>
-                                        <td>{{$numberdays}}</td>
-                                        <td> ${{$rental->car_price * $numberdays}}</td>
+                                        <td>{{$rental->expected}}</td>
+                                        <td> ${{$rental->car_price * $rental->expected}}</td>
                                     <tr>
                                         <td colspan="3"></td>
                                         <td colspan="3">
@@ -181,7 +181,7 @@
                                                 </tr>
                                                 <tr>
                                                     <th scope="row"><p class="mb-0">Sub Total :</p></th>
-                                                    <td><p class="mb-0 fw-semibold fs-15">${{$rental->car_price * $numberdays}}</p></td>
+                                                    <td><p class="mb-0 fw-semibold fs-15">${{$rental->car_price * $rental->expected}}</p></td>
                                                 </tr>
                                                 <tr>
                                                     <th scope="row"><p class="mb-0">Service Total :</p></th>
@@ -206,11 +206,14 @@
                             </div>
                         </div>
                         <div class="col-xl-12">
+                            @if($rental->message != null)
+                                <p class="ml10"><strong>Message:</strong> {{$rental->message}}</p>
+                            @endif
                             <p>
                                 <b>After discussion, both Parties have agreed to sign this contract on the terms and conditions as follows:</b>
                             </p>
                             <p><b>Article 1:</b> Rental period:</p>
-                            <p>1.1 Rental period is {{$numberdays}} days from {{$rental->rental_date}} to {{$rental->return_date}}</p>
+                            <p>1.1 Rental period is {{$rental->expected}} days from {{$rental->rental_date}} to {{$rental->return_date}}</p>
                             <p>1.2 Mileage Limit: {{$rental->car->km_limit}} Km/Day.</p>
                             <p>1.3 Place to pick up passengers: {{$rental->pickup_location}}.</p>
                             <p><b>Article 2:</b> Rental vehicles and charges</p>
@@ -247,10 +250,12 @@
                             @case(1) <span
                                 class="text text-blue">Confirmed</span>@break
                             @case(2) <span
-                                class="text text-warning">In Progress</span>@break
+                                class="text text-blue">Car Handover</span>@break
                             @case(3) <span
-                                class="text text-success">Completed</span>@break
+                                class="text text-warning">In Progress</span>@break
                             @case(4) <span
+                                class="text text-success">Completed</span>@break
+                            @case(5) <span
                                 class="text text-danger">Cancel</span>@break
                         @endswitch
                     </b>
@@ -266,9 +271,9 @@
                             </a>
                             @break
                         @case(1)
-                            <a href="{{url("admin/booking/in-progress", ["rental" => $rental->id])}}" class="btn btn-success float-right">
+                            <a href="{{url("admin/booking/car-handover", ["rental" => $rental->id])}}" class="btn btn-success float-right">
                                 <i class="far fa-credit-card"></i>
-                                In Progress
+                                Car Handover
                             </a>
                             <a href="{{url("admin/booking/cancel", ["rental" => $rental->id])}}" class="btn btn-danger float-right">
                                 <i class="far fa-credit-card"></i>
@@ -276,6 +281,12 @@
                             </a>
                             @break
                         @case(2)
+                            <a href="{{url("admin/booking/cancel", ["rental" => $rental->id])}}" class="btn btn-danger float-right">
+                                <i class="far fa-credit-card"></i>
+                                Cancel
+                            </a>
+                            @break
+                        @case(4)
                             <a href="{{url("admin/booking/complete", ["rental" => $rental->id])}}" class="btn btn-success float-right"><i class="far fa-credit-card"></i> Submit
                                 Completed
                             </a>
@@ -284,6 +295,9 @@
                             </a>
                             @break
                         @case(3)
+                            <a href="{{url("admin/booking/return-car", ["rental" => $rental->id])}}" class="btn btn-success float-right"><i class="far fa-credit-card"></i> Submit
+                                Nhận xe
+                            </a>
                             @break
                         @case(4)
                             @break

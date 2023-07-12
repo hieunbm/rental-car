@@ -391,7 +391,7 @@ class WebController extends Controller
     }
 
     public function receive(Request $request, Rental $rental) {
-        if ($rental->status == 3) {
+        if ($rental->status == 2) {
             return view("web.receiveCar", [
                 "rental" => $rental
             ]);
@@ -409,7 +409,7 @@ class WebController extends Controller
         ], [// mảng các thông điệp
 
         ]);
-        if ($rental->status == 3) {
+        if ($rental->status == 2) {
             $thumbnail_1 = null;
             $thumbnail_2 = null;
 
@@ -427,20 +427,22 @@ class WebController extends Controller
                 $file->move($path,$fileName);
                 $thumbnail_2 = "/images/car-status/".$fileName;
             }
-//        dd($thumbnail_1);
+
             CarStatuses::create([
                 "rental_id" =>$rental->id ,
                 "note" => $request->get("note"),
                 "thumbnail_1"=>$thumbnail_1,
                 "thumbnail_2"=>$thumbnail_2,
             ]);
+
+            $rental->status = 3;
+            $rental->save();
+
             session()->flash('success', 'Nhận xe thành công.');
             return redirect()->to("/order-invoice/".$rental->id);
         } else {
             return abort(404);
         }
-
-
     }
     public function pay(Request $request, Rental $rental) {
 
@@ -517,10 +519,15 @@ class WebController extends Controller
 
     public function detailRental(Rental $rental) {
         $user = auth()->user();
-        return view("web.invoice", [
-            'user' => $user,
-            "rental" => $rental
-        ]);
+        if ($rental->user_id == $user->id) {
+            return view("web.invoice", [
+                'user' => $user,
+                "rental" => $rental
+            ]);
+        } else {
+            return abort(404);
+        }
+
     }
 
     public function car_detail(Car $car)

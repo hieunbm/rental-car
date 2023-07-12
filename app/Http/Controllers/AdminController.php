@@ -28,16 +28,34 @@ class AdminController extends Controller
     }
     // start booking
     public function admin_booking() {
-        $rentals = Rental::orderBy("id", "asc")->paginate(12);
+        $rentals = Rental::orderBy("id", "desc")->paginate(12);
         return view("admin.admin-booking", [
             "rentals" => $rentals
         ]);
     }
     public function admin_booking_detail(Rental $rental) {
 
+        if ($rental->return_date != null) {
+            // xử lí lưu ngày trả xe
+            $rental->return_date = Carbon::now()->format('Y-m-d H:i:s');
+            $rental->save();
+            // xử lí ngày trả và tiền
+            $startDate = Carbon::parse($rental->rental_date);; // Ngày bắt đầu thuê
+            $endDate = Carbon::parse($rental->return_date); // Ngày kết thúc thuê
+            if ($rental->rental_type == "rent by day") {
+                $numberOfDays = $startDate->diffInDays($endDate);
+                // Kiểm tra nếu ngày thuê và ngày trả trùng nhau và đều là ngày hôm nay, thì số ngày thuê là 1
+                if ($numberOfDays === 0 && $startDate->isToday() && $endDate->isToday()) {
+                    $numberOfDays = 1;
+                }
+            } elseif ($rental->rental_type == "rent by hour") {
+                $numberOfDays =$startDate->diffInHours($endDate);
+            }
+            $rental->update(["expected"=>$numberOfDays]);
+        }
+
         $startDate = Carbon::parse($rental->rental_date);; // Ngày bắt đầu thuê
         $endDate = Carbon::parse($rental->return_date); // Ngày kết thúc thuê
-        $numberOfDays = $startDate->diffInDays($endDate);
         $services = $rental->service;
         $total = 0;
         foreach ($services as $item){
@@ -48,9 +66,10 @@ class AdminController extends Controller
             $totalFee += $item->expense;
         }
 
+        $rental->update(["total_amount"=>$total+$totalFee+$rental->expected*$rental->car_price]);
+
         return view("admin.admin-booking-detail", [
             "rental" => $rental,
-            "numberdays" => $numberOfDays,
             "total" => $total,
             "totalFee" => $totalFee
         ]);
@@ -62,23 +81,55 @@ class AdminController extends Controller
 //        Mail::to($rental->email)->send(new OrderMail($rental));
         return redirect()->to("/admin/booking-detail/".$rental->id);
     }
-    public function inProgress(Rental $rental){
-        // cập nhật status cuả order thành 1 (cònfirm)
+
+    public function carHandoverOrder(Rental $rental){
+        // cập nhật status cuả order (confirm)
         $rental->update(["status"=>2]);
         // gửi email cho khách báo đơn đã đc chuyển trạng thái
-
+//        Mail::to($rental->email)->send(new OrderMail($rental));
         return redirect()->to("/admin/booking-detail/".$rental->id);
     }
-    public function complete(Rental $rental){
+    public function inProgress(Rental $rental){
         // cập nhật status cuả order thành 1 (cònfirm)
         $rental->update(["status"=>3]);
         // gửi email cho khách báo đơn đã đc chuyển trạng thái
 
         return redirect()->to("/admin/booking-detail/".$rental->id);
     }
-    public function cancel(Rental $rental){
+
+    public function returnCar(Rental $rental)
+    {
+        // xử lí lưu ngày trả xe
+        $rental->return_date = Carbon::now()->format('Y-m-d H:i:s');
+        $rental->save();
+        // xử lí ngày trả và tiền
+        $startDate = Carbon::parse($rental->rental_date);; // Ngày bắt đầu thuê
+        $endDate = Carbon::parse($rental->return_date); // Ngày kết thúc thuê
+        if ($rental->rental_type == "rent by day") {
+            $numberOfDays = $startDate->diffInDays($endDate);
+            // Kiểm tra nếu ngày thuê và ngày trả trùng nhau và đều là ngày hôm nay, thì số ngày thuê là 1
+            if ($numberOfDays === 0 && $startDate->isToday() && $endDate->isToday()) {
+                $numberOfDays = 1;
+            }
+        } elseif ($rental->rental_type == "rent by hour") {
+            $numberOfDays =$startDate->diffInHours($endDate);
+        }
+        // Xử lý logic trả xe
+        $rental->update(["status"=>4, "is_car_returned"=>true]);
+
+        return redirect()->to("/admin/booking-detail/".$rental->id);
+    }
+
+    public function complete(Rental $rental){
         // cập nhật status cuả order thành 1 (cònfirm)
         $rental->update(["status"=>4]);
+        // gửi email cho khách báo đơn đã đc chuyển trạng thái
+
+        return redirect()->to("/admin/booking-detail/".$rental->id);
+    }
+    public function cancel(Rental $rental){
+        // cập nhật status cuả order thành 1 (cònfirm)
+        $rental->update(["status"=>5]);
         // gửi email cho khách báo đơn đã đc chuyển trạng thái
 
         return redirect()->to("/admin/booking-detail/".$rental->id);

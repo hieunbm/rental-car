@@ -91,12 +91,14 @@
                                             @case(0) <span
                                                 class="text text-dark">Pending</span>@break
                                             @case(1) <span
-                                                class="text text-blue">Comfirm</span>@break
+                                                class="text text-blue">Confirmed</span>@break
                                             @case(2) <span
-                                                class="text text-warning">In Progress</span>@break
+                                                class="text text-blue">Car Handover</span>@break
                                             @case(3) <span
-                                                class="text text-success">Complete</span>@break
+                                                class="text text-warning">In Progress</span>@break
                                             @case(4) <span
+                                                class="text text-success">Completed</span>@break
+                                            @case(5) <span
                                                 class="text text-danger">Cancel</span>@break
                                         @endswitch
                                     </td>

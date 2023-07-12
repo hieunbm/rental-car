@@ -93,11 +93,11 @@
                                                                 class="badge bg-dark text-white fw-bold">Pending</span>@break
                                                             @case(1) <span
                                                                 class="badge bg-info text-black fw-bold">Confirmed</span>@break
-                                                            @case(2) <span
-                                                                class="badge bg-warning text-black fw-bold">In Progress</span>@break
                                                             @case(3) <span
+                                                                class="badge bg-warning text-black fw-bold">In Progress</span>@break
+                                                            @case(5) <span
                                                                 class="badge bg-success text-black fw-bold">Completed</span>@break
-                                                            @case(4) <span
+                                                            @case(6) <span
                                                                 class="badge bg-danger text-black fw-bold">Cancel</span>@break
                                                         @endswitch
                                                     </li>
@@ -176,14 +176,14 @@
                                                             </tbody>
                                                         </table>
                                                     @else
-                                                        <p style="text-align: center">Khoong sử dụng dịch vụ</p>
+                                                        <p style="text-align: center">Do not use the service</p>
                                                     @endif
 
                                                 </div>
                                                 <div class="col-xl-3"></div>
                                             </div>
                                         </div>
-                                        <div class="row">
+                                        <div class="row mb-3">
                                             <h6 class="col-12" style="text-align: center">
                                                 ADDITIONAL COSTS
                                             </h6>
@@ -207,12 +207,12 @@
                                                         </tbody>
                                                     </table>
                                                 @else
-                                                    <p style="text-align: center">Không có chi phí phụ</p>
+                                                    <p style="text-align: center">No extra costs</p>
                                                 @endif
                                             </div>
                                             <div class="col-xl-3"></div>
                                         </div>
-                                        <div class="row">
+                                        <div class="row mb-5">
                                             <div class="table-responsive">
                                                 <table class="table nowrap text-nowrap border mt-4">
                                                     <thead>
@@ -232,11 +232,7 @@
                                                         <td>{{$rental->car_price}}</td>
                                                         <td> ${{$rental->car_price * $rental->expected}}</td>
                                                     <tr>
-                                                        <td colspan="3">
-                                                            @if($rental->message != null)
-                                                                <p class="mt-5 ml10"><strong>Message:</strong> {{$rental->message}}</p>
-                                                            @endif
-                                                        </td>
+                                                        <td colspan="3"></td>
                                                         <td colspan="3">
                                                             <table class="table table-sm text-nowrap mb-0 table-borderless">
                                                                 <tbody>
@@ -284,6 +280,37 @@
                                                 </table>
                                             </div>
                                         </div>
+                                        <div class="row mb-5">
+                                            @if($rental->message != null)
+                                                <p class="mt-5 ml10"><strong>Message:</strong> {{$rental->message}}</p>
+                                            @endif
+                                        </div>
+
+                                            @switch($rental->status)
+                                                @case(0)
+                                                    <a href="{{url("admin/booking/cancel", ["rental" => $rental->id])}}" class="btn btn-danger float-right">
+                                                        <i class="far fa-credit-card"></i>
+                                                        Cancel
+                                                    </a>
+                                                    @break
+                                                @case(1)
+                                                    @break
+                                                @case(2)
+                                                    <a href="{{url("/receive", ["rental" => $rental->id])}}" class="btn btn-success float-right">
+                                                        <i class="far fa-credit-card"></i>
+                                                        Receive Car
+                                                    </a>
+                                                    @break
+                                                @case(3)
+                                                    <a href="{{url("admin/booking/complete", ["rental" => $rental->id])}}" class="btn btn-success float-right"><i class="far fa-credit-card"></i> Submit
+                                                        Trả xe
+                                                    </a>
+                                                    @break
+                                                @case(4)
+                                                    @break
+                                                @case(5)
+                                                    @break
+                                            @endswitch
                                     </div>
                                 </div>
                             </div>

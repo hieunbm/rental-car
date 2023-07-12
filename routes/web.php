@@ -36,8 +36,10 @@ Route::get("/car/{car:slug}", [\App\Http\Controllers\WebController::class, "car_
 Route::match(['get', 'post'],"/car/check", [\App\Http\Controllers\WebController::class, "checkCar"]);
 Route::get("/account-dashboard", [\App\Http\Controllers\WebController::class, "dashboard"]);
 
+// receive start
 Route::get("/receive/{rental}", [\App\Http\Controllers\WebController::class, "receive"]);
 Route::post("/receive/{rental}", [\App\Http\Controllers\WebController::class, "receiveSave"]);
+// receive end
 
 Route::get("/account-favorite-cars", [\App\Http\Controllers\WebController::class, "favoriteCar"]);
 Route::get("/account-favorite-cars/add/{car}", [\App\Http\Controllers\WebController::class, "addFavoriteCar"]);
@@ -62,7 +64,9 @@ Route::prefix("/admin")->middleware(["auth", "admin"])->group(function () {// mi
     Route::get("/booking", [App\Http\Controllers\AdminController::class, "admin_booking"]);
     Route::get("/booking-detail/{rental}", [App\Http\Controllers\AdminController::class, "admin_booking_detail"]);
     Route::get("/booking/comfirm/{rental}", [App\Http\Controllers\AdminController::class, "confirmOrder"]);
+    Route::get("/booking/car-handover/{rental}", [App\Http\Controllers\AdminController::class, "carHandoverOrder"]);
     Route::get("/booking/in-progress/{rental}", [App\Http\Controllers\AdminController::class, "inProgress"]);
+    Route::get("/booking/return-car/{rental}", [App\Http\Controllers\AdminController::class, "returnCar"]);
     Route::get("/booking/complete/{rental}", [App\Http\Controllers\AdminController::class, "complete"]);
     Route::get("/booking/cancel/{rental}", [App\Http\Controllers\AdminController::class, "cancel"]);
     Route::get("/cars", [App\Http\Controllers\AdminController::class, "admin_cars"]);
