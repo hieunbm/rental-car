@@ -712,35 +712,45 @@ class WebController extends Controller
     }
     //End account profile
     public function favoriteCar()  {
-//        $products = session()->has("cart")?session()->get("cart"):[];
-//        $categories = Category::limit(10)->get();
-//        $total = 0;
-//        foreach ($products as $item){
-//            $total+= $item->price * $item->buy_qty;
-//        }
-//        return view("cart",[
-//            "products"=>$products,
-//            "categories"=>$categories,
-//            "total"=>$total
-//        ]);
-        $cars = session()->has("favoriteCar")?\session()->get("favoriteCar"):[];
+        $cars = session()->has("favoriteCar")?session()->get("favoriteCar"):[];
         return view("web.account-favorite-cars",[
             "cars"=>$cars
         ]);
     }
-    public function addFavoriteCar(Car $car,Request $request)  {
-        $favorite = session()->has("favoriteCar")?session()->get("favoriteCar"):[];
-        $qty = $request->has("qty")?$request->get("qty"):1;
-        foreach ($favorite as $item){
+    public function addFavoriteCar(Car $car)  {
+        $cars = session()->has("favoriteCar")?session()->get("favoriteCar"):[];
+        foreach ($cars as $item){
             if($item->id == $car->id){
-                $item->buy_qty = $item->buy_qty+$qty;
-                session(["favoriteCar"=>$favorite]);
+                session(["favoriteCar"=>$cars]);
                 return redirect()->to("/account-favorite-cars");
             }
         }
-        $car->buy_qty = $qty;
-        $favorite[] = $car;
-        session(["favoriteCar"=>$favorite]);
+        $cars[] = $car;
+        session(["favoriteCar"=>$cars]);
         return redirect()->to("/account-favorite-cars");
     }
+    public function deleteFavoriteCar(Car $car) {
+        $cars = session()->get("favoriteCar", []);
+
+        $index = null;
+        $count = count($cars);
+
+        for ($i = 0; $i < $count; $i++) {
+            if ($cars[$i]->id == $car->id) {
+                $index = $i;
+                break;
+            }
+        }
+
+        if ($index == null) {
+            unset($cars[$index]);
+            $cars = array_values($cars);
+
+            session(["favoriteCar" => $cars]);
+            return redirect()->to("/account-favorite-cars");
+        }
+
+        return redirect()->to("/")->with('error', 'Sản phẩm không tồn tại trong danh sách yêu thích.');
+
+        }
 }

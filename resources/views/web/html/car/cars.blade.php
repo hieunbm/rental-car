@@ -6,7 +6,12 @@
             </div>
             <div class="d-info">
                 <div class="d-text">
-                    <h4>{{$c->model}}</h4>
+                    <div style="display: flex">
+                        <h4>{{$c->model}}</h4>
+                        <div class="d-item_like" style="background-size: 100%; background-repeat: no-repeat; margin-left: 10px">
+                            <a href="{{url("/account-favorite-cars/add",["cars"=>$c->id])}}"><i class="fa fa-heart"></i></a>
+                        </div>
+                    </div>
                     <div class="d-atr-group">
                         <ul class="d-atr">
                             <li><span>Model Year:</span>{{$c->modelYear}}</li>
@@ -115,3 +120,11 @@
         </div>
     </div>
 @endforeach
+<style>
+    .fa {
+        color: #cecece;
+    }
+    .fa-heart:hover{
+        color: red;
+    }
+</style>

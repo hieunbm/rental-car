@@ -1,5 +1,7 @@
 @extends("web.layout.layout")
-@section("title","Dashboard")
+@section("name")
+    My Favorite Cars
+@endsection
 @section("main")
     <div class="no-bottom no-top zebra" id="content">
         <div id="top"></div>
@@ -41,8 +43,8 @@
                                 </ul>
                             </div>
                         </div>
-                        @foreach($cars as $c)
                             <div class="col-lg-9">
+                                @foreach($cars as $c)
                                 <div class="de-item-list no-border mb30">
                                     <div class="d-img">
                                         <img src="{{$c->thumbnail}}" class="img-fluid" alt="">
@@ -56,22 +58,22 @@
                                                     <li><span>Seats:</span>{{$c->seats}}</li>
                                                     <li><span>Transmission:</span>{{$c->transmission}}</li>
                                                     <li><span>Fuel:</span>{{$c->fuelType}}</li>
-                                                    @if($c->reverse_sensor == 1)
+                                                    @if($c->reverse_sensor)
                                                         <li>Reverse sensor<i class="fa fa-check" style="color: #199e1c; margin-left: 5px" aria-hidden="true"></i></li>
                                                     @else
                                                         <li>Reverse sensor<i class="fa fa-times" style="margin-left: 5px" aria-hidden="true"></i></li>
                                                     @endif
-                                                    @if($c->airConditioner == 1)
+                                                    @if($c->airConditioner)
                                                         <li>Air Conditioner<i class="fa fa-check" style="color: #199e1c; margin-left: 5px" aria-hidden="true"></i></li>
                                                     @else
                                                         <li>Air Conditioner<i class="fa fa-times" style="margin-left: 5px" aria-hidden="true"></i></li>
                                                     @endif
-                                                    @if($c->cDPlayer == 1)
+                                                    @if($c->cDPlayer)
                                                         <li>CD Player<i class="fa fa-check" style="color: #199e1c; margin-left: 5px" aria-hidden="true"></i></li>
                                                     @else
                                                         <li>CD Player<i class="fa fa-times" style="margin-left: 5px" aria-hidden="true"></i></li>
                                                     @endif
-                                                    @if($c->brakeAssist == 1)
+                                                    @if($c->brakeAssist)
                                                         <li>Brake Assist<i class="fa fa-check" style="color: #199e1c; margin-left: 5px" aria-hidden="true"></i></li>
                                                     @else
                                                         <li>Brake Assist<i class="fa fa-times" style="margin-left: 5px" aria-hidden="true"></i></li>
@@ -80,14 +82,18 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="clearfix"></div>
                                     <div class="d-price">
-                                        Daily rate from <span>$265</span>
-                                        <a class="btn-main" href="car-single.html">Rent Now</a>
+                                        <a href="{{url("/account-favorite-cars/delete",["car_id"=>$c->id])}}"><i class="icon_close"></i></a>
+                                        <div>
+                                            <span>{{$c->price}}</span>
+                                            <a class="btn-main" href="car-single.html">Rent Now</a>
+                                        </div>
                                     </div>
                                     <div class="clearfix"></div>
                                 </div>
+                                @endforeach
                             </div>
-                        @endforeach
                     </div>
                 </div>
             </section>

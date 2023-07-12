@@ -40,7 +40,8 @@ Route::get("/receive/{rental}", [\App\Http\Controllers\WebController::class, "re
 Route::post("/receive/{rental}", [\App\Http\Controllers\WebController::class, "receiveSave"]);
 
 Route::get("/account-favorite-cars", [\App\Http\Controllers\WebController::class, "favoriteCar"]);
-Route::get("/add-favorite-cars/{car}", [\App\Http\Controllers\WebController::class, "addFavoriteCar"]);
+Route::get("/account-favorite-cars/add/{car}", [\App\Http\Controllers\WebController::class, "addFavoriteCar"]);
+Route::get("/account-favorite-cars/delete/{car_id}", [\App\Http\Controllers\WebController::class, "deleteFavoriteCar"]);
 
 //Account Profile Start
 Route::get("/account-profile", [\App\Http\Controllers\WebController::class, "profile"]);
