@@ -13,7 +13,7 @@
                     <div class="card-title">Add Incident</div>
                 </div>
 
-                <form method="post" action="{{url("/admin/incidents/create")}}" class="row row-cols-lg-auto g-3 align-items-center">
+                <form method="post" action="{{url("/admin/incidents/create", ["rental" => $rental->id])}}" class="row row-cols-lg-auto g-3 align-items-center">
                     @csrf
                     <div class="card-body">
                         <div class="row gy-4">
@@ -23,11 +23,6 @@
                                 <input type="text" name="title" class="form-control" placeholder="Enter Name Service"/>
                             </div>
 
-                            {{--                        rental_id  --}}
-                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
-                                <label for="input-placeholder" class="form-label">Enter Rental ID</label>
-                                <input type="number" name="rental_id" class="form-control" placeholder="Enter Rental ID"/>
-                            </div>
 
                             {{--                        description--}}
                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">

@@ -1,5 +1,5 @@
 @extends('web.layout.layout')
-@section("title","Invoice")
+@section("name","Invoice")
 @section("main")
     <div class="no-bottom no-top" id="content">
         <div id="top"></div>
@@ -93,8 +93,12 @@
                                                                 class="badge bg-dark text-white fw-bold">Pending</span>@break
                                                             @case(1) <span
                                                                 class="badge bg-info text-black fw-bold">Confirmed</span>@break
+                                                            @case(2) <span
+                                                                class="badge bg-info text-black fw-bold">Delivery</span>@break
                                                             @case(3) <span
                                                                 class="badge bg-warning text-black fw-bold">In Progress</span>@break
+                                                            @case(4) <span
+                                                                class="badge bg-warning text-black fw-bold">Processing</span>@break
                                                             @case(5) <span
                                                                 class="badge bg-success text-black fw-bold">Completed</span>@break
                                                             @case(6) <span
@@ -302,13 +306,17 @@
                                                     </a>
                                                     @break
                                                 @case(3)
-                                                    <a href="{{url("admin/booking/complete", ["rental" => $rental->id])}}" class="btn btn-success float-right"><i class="far fa-credit-card"></i> Submit
-                                                        Trả xe
-                                                    </a>
                                                     @break
                                                 @case(4)
                                                     @break
                                                 @case(5)
+                                                    @if(!$rental->is_reviewed)
+                                                    <a href="{{url("/review", ["rental" => $rental->id])}}" class="btn btn-success float-right">
+                                                        <i class="far fa-credit-card"></i>
+                                                        Review Car
+                                                    </a>
+                                                    @endif
+
                                                     @break
                                             @endswitch
                                     </div>

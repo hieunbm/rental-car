@@ -151,6 +151,7 @@ class WebController extends Controller
 
     //End CarList
 
+    // Start Booking
     public function checkCar(Request $request)
     {
         $request->validate([
@@ -496,7 +497,6 @@ class WebController extends Controller
         } else {
             return abort(404);
         }
-
     }
     public function receiveSave(Request $request, Rental $rental) {
 
@@ -542,16 +542,71 @@ class WebController extends Controller
             return abort(404);
         }
     }
-    public function pay(Request $request, Rental $rental) {
 
+    public function review_reviewCreate(Rental $rental){
+        if ($rental->status == 5) {
+            return view("web.review", [
+                "rental" => $rental
+            ]);
+        } else {
+            return abort(404);
+        }
     }
+    public function review(Request $request, $rentalId){
+        {
+            $rental = Rental::find($rentalId);
+            if (!$rental) {
+                abort(404);
+            }
 
-    public function return(Request $request, Rental $rental) {
+            if (!auth()->check()) {
+                return redirect('/login');
+            }
 
-    }
+            // Kiểm tra xem rental có được trả chưa
 
-    public function refund(Request $request, Rental $rental) {
+            if (!$rental->is_reviewed) {
+                // Xử lý đánh giá
 
+                $score = $request->input('score');
+                $message = $request->input('message');
+
+                // Kiểm tra tính hợp lệ của đánh giá
+
+                if ($score < 1 || $score > 5) {
+                    return response("Đánh giá phải từ 1 đến 5 sao", 400);
+                }
+
+                // Lưu đánh giá vào cơ sở dữ liệu
+                $review = new CarReview();
+                $review->user_id = auth()->user()->id;
+                $review->car_id = $rental->car_id;
+                $review->score = $score;
+                $review->message = $message;
+                $review->save();
+
+                $rental->is_reviewed = true;
+                $rental->save();
+
+                $rate = 0;
+                $scores = 0;
+                $reviews = CarReview::where("car_id", $rental->car_id)->get();
+                foreach ($reviews as $item){
+                    $scores += $item->score;
+                }
+                $rate = number_format($scores/$reviews->count(), 1);
+
+                // update rate car
+                $car = Car::find($rental->car_id);
+                $car->rate = $rate;
+                $car->save();
+
+
+            } else {
+                return response("Xe đã được trả trước đó", 400);
+            }
+            return redirect()->to('/car-list')->with('success', 'Đánh giá đã được tạo thành công.');
+        }
     }
 
     public function execPostRequest($url, $data)
@@ -644,12 +699,12 @@ class WebController extends Controller
             "car" => $car,
             "thumbnails" => $thumbnails,
             "reviews" => $reviews,
-            "rate" => $rate,
+            "rate" => $car->rate,
             "rentalrate" => $rentalrate,
             "review_total" => $review_total
         ]);
     }
-
+    // End Booking
 
     //Start account-booking
     public function myOrders()

@@ -24,9 +24,6 @@ Route::get("/about", [\App\Http\Controllers\WebController::class, "about"]);
 
 Route::get("/booking", [\App\Http\Controllers\WebController::class, "booking"]);
 Route::post("/booking", [\App\Http\Controllers\WebController::class, "placeOrder"]);
-Route::post("/bookings/{rental}/pay", [\App\Http\Controllers\WebController::class, "pay"]);
-Route::post("/bookings/{rental}/return", [\App\Http\Controllers\WebController::class, "return"]);
-Route::post("/bookings/{rental}/refund", [\App\Http\Controllers\WebController::class, "refund"]);
 Route::get("/order-invoice/{rental}", [\App\Http\Controllers\WebController::class, "detailRental"]);
 
 
@@ -44,6 +41,11 @@ Route::post("/receive/{rental}", [\App\Http\Controllers\WebController::class, "r
 Route::get("/account-favorite-cars", [\App\Http\Controllers\WebController::class, "favoriteCar"]);
 Route::get("/account-favorite-cars/add/{car}", [\App\Http\Controllers\WebController::class, "addFavoriteCar"]);
 Route::get("/account-favorite-cars/delete/{car}", [\App\Http\Controllers\WebController::class, "deleteFavoriteCar"]);
+
+// Review Start
+Route::get("/review/{rental}", [\App\Http\Controllers\WebController::class, "review_reviewCreate"]);
+Route::post("/review/{rentalId}", [\App\Http\Controllers\WebController::class, "review"]);
+// Review End
 
 //Account Profile Start
 Route::get("/account-profile", [\App\Http\Controllers\WebController::class, "profile"]);
@@ -102,8 +104,8 @@ Route::prefix("/admin")->middleware(["auth", "admin"])->group(function () {// mi
     Route::put("/services/edit/{id}", [App\Http\Controllers\AdminController::class, "admin_serviceUpdate"]);
     Route::get("/services/delete/{service}", [App\Http\Controllers\AdminController::class, "admin_serviceDelete"]);
     Route::get("/incidents", [App\Http\Controllers\AdminController::class, "admin_incident"]);
-    Route::get("/incidents/create", [App\Http\Controllers\AdminController::class, "admin_incidentCreate"]);
-    Route::post("/incidents/create", [App\Http\Controllers\AdminController::class, "admin_incidentSave"]);
+    Route::get("/incidents/create/{rental}", [App\Http\Controllers\AdminController::class, "admin_incidentCreate"]);
+    Route::post("/incidents/create/{rental}", [App\Http\Controllers\AdminController::class, "admin_incidentSave"]);
     Route::get("/incidents/edit/{id}", [App\Http\Controllers\AdminController::class, "admin_incidentEdit"]);
     Route::put("/incidents/edit/{id}", [App\Http\Controllers\AdminController::class, "admin_incidentUpdate"]);
     Route::get("/incidents/delete/{incident}", [App\Http\Controllers\AdminController::class, "admin_incidentDelete"]);
@@ -111,5 +113,5 @@ Route::prefix("/admin")->middleware(["auth", "admin"])->group(function () {// mi
 // admin end
 
 Auth::routes();
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [App\Http\Controllers\WebController::class, 'home']);
 

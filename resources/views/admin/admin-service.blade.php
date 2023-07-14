@@ -35,6 +35,7 @@
                             <tbody>
                             @foreach($service as $item)
                                 <tr>
+                                    <input type="hidden" class="serdelete_val_id" value="{{$item->id}}">
                                     <th>{{$item->id}}</th>
                                     <td>{{$item->title}}</td>
                                     <td>{{$item->description}}</td>
@@ -47,8 +48,9 @@
                                     <td>
                                         <div class="hstack gap-2 fs-15">
                                             <a href="{{url("/admin/services/edit", ["id" => $item->id])}}" class="btn btn-icon btn-sm btn-info-transparent rounded-pill"><i class="ri-edit-line"></i></a>
-                                            <a onclick="return confirm('Xoá sản phẩm?')" href="{{url("/admin/services/delete",["service"=>$item->id])}}" class="btn btn-icon btn-sm btn-danger-transparent rounded-pill"><i class="ri-delete-bin-line"></i></a>
+                                            <a onclick="confirmation(event)" href="{{url("/admin/services/delete",["service"=>$item->id])}}" class="btn btn-icon btn-sm btn-danger-transparent rounded-pill"><i class="ri-delete-bin-line"></i></a>
                                         </div>
+
                                     </td>
                                 </tr>
                             @endforeach
@@ -68,5 +70,23 @@
         </div>
     </div>
     {{--    End Row--}}
-
 @endsection
+<script>
+    function confirmation(ev) {
+        ev.preventDefault();
+        var urlToRedirect = ev.currentTarget.getAttribute('href');
+        console.log(urlToRedirect);
+        swal({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willCancel) => {
+                if (willCancel) {
+                    window.location.href = urlToRedirect;
+                }
+            });
+    }
+</script>

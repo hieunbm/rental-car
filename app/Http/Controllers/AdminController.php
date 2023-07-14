@@ -16,6 +16,8 @@ use App\Models\Rental;
 use App\Models\RentalRate;
 use App\Models\Service;
 use App\Models\User;
+
+use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Mail;
@@ -26,6 +28,7 @@ class AdminController extends Controller
     public function admin_dashboard() {
         return view("admin.dashboard");
     }
+
     // start booking
     public function admin_booking() {
         $rentals = Rental::orderBy("id", "desc")->paginate(12);
@@ -78,10 +81,9 @@ class AdminController extends Controller
         // cập nhật status cuả order thành 1 (cònfirm)
         $rental->update(["status"=>1]);
         // gửi email cho khách báo đơn đã đc chuyển trạng thái
-//        Mail::to($rental->email)->send(new OrderMail($rental));
+        Mail::to($rental->email)->send(new OrderMail($rental));
         return redirect()->to("/admin/booking-detail/".$rental->id);
     }
-
     public function carHandoverOrder(Rental $rental){
         // cập nhật status cuả order (confirm)
         $rental->update(["status"=>2]);
@@ -96,11 +98,10 @@ class AdminController extends Controller
 
         return redirect()->to("/admin/booking-detail/".$rental->id);
     }
-
     public function returnCar(Rental $rental)
     {
         // xử lí lưu ngày trả xe
-        $rental->return_date = Carbon::now()->format('Y-m-d H:i:s');
+        $rental->return_date = Carbon::now('Asia/Ho_Chi_Minh')->format('Y-m-d H:i:s');
         $rental->save();
         // xử lí ngày trả và tiền
         $startDate = Carbon::parse($rental->rental_date);; // Ngày bắt đầu thuê
@@ -113,28 +114,30 @@ class AdminController extends Controller
             }
         } elseif ($rental->rental_type == "rent by hour") {
             $numberOfDays =$startDate->diffInHours($endDate);
+            if ($numberOfDays === 0 && $startDate->isToday() && $endDate->isToday()) {
+                $numberOfDays = 1;
+            }
         }
         // Xử lý logic trả xe
         $rental->update(["status"=>4, "is_car_returned"=>true]);
 
         return redirect()->to("/admin/booking-detail/".$rental->id);
     }
-
     public function complete(Rental $rental){
         // cập nhật status cuả order thành 1 (cònfirm)
-        $rental->update(["status"=>4]);
+        $rental->update(["status"=>5, "is_rent_paid"=>true, "is_desposit_returned" => true]);
         // gửi email cho khách báo đơn đã đc chuyển trạng thái
 
         return redirect()->to("/admin/booking-detail/".$rental->id);
     }
     public function cancel(Rental $rental){
         // cập nhật status cuả order thành 1 (cònfirm)
-        $rental->update(["status"=>5]);
+        $rental->update(["status"=>6]);
         // gửi email cho khách báo đơn đã đc chuyển trạng thái
 
         return redirect()->to("/admin/booking-detail/".$rental->id);
     }
-    // start booking
+    // end booking
     public function admin_cars() {
         $cars=Car::get();
         return view("admin.admin-cars",[
@@ -491,6 +494,7 @@ class AdminController extends Controller
             "description" => $request->get("description"),
             "price" => $request->get("price")
         ]);
+        Toastr::success('Successful service creation.', 'Success!');
         return redirect()->to("/admin/services");
     }
     public function admin_serviceEdit($id) {
@@ -513,10 +517,12 @@ class AdminController extends Controller
                 "description" => $request->input("description"),
                 "price" => $request->input("price")
             ]);
+        Toastr::success('Update successful.', 'Success!');
         return redirect()->to("/admin/services");
     }
     public function admin_serviceDelete(Service $service) {
         $service->delete();
+        Toastr::success('Your file has been deleted.', 'Deleted!');
         return redirect()->to("/admin/services");
     }
     // end service
@@ -528,13 +534,14 @@ class AdminController extends Controller
             "incidents" => $incidents
         ]);
     }
-    public function admin_incidentCreate() {
-        return view("admin.admin-incidentCreate");
+    public function admin_incidentCreate(Rental $rental) {
+        return view("admin.admin-incidentCreate", [
+            "rental" => $rental
+        ]);
     }
-    public function admin_incidentSave(Request $request) {
+    public function admin_incidentSave(Request $request, Rental $rental) {
         $request->validate([
             "title"=>"required",
-            "rental_id"=>"required",
             "description" => "required",
             "expense"=>"required|numeric|min:0",
         ],[
@@ -542,7 +549,7 @@ class AdminController extends Controller
         ]);
         Incident::create([
             "title" => $request->get("title"),
-            "rental_id" => $request->get("rental_id"),
+            "rental_id" => $rental->id,
             "description" => $request->get("description"),
             "expense" => $request->get("expense"),
             "status" => 0,
