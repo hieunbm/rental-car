@@ -313,7 +313,14 @@
                                 <div class="row">
 
                                     <div class="col-lg-12 mb20">
-                                        <h5>Pick Up Date & Time</h5>
+                                        <h5>Pick Up Date & Time
+                                            @error('rental_date')
+                                                <span style="font-size: 12px" class="text-danger">( {{ $message }} )</span>
+                                            @enderror
+                                            @error('rental_time')
+                                                <span style="font-size: 12px" class="text-danger">( {{ $message }} )</span>
+                                            @enderror
+                                        </h5>
                                         <div class="date-time-field">
                                             <input type="text" id="date-picker" name="rental_date" value="">
                                             <select name="rental_time" id="pickup-time">
@@ -374,7 +381,18 @@
                                         <input name="expected" class="form-control" type="text"/>
                                     </div>
                                 </div>
-                                <input type='submit' id='send_message' value='Book Now' class="btn-main btn-fullwidth">
+                                @if (auth()->check())
+                                    @switch(auth()->user()->status)
+                                        @case(2) {{-- Trạng thái Verified --}}
+                                        <input type='submit' id='send_message' value='Book Now' class="btn-main btn-fullwidth">
+                                        @break
+                                        @default {{-- Những trạng thái khác --}}
+                                        <a href="{{url("/account-profile-licenses")}}" class="btn-main btn-fullwidth">License Verification</a>
+                                        <span style="color: #ACACAC;font-weight: bold;font-size: 12px">(Verify license before renting car)</span>
+                                    @endswitch
+                                @else
+                                    <a href="{{url("/login")}}" class="btn-main btn-fullwidth">Login to Rent</a>
+                                @endif
                                 <div class="clearfix"></div>
                             </form>
                         </div>
