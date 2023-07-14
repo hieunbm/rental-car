@@ -53,10 +53,10 @@ Route::post("/account-profile-licenses", [\App\Http\Controllers\WebController::c
 // 2 cái này dùng cho paypal
 Route::get('/success-transaction/{rental}', [\App\Http\Controllers\WebController::class, 'successTransaction'])->name('successTransaction');
 Route::get('/cancel-transaction/{rental}', [\App\Http\Controllers\WebController::class, 'cancelTransaction'])->name('cancelTransaction');
-Route::post('/vnPayCheck', [\App\Http\Controllers\WebController::class, 'vnPayCheck']);
 //Account Profile End
 Route::get("/account-booking", [\App\Http\Controllers\WebController::class, "myOrders"]);
 // website end
+//VNPAY
 
 // admin start
 Route::prefix("/admin")->middleware(["auth", "admin"])->group(function () {// middleware: phải đăng nhập thì ms vào đc
