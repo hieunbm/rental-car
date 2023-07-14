@@ -271,6 +271,7 @@ class AdminController extends Controller
             'license_plate' => $request->get("license_plate"),
             'model' => $request->get("model"),
             'price' => $request->get("price"),
+            'desposit' => $request->get("desposit"),
             'slug' => Str::slug($request->get("model")),
             'brand_id' => $request->get("brand_id"),
             'carType_id' => $request->get("carType_id"),
