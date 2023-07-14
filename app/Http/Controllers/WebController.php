@@ -153,6 +153,12 @@ class WebController extends Controller
 
     public function checkCar(Request $request)
     {
+        $request->validate([
+            'rental_time' => 'required',
+        ], [
+            'rental_time.required' => 'You must choose the number of hours',
+        ]);
+
         $car_id = $request->get("car_id");
         $rental_dayString = $request->get("rental_date");
         $rental_timeString = $request->get("rental_time");
@@ -167,7 +173,20 @@ class WebController extends Controller
         Session::put('car', $car);
         Session::put('rental_date', $rental_date);
         Session::put('expected', $expected);
-        return redirect()->to("/booking");
+
+        if ($rental_date->isPast()) {
+            //chỉ được chọn thời gian từ thời điểm hiện tại trở đi
+            return redirect()->back()->withErrors(['rental_date' => 'Invalid time']);
+        }
+
+        //kiểm tra trạng thái giấy phép lái xe
+        $user = auth()->user();
+        switch ($user->status) {
+            case 2:
+                return redirect()->to("/booking");
+            default:
+                return redirect()->to("/account-profile-licenses");
+        }
     }
 
     public function booking()
@@ -326,7 +345,7 @@ class WebController extends Controller
             $accessKey = 'klm05TvNBzhg7h7j';
             $secretKey = 'at67qH6mk8w5Y1nAyMoYKMWACiEi2bsa';
             $orderInfo = "Payment via momo";
-            $amount_usd = $rental->total_amount;
+            $amount_usd = $rental->desposit_amount;
             $amount_vnd = $amount_usd * 23000;
             $orderId = time() ."";
             $redirectUrl = "http://127.0.0.1:8000/booking";
@@ -382,7 +401,7 @@ class WebController extends Controller
     public function successTransaction(Rental $rental, Request $request)
     {
         $rental->update(["is_desposit_paid" => true, "status" => 1]);// đã thanh toán, trạng thái về xác nhận
-//        return redirect()->to("/thank-you/" . $order->id);
+        return redirect()->to("/order-invoice/" . $rental->id);
     }
 
     public function cancelTransaction(Request $request)

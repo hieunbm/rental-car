@@ -15,23 +15,40 @@
                                 <form id="form_register" class="form-border" method="post" action="{{route("register")}}">
                                     @csrf
                                     <div class="field-set">
-                                        <input type="text" name="name" class="form-control" placeholder="Full name" />
+                                        @error('name')
+                                        <span style="font-size: 12px; font-weight: bold" class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                        <input type="text" name="name" class="form-control" placeholder="Full name" value="{{ old('name') }}"/>
                                     </div>
                                     <br>
                                     <div class="field-set">
-                                        <input type="email" name="email" class="form-control" placeholder="Email" />
+                                        @error('email')
+                                        <span style="font-size: 12px; font-weight: bold" class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                        <input type="email" name="email" class="form-control" placeholder="Email" value="{{ old('email') }}" style="background-color: rgba(0, 0, 0, .025);border: solid 2px #eeeeee;height: 45px"/>
                                     </div>
                                     <br>
                                     <div class="field-set">
-                                        <input type="text" name="phone" class="form-control" placeholder="Phone" />
+                                        @error('phone')
+                                        <span style="font-size: 12px; font-weight: bold" class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                        <input type="text" name="phone" class="form-control" placeholder="Phone" value="{{ old('phone') }}"/>
                                     </div>
                                     <br>
                                     <div class="field-set">
-                                        <input type="password" name="password" class="form-control" placeholder="Password" />
+                                        @error('password')
+                                        <span style="font-size: 12px; font-weight: bold" class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                        <input type="password" name="password" id="password" class="form-control" placeholder="Password" value="{{ old('password') }}" />
+                                        <i class="fas fa-eye" id="toggle-password" onclick="togglePasswordVisibility('password', 'toggle-password')"></i>
                                     </div>
                                     <br>
                                     <div class="field-set">
-                                        <input type="password" name="password_confirmation" class="form-control" placeholder="Retype Password" />
+                                        @error('password')
+                                        <span style="font-size: 12px; font-weight: bold" class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                        <input type="password" name="password_confirmation" id="password-confirm" class="form-control" placeholder="Retype Password" />
+                                        <i class="fas fa-eye" id="toggle-confirm-password" onclick="togglePasswordVisibility('password-confirm', 'toggle-confirm-password')"></i>
                                     </div>
                                     <br>
                                     <div id="submit">
@@ -46,4 +63,34 @@
             </div>
         </section>
     </div>
+
+    <style>
+        .fa-eye {
+            position: absolute;
+            margin-top: -41px;
+            margin-left: 300px;
+        }
+        .fa-eye-slash {
+            position: absolute;
+            margin-top: -41px;
+            margin-left: 300px;
+        }
+    </style>
+
+    <script>
+        function togglePasswordVisibility(inputId, iconId) {
+            var input = document.getElementById(inputId);
+            var icon = document.getElementById(iconId);
+
+            if (input.type === "password") {
+                input.type = "text";
+                icon.classList.remove("fa-eye");
+                icon.classList.add("fa-eye-slash");
+            } else {
+                input.type = "password";
+                icon.classList.remove("fa-eye-slash");
+                icon.classList.add("fa-eye");
+            }
+        }
+    </script>
 @endsection
