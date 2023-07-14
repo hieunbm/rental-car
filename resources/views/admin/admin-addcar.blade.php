@@ -169,6 +169,13 @@
                                                                                                        id="input-number"
                                                                                                        placeholder="Enter Rate"/>
                             </div>
+                            {{--                                Desposit--}}
+                                <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12">
+                                <label for="input-number" class="form-label">Price Desposit</label> <input name="desposit" type="number"
+                                                                                                       class="form-control"
+                                                                                                       id="input-number"
+                                                                                                       placeholder="Enter Desposit"/>
+                            </div>
 
                             <div class="col-12">
                                 <button type="submit" class="btn btn-primary">Add Car</button>
