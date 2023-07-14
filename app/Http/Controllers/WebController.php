@@ -835,27 +835,18 @@ class WebController extends Controller
         return redirect()->to("/account-favorite-cars");
     }
     public function deleteFavoriteCar(Car $car) {
-        $cars = session()->get("favoriteCar", []);
+        $cars = session()->get("favoriteCar");
 
-        $index = null;
-        $count = count($cars);
-
-        for ($i = 0; $i < $count; $i++) {
-            if ($cars[$i]->id == $car->id) {
-                $index = $i;
-                break;
+        if($cars) {
+            foreach ($cars as $key => $item) {
+                if($item->id == $car->id){
+                    dd($car->id);
+                    unset($cars[$key]);
+                    session(["favoriteCar"=>$cars]);
+                    break;
+                }
             }
         }
-
-        if ($index == null) {
-            unset($cars[$index]);
-            $cars = array_values($cars);
-
-            session(["favoriteCar" => $cars]);
-            return redirect()->to("/account-favorite-cars");
-        }
-
-        return redirect()->to("/")->with('error', 'Sản phẩm không tồn tại trong danh sách yêu thích.');
-
-        }
+        return redirect()->to("/account-favorite-cars");
+    }
 }

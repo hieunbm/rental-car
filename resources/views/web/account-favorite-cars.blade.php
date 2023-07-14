@@ -82,12 +82,13 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="clearfix"></div>
                                     <div class="d-price">
-                                        <a href="{{url("/account-favorite-cars/delete",["car_id"=>$c->id])}}"><i class="icon_close"></i></a>
+                                        <div style="margin-top: -30px; margin-bottom: 10px;">
+                                            <a style="margin-left: 200px; font-size: 30px;" href="{{url("/account-favorite-cars/delete",["car"=>$c->id])}}"><i class="icon_close"></i></a>
+                                        </div>
                                         <div>
-                                            <span>{{$c->price}}</span>
-                                            <a class="btn-main" href="car-single.html">Rent Now</a>
+                                            Daily rate from <span>{{ $c->price }}</span>
+                                            <a class="btn-main" href="{{url("/car",["car"=>$c->slug])}}">Rent Now</a>
                                         </div>
                                     </div>
                                     <div class="clearfix"></div>

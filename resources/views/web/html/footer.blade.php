@@ -12,9 +12,9 @@
                 <div class="widget">
                     <h5>Contact Info</h5>
                     <address class="s1">
-                        <span><i class="id-color fa fa-map-marker fa-lg"></i>08 W 36th St, New York, NY 10001</span>
-                        <span><i class="id-color fa fa-phone fa-lg"></i>+1 333 9296</span>
-                        <span><i class="id-color fa fa-envelope-o fa-lg"></i><a href="mailto:contact@example.com">contact@example.com</a></span>
+                        <span><i class="id-color fa fa-map-marker fa-lg"></i>Số 8 Tôn Thất Thuyết</span>
+                        <span><i class="id-color fa fa-phone fa-lg"></i>+84 396321425</span>
+                        <span><i class="id-color fa fa-envelope-o fa-lg"></i><a href="mailto:contact@example.com">hiepga1243gmail.com</a></span>
                         <span><i class="id-color fa fa-file-pdf-o fa-lg"></i><a href="#">Download Brochure</a></span>
                     </address>
                 </div>
@@ -26,11 +26,10 @@
                     <div class="col-lg-6">
                         <div class="widget">
                             <ul>
-                                <li><a href="#">About</a></li>
-                                <li><a href="#">Blog</a></li>
-                                <li><a href="#">Careers</a></li>
-                                <li><a href="#">News</a></li>
-                                <li><a href="#">Partners</a></li>
+                                <li><a href="{{url("/c")}}">Home</a></li>
+                                <li><a href="{{url("/car-list")}}">Cars</a></li>
+                                <li><a href="{{url("/about")}}">About Us</a></li>
+                                <li><a href="{{url("/contact")}}">Contact</a></li>
                             </ul>
                         </div>
                     </div>

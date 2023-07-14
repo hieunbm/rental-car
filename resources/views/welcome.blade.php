@@ -373,7 +373,7 @@
                                         </div>
                                         <div class="d-price">
                                             Daily rate from <span>{{$c->price}}</span>
-                                            <a class="btn-main" href="#">Rent Now</a>
+                                            <a class="btn-main" href="{{url("/car",["car"=>$c->slug])}}">Rent Now</a>
                                         </div>
                                     </div>
                                 </div>
@@ -419,8 +419,8 @@
                     </div>
                     <div class="col-md-3 col-sm-6 mb-sm-30">
                         <div class="de_count transparent text-light wow fadeInUp">
-                            <h3 class="timer" data-to="15" data-speed="3000">0</h3>
-                            Chưa biết làm gì
+                            <h3 class="timer" data-to="{{$countRental}}" data-speed="3000">0</h3>
+                            Rentals
                         </div>
                     </div>
                 </div>
@@ -639,7 +639,7 @@
                                     1 200 333 800
                                 </span>
                         </div>
-                        <a href="#" class="btn-main">Contact Us</a>
+                        <a href="{{url("/contact")}}" class="btn-main">Contact Us</a>
                     </div>
                 </div>
             </div>

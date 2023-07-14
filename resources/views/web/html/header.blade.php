@@ -3,8 +3,8 @@
         <div class="container">
             <div class="topbar-left xs-hide">
                 <div class="topbar-widget">
-                    <div class="topbar-widget"><a href="#"><i class="fa fa-phone"></i>+208 333 9296</a></div>
-                    <div class="topbar-widget"><a href="#"><i class="fa fa-envelope"></i>contact@rentaly.com</a></div>
+                    <div class="topbar-widget"><a href="#"><i class="fa fa-phone"></i>+84 396321425</a></div>
+                    <div class="topbar-widget"><a href="#"><i class="fa fa-envelope"></i>hiepga1243@gmail.com</a></div>
                     <div class="topbar-widget"><a href="#"><i class="fa fa-clock-o"></i>Mon - Fri 08.00 - 18.00</a>
                     </div>
                 </div>
@@ -30,7 +30,7 @@
                         <div class="de-flex-col">
                             <!-- logo begin -->
                             <div id="logo">
-                                <a href="index.html">
+                                <a href="/">
                                     <img class="logo-1" src="images/logo-light.png" alt="">
                                     <img class="logo-2" src="images/logo.png" alt="">
                                 </a>
