@@ -36,14 +36,10 @@
                                 <th scope="col">ID Booking</th>
                                 <th scope="col">Customer Name</th>
                                 <th scope="col">Car</th>
-                                <th scope="col">
-                                    Rental Date & Time
-                                    <br>
-                                    Return Date & Time
-                                </th>
+                                <th scope="col">Rental Date & Time</th>
+                                <th>Return Date & Time</th>
                                 <th scope="col">Incident</th>
                                 <th scope="col">Total Amount</th>
-                                <th scope="col">Payment method</th>
                                 <th scope="col">Is paid</th>
                                 <th scope="col">Status</th>
                                 <th scope="col">View</th>
@@ -71,16 +67,20 @@
                                     </td>
                                     <td>
                                         {{$item->rental_date}}
-                                        <br>
+                                    </td>
+                                    <td>
                                         {{$item->return_date}}
                                     </td>
                                     <td>
-                                        0
+                                        @if($item->additional_fee != null)
+                                            ${{$item->additional_fee}}
+                                        @else
+                                            $0.00
+                                        @endif
                                     </td>
                                     <td>${{$item->total_amount}}</td>
-                                    <td>{{$item->payment_method}}</td>
                                     <td>
-                                        @if($item->is_paid)
+                                        @if($item->is_rent_paid)
                                             <span class="badge bg-success">Pain</span>
                                         @else
                                             <span class="badge bg-danger">UnPain</span>
@@ -89,17 +89,19 @@
                                     <td>
                                         @switch($item->status)
                                             @case(0) <span
-                                                class="text text-dark">Pending</span>@break
+                                                class="badge bg-dark text-white fw-bold">Pending</span>@break
                                             @case(1) <span
-                                                class="text text-blue">Confirmed</span>@break
+                                                class="badge bg-info text-black fw-bold">Confirmed</span>@break
                                             @case(2) <span
-                                                class="text text-blue">Car Handover</span>@break
+                                                class="badge bg-info text-black fw-bold">Delivery</span>@break
                                             @case(3) <span
-                                                class="text text-warning">In Progress</span>@break
+                                                class="badge bg-warning text-black fw-bold">In Progress</span>@break
                                             @case(4) <span
-                                                class="text text-success">Completed</span>@break
+                                                class="badge bg-warning text-black fw-bold">Processing</span>@break
                                             @case(5) <span
-                                                class="text text-danger">Cancel</span>@break
+                                                class="badge bg-success text-black fw-bold">Completed</span>@break
+                                            @case(6) <span
+                                                class="badge bg-danger text-black fw-bold">Cancel</span>@break
                                         @endswitch
                                     </td>
                                     <td>

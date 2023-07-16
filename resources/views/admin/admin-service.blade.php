@@ -60,7 +60,7 @@
                 </div>
                 <div class="card-footer">
                     <div class="d-flex align-items-center">
-                        <div>Showing 6 Entries <i class="bi bi-arrow-right ms-2 fw-semibold"></i></div>
+                        <div>Showing 12 Entries <i class="bi bi-arrow-right ms-2 fw-semibold"></i></div>
                         <div class="ms-auto">
                             {!! $service->appends(app("request")->input())->links("pagination::bootstrap-4") !!}
                         </div>
@@ -71,22 +71,3 @@
     </div>
     {{--    End Row--}}
 @endsection
-<script>
-    function confirmation(ev) {
-        ev.preventDefault();
-        var urlToRedirect = ev.currentTarget.getAttribute('href');
-        console.log(urlToRedirect);
-        swal({
-            title: "Are you sure?",
-            text: "You won't be able to revert this!",
-            icon: "warning",
-            buttons: true,
-            dangerMode: true,
-        })
-            .then((willCancel) => {
-                if (willCancel) {
-                    window.location.href = urlToRedirect;
-                }
-            });
-    }
-</script>

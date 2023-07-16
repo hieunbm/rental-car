@@ -12,6 +12,7 @@ use App\Models\Category;
 use App\Models\ContactUsQuery;
 use App\Models\Product;
 use App\Utilities\VNPay;
+use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Hash;
 use App\Models\DrivingLicenses;
 use App\Models\Gallery;
@@ -76,7 +77,7 @@ class WebController extends Controller
 
     public function car_list()
     {
-        $cars = Car::paginate(18);
+        $cars = Car::where("status", 0)->paginate(18);
         $merge = $this->mergeCode($cars);
 
         return view("web.car-list", $merge, [
@@ -156,6 +157,7 @@ class WebController extends Controller
     {
         $request->validate([
             'rental_time' => 'required',
+            'expected' => 'required',
         ], [
             'rental_time.required' => 'You must choose the number of hours',
         ]);
@@ -226,6 +228,7 @@ class WebController extends Controller
     public function placeOrder(Request $request)
     {
         $request->validate([// mảng các quy tắt
+            'rental_time' => 'required',
             "rental_date" => "required",
             "expected" => "required",
             "pickup_location" => "required",
@@ -234,7 +237,7 @@ class WebController extends Controller
             "rental_type" => "required",
             "car_price" => "required|numeric|min:0",
         ], [// mảng các thông điệp
-
+            'rental_time.required' => 'You must choose the number of hours',
         ]);
 
         if (!auth()->check()) {
@@ -247,6 +250,12 @@ class WebController extends Controller
         $rental_day = Carbon::createFromFormat('F j, Y', $rental_dayString);
         $rental_time = Carbon::createFromFormat('H:i', $rental_timeString);
         $rental_date = $rental_day->setTime($rental_time->hour, $rental_time->minute, $rental_time->second);
+
+        if ($rental_date->isPast()) {
+            //chỉ được chọn thời gian từ thời điểm hiện tại trở đi
+            return redirect()->back()->withErrors(['rental_date' => 'Invalid time']);
+        }
+
         Session::put('rental_date', $rental_date);
         Session::put('expected', $expected);
 
@@ -297,6 +306,9 @@ class WebController extends Controller
             $rental->address = $address;
             $rental->save();
         }
+        // Đổi trạng thái xe
+        $car->status = 1;
+        $car->save();
 
         // thanh toan bang paypal
         if ($rental->desposit_type == "PAYPAL") {
@@ -475,12 +487,14 @@ class WebController extends Controller
         session()->forget("rental_date");
         session()->forget("expected");
         // chuyển đến trang home
-        return redirect()->to("/");
+        Toastr::success('Successful booking.', 'Success!');
+        return redirect()->to("/order-invoice/" . $rental->id);
     }
 
     public function successTransaction(Rental $rental, Request $request)
     {
         $rental->update(["is_desposit_paid" => true, "status" => 1]);// đã thanh toán, trạng thái về xác nhận
+        Toastr::success('Deposit payment successful.', 'Success!');
         return redirect()->to("/order-invoice/" . $rental->id);
     }
 
@@ -490,7 +504,7 @@ class WebController extends Controller
     }
 
     public function receive(Request $request, Rental $rental) {
-        if ($rental->status == 2) {
+        if ($rental->status == 2 && auth()->check() == true) {
             return view("web.receiveCar", [
                 "rental" => $rental
             ]);
@@ -536,7 +550,7 @@ class WebController extends Controller
             $rental->status = 3;
             $rental->save();
 
-            session()->flash('success', 'Nhận xe thành công.');
+            Toastr::success('Successfully received the car.', 'Success!');
             return redirect()->to("/order-invoice/".$rental->id);
         } else {
             return abort(404);
@@ -544,7 +558,7 @@ class WebController extends Controller
     }
 
     public function review_reviewCreate(Rental $rental){
-        if ($rental->status == 5) {
+        if ($rental->status == 5 && $rental->is_reviewed == false && auth()->check() == true) {
             return view("web.review", [
                 "rental" => $rental
             ]);
@@ -688,12 +702,6 @@ class WebController extends Controller
         $thumbnails = Gallery::where("car_id", $car->id)->get();
         $reviews = CarReview::where("car_id", $car->id)->orderBy("id", "desc")->paginate(3);
         $review_total = CarReview::where("car_id", $car->id)->get();
-        $rate = 0;
-        $totals = 0;
-        foreach ($reviews as $item) {
-            $totals += $item->score;
-            $rate = number_format($totals / $reviews->count(), 1);
-        }
         $rentalrate = RentalRate::where("car_id", $car->id)->get();
         return view("web.car-detail", [
             "car" => $car,

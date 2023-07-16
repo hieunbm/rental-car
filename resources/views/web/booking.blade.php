@@ -84,6 +84,12 @@
                                                 </div>
                                                 <div class="col-lg-6 mb20">
                                                     <h5>Pick Up Date & Time</h5>
+                                                        @error('rental_date')
+                                                        <span style="font-size: 12px" class="text-danger">( {{ $message }} )</span>
+                                                        @enderror
+                                                        @error('rental_time')
+                                                        <span style="font-size: 12px" class="text-danger">( {{ $message }} )</span>
+                                                        @enderror
                                                     <div class="date-time-field">
                                                         <input type="text" id="date-picker" name="rental_date"
                                                                value="{{$rental_day}}">
@@ -286,7 +292,7 @@
                                                 </div>
                                                 <div class="col-lg-6 mb20">
                                                     <h5>Expected number of days/hours</h5>
-                                                    <input onchange="updateInput()" name="expected" id="expected" value="{{$expected}}" class="form-control" type="number"/>
+                                                    <input onchange="updateInput()" oninput="checkMinValue(this)" name="expected" id="expected" value="{{$expected}}" class="form-control" type="number" min="1"/>
                                                 </div>
                                             </div>
                                             <div class="col-lg-12 mb30" id="address_input" style="display: none;">
@@ -534,7 +540,7 @@
                                                         <span>TOTAL</span> <strong class="text-dark" id="total">$0.00</strong>
                                                     </div>
                                                     <div class="d-flex justify-content-between mb-4 small">
-                                                        <span>DEPOSIT</span> <strong class="text-dark" id="deposit">$0.00</strong>
+                                                        <span>DEPOSIT</span> <strong class="text-dark" id="deposit">${{$car->desposit}}</strong>
                                                     </div>
                                                     <div class="form-check mb-1 small">
                                                         <input class="form-check-input" type="checkbox" value="" id="tnc">
@@ -629,6 +635,7 @@
             var carPrice = document.getElementById('myLable').value;
             var days = parseFloat(document.getElementById('expected').value);
 
+
             // Calculate subtotal based on pickup date and car price
             var subtotal = parseFloat(days) * parseFloat(carPrice);
 
@@ -667,18 +674,20 @@
             var total = 0;
 
             total = subtotal + additionalServicesTotal;
-            var deposit = 0;
 
-            deposit = total * (30/100);
             // Update the total value on the UI
             document.getElementById('total').textContent = '$' + total.toFixed(2);
             document.getElementById('service').textContent = '$' + additionalServicesTotal.toFixed(2);
-            document.getElementById('deposit').textContent = '$' + deposit.toFixed(2);
-            document.getElementById('desposit_amount').value = deposit;
+            document.getElementById('desposit_amount').value = {{$car->desposit}};
             document.getElementById('total_amount').value = total;
 
         }
-
+        function checkMinValue(input) {
+            if (input.value < 1) {
+                expected(event);
+                input.value = 1; // Đặt giá trị thành 1
+            }
+        }
 
     </script>
 @endsection

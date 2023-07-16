@@ -246,17 +246,19 @@
                     <b style="float: left">
                         @switch($rental->status)
                             @case(0) <span
-                                class="text text-dark">Pending</span>@break
+                                class="badge bg-dark text-white fw-bold">Pending</span>@break
                             @case(1) <span
-                                class="text text-blue">Confirmed</span>@break
+                                class="badge bg-info text-black fw-bold">Confirmed</span>@break
                             @case(2) <span
-                                class="text text-blue">Car Handover</span>@break
+                                class="badge bg-info text-black fw-bold">Delivery</span>@break
                             @case(3) <span
-                                class="text text-warning">In Progress</span>@break
+                                class="badge bg-warning text-black fw-bold">In Progress</span>@break
                             @case(4) <span
-                                class="text text-success">Completed</span>@break
+                                class="badge bg-warning text-black fw-bold">Processing</span>@break
                             @case(5) <span
-                                class="text text-danger">Cancel</span>@break
+                                class="badge bg-success text-black fw-bold">Completed</span>@break
+                            @case(6) <span
+                                class="badge bg-danger text-black fw-bold">Cancel</span>@break
                         @endswitch
                     </b>
                     @switch($rental->status)
@@ -290,7 +292,7 @@
                             <a href="{{url("admin/booking/complete", ["rental" => $rental->id])}}" class="btn btn-success float-right"><i class="far fa-credit-card"></i> Submit
                                 Completed
                             </a>
-                            <a href="#" class="btn btn-danger float-right"><i class="far fa-credit-card"></i> Submit
+                            <a href="{{url("admin/incidents/create", ["rental" => $rental->id])}}" class="btn btn-danger float-right"><i class="far fa-credit-card"></i> Submit
                                 Incident
                             </a>
                             @break
@@ -298,8 +300,6 @@
                             <a href="{{url("admin/booking/return-car", ["rental" => $rental->id])}}" class="btn btn-success float-right"><i class="far fa-credit-card"></i> Submit
                                 Nhận xe
                             </a>
-                            @break
-                        @case(4)
                             @break
                     @endswitch
                     <button class="btn btn-success">Download <i class="ri-download-2-line ms-1 align-middle"></i></button>
@@ -309,20 +309,34 @@
         <div class="col-xl-3">
             <div class="card custom-card">
                 <div class="card-header">
-                    <div class="card-title"> Mode Of Payment</div>
+                    <div class="card-title">Note</div>
                 </div>
                 <div class="card-body">
                     <div class="row gy-3">
                         <div class="col-xl-12"><p class="fs-14 fw-semibold"> Credit/Debit Card </p>
-                            <p><span class="fw-semibold text-muted fs-12">Name On Card :</span> Json Taylor </p>
+                            <p><span class="fw-semibold text-muted fs-12">Name On Card :</span> {{$rental->customer->name}} </p>
                             <p><span class="fw-semibold text-muted fs-12">Card Number :</span> 1234 5678 9087 XXXX
                             </p>
                             <p><span class="fw-semibold text-muted fs-12">Total Amount :</span> <span
-                                    class="text-success fw-semibold fs-14">$2570.42</span></p>
+                                    class="text-success fw-semibold fs-14">${{$rental->total_amount}}</span></p>
                             <p><span class="fw-semibold text-muted fs-12">Due Date :</span> 29,Dec 2022 - <span
                                     class="text-danger fs-12 fw-semibold">30 days due</span></p>
-                            <p><span class="fw-semibold text-muted fs-12">Invoice Status : <span
-                                        class="badge bg-warning-transparent">Pending</span></span></p>
+                            <p><span class="fw-semibold text-muted fs-12">Invoice Status : @switch($rental->status)
+                                        @case(0) <span
+                                            class="badge bg-dark text-white fw-bold">Pending</span>@break
+                                        @case(1) <span
+                                            class="badge bg-info text-black fw-bold">Confirmed</span>@break
+                                        @case(2) <span
+                                            class="badge bg-info text-black fw-bold">Delivery</span>@break
+                                        @case(3) <span
+                                            class="badge bg-warning text-black fw-bold">In Progress</span>@break
+                                        @case(4) <span
+                                            class="badge bg-warning text-black fw-bold">Processing</span>@break
+                                        @case(5) <span
+                                            class="badge bg-success text-black fw-bold">Completed</span>@break
+                                        @case(6) <span
+                                            class="badge bg-danger text-black fw-bold">Cancel</span>@break
+                                    @endswitch</span></p>
                             <div class="alert alert-success" role="alert"> Please Make sure to pay the invoice bill
                                 within 30 days.
                             </div>

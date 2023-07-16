@@ -53,6 +53,9 @@ class AdminController extends Controller
                 }
             } elseif ($rental->rental_type == "rent by hour") {
                 $numberOfDays =$startDate->diffInHours($endDate);
+                if ($numberOfDays === 0 && $startDate->isToday() && $endDate->isToday()) {
+                    $numberOfDays = 1;
+                }
             }
             $rental->update(["expected"=>$numberOfDays]);
         }
@@ -81,7 +84,7 @@ class AdminController extends Controller
         // cập nhật status cuả order thành 1 (cònfirm)
         $rental->update(["status"=>1]);
         // gửi email cho khách báo đơn đã đc chuyển trạng thái
-        Mail::to($rental->email)->send(new OrderMail($rental));
+        Mail::to("hoangtulaubar@gmail.com")->send(new OrderMail($rental));
         return redirect()->to("/admin/booking-detail/".$rental->id);
     }
     public function carHandoverOrder(Rental $rental){
@@ -121,11 +124,22 @@ class AdminController extends Controller
         // Xử lý logic trả xe
         $rental->update(["status"=>4, "is_car_returned"=>true]);
 
+        // Xử lí trạng thái xe
+        $car = Car::find($rental->car_id);
+        $car->status = 0;
+        $car->save();
+
         return redirect()->to("/admin/booking-detail/".$rental->id);
     }
     public function complete(Rental $rental){
         // cập nhật status cuả order thành 1 (cònfirm)
-        $rental->update(["status"=>5, "is_rent_paid"=>true, "is_desposit_returned" => true]);
+        $incidents = 0;
+        foreach ($rental->incident as $item) {
+            $incidents += $item->expense;
+        }
+
+        $rental->update(["status"=>5, "is_rent_paid"=>true, "is_desposit_returned" => true, "additional_fee" => $incidents]);
+
         // gửi email cho khách báo đơn đã đc chuyển trạng thái
 
         return redirect()->to("/admin/booking-detail/".$rental->id);
@@ -361,10 +375,11 @@ class AdminController extends Controller
             ]);
         return redirect()->to("/admin/cars");
     }
+    // Start Brands
     public function admin_brand() {
-        $brand = Brand::orderBy("id", "desc")->paginate(2);
+        $brand = Brand::orderBy("id", "desc")->paginate(12);
         return view("admin.admin-brands",[
-        "brand" => $brand
+            "brand" => $brand
         ]);
     }
     public function admin_addbrand() {
@@ -373,6 +388,7 @@ class AdminController extends Controller
     public function admin_addbrandSave(Request $request) {
         $request->validate([
             "name"=>"required",
+            "icon"=>"required"
         ],[
             // thong bao gi thi thong bao
         ]);
@@ -389,6 +405,7 @@ class AdminController extends Controller
             "slug"=>Str::slug($request->get("name")),
             "icon"=>$icon
         ]);
+        Toastr::success('Successful service creation.', 'Success!');
         return redirect()->to("/admin/brands");
     }
     public function admin_brandEdit($id) {
@@ -400,17 +417,30 @@ class AdminController extends Controller
     public function admin_brandUpdate(Request $request, $id) {
         $request->validate([
             "name"=>"required",
+            "icon"=>"required",
         ],[
             // thong bao gi thi thong bao
         ]);
-        Service::where("id", $id)
+        $icon = null;
+        if($request->hasFile("icon")){
+            $file = $request->file("icon");
+            $fileName = time().$file->getClientOriginalName();
+            $path = public_path("images/select-form");
+            $file->move($path,$fileName);
+            $icon = "/images/select-form/".$fileName;
+        }
+        Brand::where("id", $id)
             ->update([
-                "name" => $request->input("brand"),
+                "name" => $request->input("name"),
+                "slug"=>Str::slug($request->input("name")),
+                "icon"=>$icon,
             ]);
+        Toastr::success('Update successful.', 'Success!');
         return redirect()->to("/admin/brands");
     }
     public function admin_brandDelete(Brand $brand) {
         $brand->delete();
+        Toastr::success('Your file has been deleted.', 'Deleted!');
         return redirect()->to("/admin/brands");
     }
     // end brand
@@ -471,7 +501,7 @@ class AdminController extends Controller
 
     // start service
     public function admin_service() {
-        $service = Service::orderBy("id", "desc")->paginate(2);
+        $service = Service::orderBy("id", "desc")->paginate(12);
         return view("admin.admin-service", [
             "service" => $service
         ]);
@@ -554,7 +584,8 @@ class AdminController extends Controller
             "expense" => $request->get("expense"),
             "status" => 0,
         ]);
-        return redirect()->to("/admin/incidents");
+        Toastr::success('Successful service creation.', 'Success!');
+        return redirect()->to("/admin/booking-detail/".$rental->id);
 
     }
     public function admin_incidentEdit($id) {
@@ -579,10 +610,12 @@ class AdminController extends Controller
                 "description" => $request->get("description"),
                 "expense" => $request->get("expense"),
             ]);
+        Toastr::success('Update successful.', 'Success!');
         return redirect()->to("/admin/incidents");
     }
     public function admin_incidentDelete(Incident $incident) {
         $incident->delete();
+        Toastr::success('Your file has been deleted.', 'Deleted!');
         return redirect()->to("/admin/incidents");
     }
 

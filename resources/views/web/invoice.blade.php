@@ -1,6 +1,12 @@
 @extends('web.layout.layout')
 @section("name","Invoice")
 @section("main")
+    <style>
+        .toast-container .toast {background-size: 7%!important;}
+
+        .toast-success {background-size: 7%!important;}
+
+    </style>
     <div class="no-bottom no-top" id="content">
         <div id="top"></div>
 
@@ -11,11 +17,6 @@
 
         <section id="section-settings" class="bg-gray-100">
             <div class="container">
-                @if (session('success'))
-                    <div id="alert-message" class="alert alert-success">
-                        {{ session('success') }}
-                    </div>
-                @endif
                 <div class="row">
                     <div class="col-lg-3 mb30">
                         <div class="card p-4 rounded-5">
@@ -328,9 +329,4 @@
             </div>
         </section>
     </div>
-    <script>
-        setTimeout(function() {
-            document.getElementById('alert-message').style.display = 'none';
-        }, 3000);
-    </script>
 @endsection

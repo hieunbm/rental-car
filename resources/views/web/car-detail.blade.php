@@ -297,8 +297,15 @@
                     </div>
                     <div class="col-lg-3">
                         <div class="de-price text-center">
-                            Daily rate
-                            <h3>${{$car->price}}</h3>
+                            @foreach($rentalrate as $item)
+                                @if($item->rental_type == "rent by day")
+                                    <h4 style="font-size: 32px">${{$item->price}}/day</h4>
+                                @else
+                                    <h4>${{$item->price}}/hour</h4>
+                                @endif
+
+                            @endforeach
+
                         </div>
                         <div class="spacer-30"></div>
                         <div class="de-box mb25">
@@ -378,7 +385,10 @@
                                     </div>
                                     <div class="col-lg-12 mb20">
                                         <h5>Expected number of days/hours</h5>
-                                        <input name="expected" class="form-control" type="text"/>
+                                        <input name="expected" class="form-control" type="number" min="0"/>
+                                        @error("expected")
+                                        <span style="font-size: 12px" class="text-danger">( {{ $message }} )</span>
+                                        @enderror
                                     </div>
                                 </div>
                                 @if (auth()->check())

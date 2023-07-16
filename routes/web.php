@@ -21,42 +21,49 @@ Route::get("/car-filter/type/{carType:slug}", [\App\Http\Controllers\WebControll
 Route::get("/car-filter/price", [\App\Http\Controllers\WebController::class, "car_filter_price"]);
 Route::get("/car-filter/seats/{seats}", [\App\Http\Controllers\WebController::class, "car_filter_seats"]);
 Route::get("/about", [\App\Http\Controllers\WebController::class, "about"]);
-
-Route::get("/booking", [\App\Http\Controllers\WebController::class, "booking"]);
-Route::post("/booking", [\App\Http\Controllers\WebController::class, "placeOrder"]);
-Route::get("/order-invoice/{rental}", [\App\Http\Controllers\WebController::class, "detailRental"]);
-
-
 Route::get("/contact", [\App\Http\Controllers\WebController::class, "contact"]);
-Route::post("/contact/create", [\App\Http\Controllers\WebController::class, "contact_contactSave"]);
 Route::get("/car/{car:slug}", [\App\Http\Controllers\WebController::class, "car_detail"]);
-Route::match(['get', 'post'],"/car/check", [\App\Http\Controllers\WebController::class, "checkCar"]);
-Route::get("/account-dashboard", [\App\Http\Controllers\WebController::class, "dashboard"]);
 
-// receive start
-Route::get("/receive/{rental}", [\App\Http\Controllers\WebController::class, "receive"]);
-Route::post("/receive/{rental}", [\App\Http\Controllers\WebController::class, "receiveSave"]);
+Route::prefix("/")->middleware(["auth"])->group(function () {//
+    Route::get("/booking", [\App\Http\Controllers\WebController::class, "booking"]);
+    Route::post("/booking", [\App\Http\Controllers\WebController::class, "placeOrder"]);
+    Route::get("/order-invoice/{rental}", [\App\Http\Controllers\WebController::class, "detailRental"]);
+    Route::post("/contact/create", [\App\Http\Controllers\WebController::class, "contact_contactSave"]);
+
+    Route::match(['get', 'post'],"/car/check", [\App\Http\Controllers\WebController::class, "checkCar"]);
+    Route::get("/account-dashboard", [\App\Http\Controllers\WebController::class, "dashboard"]);
+    //Account Profile Start
+    Route::get("/account-profile", [\App\Http\Controllers\WebController::class, "profile"]);
+    Route::post("/account-profile", [\App\Http\Controllers\WebController::class, "updateProfileSave"]);
+    Route::get("/account-profile-licenses", [\App\Http\Controllers\WebController::class, "profileLicenses"]);
+    Route::post("/account-profile-licenses", [\App\Http\Controllers\WebController::class, "updateLicensesSave"]);
+
+    //Account Profile End
+    Route::get("/account-booking", [\App\Http\Controllers\WebController::class, "myOrders"]);
+
+    Route::get("/account-favorite-cars", [\App\Http\Controllers\WebController::class, "favoriteCar"]);
+    Route::get("/account-favorite-cars/add/{car}", [\App\Http\Controllers\WebController::class, "addFavoriteCar"]);
+    Route::get("/account-favorite-cars/delete/{car}", [\App\Http\Controllers\WebController::class, "deleteFavoriteCar"]);
+
+    // receive start
+    Route::get("/receive/{rental}", [\App\Http\Controllers\WebController::class, "receive"]);
+    Route::post("/receive/{rental}", [\App\Http\Controllers\WebController::class, "receiveSave"]);
 // receive end
 
-Route::get("/account-favorite-cars", [\App\Http\Controllers\WebController::class, "favoriteCar"]);
-Route::get("/account-favorite-cars/add/{car}", [\App\Http\Controllers\WebController::class, "addFavoriteCar"]);
-Route::get("/account-favorite-cars/delete/{car}", [\App\Http\Controllers\WebController::class, "deleteFavoriteCar"]);
-
 // Review Start
-Route::get("/review/{rental}", [\App\Http\Controllers\WebController::class, "review_reviewCreate"]);
-Route::post("/review/{rentalId}", [\App\Http\Controllers\WebController::class, "review"]);
+    Route::get("/review/{rental}", [\App\Http\Controllers\WebController::class, "review_reviewCreate"]);
+    Route::post("/review/{rentalId}", [\App\Http\Controllers\WebController::class, "review"]);
 // Review End
+});
 
-//Account Profile Start
-Route::get("/account-profile", [\App\Http\Controllers\WebController::class, "profile"]);
-Route::post("/account-profile", [\App\Http\Controllers\WebController::class, "updateProfileSave"]);
-Route::get("/account-profile-licenses", [\App\Http\Controllers\WebController::class, "profileLicenses"]);
-Route::post("/account-profile-licenses", [\App\Http\Controllers\WebController::class, "updateLicensesSave"]);
+
+
+
+
 // 2 cái này dùng cho paypal
 Route::get('/success-transaction/{rental}', [\App\Http\Controllers\WebController::class, 'successTransaction'])->name('successTransaction');
 Route::get('/cancel-transaction/{rental}', [\App\Http\Controllers\WebController::class, 'cancelTransaction'])->name('cancelTransaction');
-//Account Profile End
-Route::get("/account-booking", [\App\Http\Controllers\WebController::class, "myOrders"]);
+
 // website end
 //VNPAY
 
@@ -89,8 +96,8 @@ Route::prefix("/admin")->middleware(["auth", "admin"])->group(function () {// mi
     Route::get("/add-brand", [App\Http\Controllers\AdminController::class, "admin_addbrand"]);
     Route::post("/add-brand/create", [App\Http\Controllers\AdminController::class, "admin_addbrandSave"]);
     Route::get("/add-brand/edit/{id}", [App\Http\Controllers\AdminController::class, "admin_brandEdit"]);
-    Route::get("/add-brand/edit/{id}", [App\Http\Controllers\AdminController::class, "admin_brandUpdate"]);
-    Route::get("/add-brand/delete/{add-brand}", [App\Http\Controllers\AdminController::class, "admin_brandDelete"]);
+    Route::put("/add-brand/edit/{id}", [App\Http\Controllers\AdminController::class, "admin_brandUpdate"]);
+    Route::get("/add-brand/delete/{brand}", [App\Http\Controllers\AdminController::class, "admin_brandDelete"]);
     Route::get("/contact-query", [App\Http\Controllers\AdminController::class, "admin_contactquery"]);
     Route::get("/contact-query-detail", [App\Http\Controllers\AdminController::class, "admin_contactdetail"]);
     Route::get("/customers", [App\Http\Controllers\AdminController::class, "admin_customer"]);
