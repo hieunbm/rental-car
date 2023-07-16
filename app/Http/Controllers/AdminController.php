@@ -299,13 +299,13 @@ class AdminController extends Controller
 
         RentalRate::create([
             'car_id' => $carId,
-            'rental_type' => 'rental by day',
+            'rental_type' => 'rent by day',
             'price' => $request->get('rentalrate_price_day'),
         ]);
 
         RentalRate::create([
             'car_id' => $carId,
-            'rental_type' => 'rental by hours',
+            'rental_type' => 'rent by hours',
             'price' => $request->get('rentalrate_price_hours'),
         ]);
 
