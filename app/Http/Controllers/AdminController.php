@@ -291,7 +291,7 @@ class AdminController extends Controller
             'seats' => $request->get("seats"),
             'status' => $request->get("status"),
             'description' => $request->get("description"),
-            'rate' => $request->get("rate"),
+            'rate' => 0,
         ]);
 
         $carId = $car->id;

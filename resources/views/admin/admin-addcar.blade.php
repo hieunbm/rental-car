@@ -101,13 +101,6 @@
                                 <input name="modelYear" type="number" class="form-control" id="input-number" placeholder="Enter Model Year"/>
                             </div>
 
-                            {{--                        Rate--}}
-                            <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12">
-                                <label for="input-number" class="form-label">Enter Rate</label> <input name="rate" type="number"
-                                                                                                       class="form-control"
-                                                                                                       id="input-number"
-                                                                                                       placeholder="Enter Rate"/>
-                            </div>
 
                             {{--                        Seat--}}
                             <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12">
