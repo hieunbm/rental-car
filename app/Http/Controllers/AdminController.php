@@ -192,6 +192,7 @@ class AdminController extends Controller
             "icon"=>$icon,
             "description"=>$request->get("description")
         ]);
+        Toastr::success('Successful cartype creation.', 'Success!');
         return redirect()->to("/admin/car-type");
     }
     public function admin_cartypeEdit($id) {
@@ -222,10 +223,12 @@ class AdminController extends Controller
                 "icon"=>$icon,
                 "description"=>$request->input("description")
             ]);
+        Toastr::success('Update successful.', 'Success!');
         return redirect()->to("/admin/car-type");
     }
     public function admin_cartypeDelete(CarType $carType) {
         $carType->delete();
+        Toastr::success('Your file has been deleted.', 'Deleted!');
         return redirect()->to("/admin/car-type");
     }
     public function admin_addcar() {

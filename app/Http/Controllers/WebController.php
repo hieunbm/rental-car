@@ -903,7 +903,6 @@ class WebController extends Controller
         if($cars) {
             foreach ($cars as $key => $item) {
                 if($item->id == $car->id){
-                    dd($car->id);
                     unset($cars[$key]);
                     session(["favoriteCar"=>$cars]);
                     break;
