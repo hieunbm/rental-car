@@ -47,7 +47,7 @@
                                     <td>
                                         <div class="hstack gap-2 fs-15">
                                             <a href="{{url("/admin/cartype/edit", ["id" => $cT->id])}}" class="btn btn-icon btn-sm btn-info-transparent rounded-pill"><i class="ri-edit-line"></i></a>
-                                            <a onclick="return confirm('Xoá loại xe ?')" href="{{url("/admin/cartype/delete",["cartype"=>$cT->id])}}" class="btn btn-icon btn-sm btn-danger-transparent rounded-pill"><i class="ri-delete-bin-line"></i></a>
+                                            <a onclick="confirmation(event)" href="{{url("/admin/cartype/delete",["cartype"=>$cT->id])}}" class="btn btn-icon btn-sm btn-danger-transparent rounded-pill"><i class="ri-delete-bin-line"></i></a>
                                         </div>
                                     </td>
                                 </tr>
