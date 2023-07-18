@@ -623,6 +623,19 @@ class WebController extends Controller
         }
     }
 
+    public function cancel($rentalId) {
+        $rental = Rental::find($rentalId);
+        $rental->update(["status"=>6]);
+        $rental->save();
+
+        $car = Car::find($rental->car_id);
+        $car->status = 0;
+        $car->save();
+        Toastr::success('Cancellation of car booking successfully.', 'Success!');
+
+        return redirect()->to("/order-invoice/".$rental->id);
+    }
+
     public function execPostRequest($url, $data)
     {
         $ch = curl_init($url);
@@ -722,9 +735,9 @@ class WebController extends Controller
 
         $pendingOrders = Rental::where('status', 0)->where('user_id', $customer_id)->orderBy('id')->get();
         $confirmedOrders = Rental::where('status', 1)->where('user_id', $customer_id)->orderBy('id')->get();
-        $inProgress = Rental::where('status', 2)->where('user_id', $customer_id)->orderBy('id')->get();
-        $completedOrders = Rental::where('status', 3)->where('user_id', $customer_id)->orderBy('id')->get();
-        $cancelledOrders = Rental::where('status', 4)->where('user_id', $customer_id)->orderBy('id')->get();
+        $inProgress = Rental::where('status', 3)->where('user_id', $customer_id)->orderBy('id')->get();
+        $completedOrders = Rental::where('status', 5)->where('user_id', $customer_id)->orderBy('id')->get();
+        $cancelledOrders = Rental::where('status', 6)->where('user_id', $customer_id)->orderBy('id')->get();
         return view("web.account-booking", [
             'user' => $user,
             'pendingOrders' => $pendingOrders,

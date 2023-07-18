@@ -28,6 +28,7 @@ Route::prefix("/")->middleware(["auth"])->group(function () {//
     Route::get("/booking", [\App\Http\Controllers\WebController::class, "booking"]);
     Route::post("/booking", [\App\Http\Controllers\WebController::class, "placeOrder"]);
     Route::get("/order-invoice/{rental}", [\App\Http\Controllers\WebController::class, "detailRental"]);
+    Route::get("/booking/cancel/{rentalId}", [\App\Http\Controllers\WebController::class, "cancel"]);
     Route::post("/contact/create", [\App\Http\Controllers\WebController::class, "contact_contactSave"]);
 
     Route::match(['get', 'post'],"/car/check", [\App\Http\Controllers\WebController::class, "checkCar"]);
@@ -48,12 +49,12 @@ Route::prefix("/")->middleware(["auth"])->group(function () {//
     // receive start
     Route::get("/receive/{rental}", [\App\Http\Controllers\WebController::class, "receive"]);
     Route::post("/receive/{rental}", [\App\Http\Controllers\WebController::class, "receiveSave"]);
-// receive end
+    // receive end
 
-// Review Start
+    // Review Start
     Route::get("/review/{rental}", [\App\Http\Controllers\WebController::class, "review_reviewCreate"]);
     Route::post("/review/{rentalId}", [\App\Http\Controllers\WebController::class, "review"]);
-// Review End
+    // Review End
 });
 
 

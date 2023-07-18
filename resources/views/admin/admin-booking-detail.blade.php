@@ -283,6 +283,10 @@
                             </a>
                             @break
                         @case(2)
+                            <a href="{{url("admin/booking/in-progress", ["rental" => $rental->id])}}" class="btn btn-success float-right">
+                                <i class="far fa-credit-card"></i>
+                                In-Progress
+                            </a>
                             <a href="{{url("admin/booking/cancel", ["rental" => $rental->id])}}" class="btn btn-danger float-right">
                                 <i class="far fa-credit-card"></i>
                                 Cancel

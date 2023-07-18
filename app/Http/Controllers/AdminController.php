@@ -85,20 +85,22 @@ class AdminController extends Controller
         $rental->update(["status"=>1]);
         // gửi email cho khách báo đơn đã đc chuyển trạng thái
         Mail::to("hoangtulaubar@gmail.com")->send(new OrderMail($rental));
+        Toastr::success('Status update successful.', 'Success!');
         return redirect()->to("/admin/booking-detail/".$rental->id);
     }
     public function carHandoverOrder(Rental $rental){
         // cập nhật status cuả order (confirm)
         $rental->update(["status"=>2]);
         // gửi email cho khách báo đơn đã đc chuyển trạng thái
-//        Mail::to($rental->email)->send(new OrderMail($rental));
+        Mail::to($rental->email)->send(new OrderMail($rental));
+        Toastr::success('Status update successful.', 'Success!');
         return redirect()->to("/admin/booking-detail/".$rental->id);
     }
     public function inProgress(Rental $rental){
         // cập nhật status cuả order thành 1 (cònfirm)
         $rental->update(["status"=>3]);
         // gửi email cho khách báo đơn đã đc chuyển trạng thái
-
+        Toastr::success('Status update successful.', 'Success!');
         return redirect()->to("/admin/booking-detail/".$rental->id);
     }
     public function returnCar(Rental $rental)
@@ -128,7 +130,7 @@ class AdminController extends Controller
         $car = Car::find($rental->car_id);
         $car->status = 0;
         $car->save();
-
+        Toastr::success('Status update successful.', 'Success!');
         return redirect()->to("/admin/booking-detail/".$rental->id);
     }
     public function complete(Rental $rental){
@@ -141,7 +143,8 @@ class AdminController extends Controller
         $rental->update(["status"=>5, "is_rent_paid"=>true, "is_desposit_returned" => true, "additional_fee" => $incidents]);
 
         // gửi email cho khách báo đơn đã đc chuyển trạng thái
-
+        Mail::to($rental->email)->send(new OrderMail($rental));
+        Toastr::success('Status update successful.', 'Success!');
         return redirect()->to("/admin/booking-detail/".$rental->id);
     }
     public function cancel(Rental $rental){

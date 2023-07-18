@@ -293,7 +293,7 @@
 
                                             @switch($rental->status)
                                                 @case(0)
-                                                    <a href="{{url("admin/booking/cancel", ["rental" => $rental->id])}}" class="btn btn-danger float-right">
+                                                    <a href="{{url("/booking/cancel/".$rental->id)}}" class="btn btn-danger float-right">
                                                         <i class="far fa-credit-card"></i>
                                                         Cancel
                                                     </a>

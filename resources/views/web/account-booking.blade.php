@@ -63,6 +63,7 @@
                                     <th scope="col"><span class="text-uppercase fs-12 text-gray">Return Date</span></th>
                                     <th scope="col"><span class="text-uppercase fs-12 text-gray">Total Amount</span></th>
                                     <th scope="col"><span class="text-uppercase fs-12 text-gray">Pay</span></th>
+                                    <th scope="col"><span class="text-uppercase fs-12 text-gray">View</span></th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -80,6 +81,9 @@
                                             @else
                                                 <span class="text-danger">unPaid</span>
                                             @endif
+                                        </td>
+                                        <td>
+                                            <a href="{{url("/order-invoice/".$item->id)}}" class="badge bg-info">View</a>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -105,6 +109,7 @@
                                     <th scope="col"><span class="text-uppercase fs-12 text-gray">Return Date</span></th>
                                     <th scope="col"><span class="text-uppercase fs-12 text-gray">Total Amount</span></th>
                                     <th scope="col"><span class="text-uppercase fs-12 text-gray">Pay</span></th>
+                                    <th scope="col"><span class="text-uppercase fs-12 text-gray">View</span></th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -122,6 +127,9 @@
                                             @else
                                                 <span class="text-danger">unPaid</span>
                                             @endif
+                                        </td>
+                                        <td>
+                                            <a href="{{url("/order-invoice/".$order->id)}}" class="badge bg-info">View</a>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -147,6 +155,7 @@
                                     <th scope="col"><span class="text-uppercase fs-12 text-gray">Return Date</span></th>
                                     <th scope="col"><span class="text-uppercase fs-12 text-gray">Total Amount</span></th>
                                     <th scope="col"><span class="text-uppercase fs-12 text-gray">Pay</span></th>
+                                    <th scope="col"><span class="text-uppercase fs-12 text-gray">View</span></th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -164,6 +173,9 @@
                                             @else
                                                 <span class="text-danger">unPaid</span>
                                             @endif
+                                        </td>
+                                        <td>
+                                            <a href="{{url("/order-invoice/".$order->id)}}" class="badge bg-info">View</a>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -190,6 +202,7 @@
                                     <th scope="col"><span class="text-uppercase fs-12 text-gray">Return Date</span></th>
                                     <th scope="col"><span class="text-uppercase fs-12 text-gray">Total Amount</span></th>
                                     <th scope="col"><span class="text-uppercase fs-12 text-gray">Pay</span></th>
+                                    <th scope="col"><span class="text-uppercase fs-12 text-gray">View</span></th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -207,6 +220,9 @@
                                             @else
                                                 <span class="text-danger">unPaid</span>
                                             @endif
+                                        </td>
+                                        <td>
+                                            <a href="{{url("/order-invoice/".$order->id)}}" class="badge bg-info">View</a>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -233,6 +249,7 @@
                                     <th scope="col"><span class="text-uppercase fs-12 text-gray">Return Date</span></th>
                                     <th scope="col"><span class="text-uppercase fs-12 text-gray">Total Amount</span></th>
                                     <th scope="col"><span class="text-uppercase fs-12 text-gray">Pay</span></th>
+                                    <th scope="col"><span class="text-uppercase fs-12 text-gray">View</span></th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -250,6 +267,9 @@
                                             @else
                                                 <span class="text-danger">unPaid</span>
                                             @endif
+                                        </td>
+                                        <td>
+                                            <a href="{{url("/order-invoice/".$order->id)}}" class="badge bg-info">View</a>
                                         </td>
                                     </tr>
                                 @endforeach
