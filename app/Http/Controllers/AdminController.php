@@ -89,12 +89,23 @@ class AdminController extends Controller
         return redirect()->to("/admin/booking-detail/".$rental->id);
     }
     public function carHandoverOrder(Rental $rental){
-        // cập nhật status cuả order (confirm)
-        $rental->update(["status"=>2]);
-        // gửi email cho khách báo đơn đã đc chuyển trạng thái
-        Mail::to($rental->email)->send(new OrderMail($rental));
-        Toastr::success('Status update successful.', 'Success!');
-        return redirect()->to("/admin/booking-detail/".$rental->id);
+        // kiểm tra
+        $rentalDate = Carbon::parse($rental->rental_date);
+        $now = Carbon::now();
+
+        if ($now->diffInHours($rentalDate, false) < 24) {
+            // cập nhật status cuả order (confirm)
+            $rental->update(["status"=>2]);
+            // gửi email cho khách báo đơn đã đc chuyển trạng thái
+            Mail::to($rental->email)->send(new OrderMail($rental));
+            Toastr::success('Status update successful.', 'Success!');
+            return redirect()->to("/admin/booking-detail/".$rental->id);
+        } else {
+            // Không đủ thời gian để giao xe, hiển thị thông báo lỗi hoặc xử lý theo yêu cầu
+            Toastr::warning('Delivery date not yet.', 'Warning!');
+            return redirect()->to("/admin/booking-detail/".$rental->id);
+        }
+
     }
     public function inProgress(Rental $rental){
         // cập nhật status cuả order thành 1 (cònfirm)

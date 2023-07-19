@@ -25,6 +25,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Srmklive\PayPal\Services\PayPal as PayPalClient;
+use function PHPUnit\Framework\isEmpty;
 use function Webmozart\Assert\Tests\StaticAnalysis\email;
 
 class WebController extends Controller
@@ -208,7 +209,8 @@ class WebController extends Controller
             $rental_time = $rental_date->format('H:i');
 
             $rentalrate = RentalRate::where("car_id", $car->id)->get();
-//            dd($rentalrate);
+
+            $price = RentalRate::where("car_id", $car->id)->where("rental_type", "rent by day")->get();
 
         } else {
             return redirect('/car-list');
@@ -222,6 +224,7 @@ class WebController extends Controller
             "rental_day" => $rental_day,
             "rental_time" => $rental_time,
             "expected" => $expected,
+            "price" => $price,
         ]);
     }
 
@@ -735,13 +738,16 @@ class WebController extends Controller
 
         $pendingOrders = Rental::where('status', 0)->where('user_id', $customer_id)->orderBy('id')->get();
         $confirmedOrders = Rental::where('status', 1)->where('user_id', $customer_id)->orderBy('id')->get();
+        $deliveryOrders = Rental::where('status', 2)->where('user_id', $customer_id)->orderBy('id')->get();
         $inProgress = Rental::where('status', 3)->where('user_id', $customer_id)->orderBy('id')->get();
         $completedOrders = Rental::where('status', 5)->where('user_id', $customer_id)->orderBy('id')->get();
         $cancelledOrders = Rental::where('status', 6)->where('user_id', $customer_id)->orderBy('id')->get();
+
         return view("web.account-booking", [
             'user' => $user,
             'pendingOrders' => $pendingOrders,
             'confirmedOrders' => $confirmedOrders,
+            'deliveryOrders' => $deliveryOrders,
             'inProgress' => $inProgress,
             'completedOrders' => $completedOrders,
             'cancelledOrders' => $cancelledOrders

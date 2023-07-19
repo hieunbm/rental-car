@@ -45,7 +45,7 @@
                                                 </div>
                                                 <div class="col-lg-6 mb20">
                                                     <h5>Email</h5>
-                                                    <input type="text" name="email" placeholder="sample@yourcompany.com"
+                                                    <input type="email" value="{{auth()->user()->email}}"  name="email" placeholder="sample@yourcompany.com"
                                                            autocomplete="off" class="form-control">
                                                     <div class="jls-address-preview jls-address-preview--hidden">
                                                         <div class="jls-address-preview__header">
@@ -57,7 +57,7 @@
                                                 </div>
                                                 <div class="col-lg-6 mb20">
                                                     <h5>Telephone</h5>
-                                                    <input type="text" name="telephone" placeholder="+66-4353434"
+                                                    <input type="text" value="{{auth()->user()->phone}}" name="telephone" placeholder="+66-4353434"
                                                            autocomplete="off" class="form-control">
                                                     <div class="jls-address-preview jls-address-preview--hidden">
                                                         <div class="jls-address-preview__header">
@@ -74,13 +74,15 @@
                                                     <select name="rental_type" id="mySelect2" class="form-control"
                                                             onchange="updateInput()">
                                                         @foreach($rentalrate as $rt)
-                                                            <option value="{{$rt->rental_type}}" >{{$rt->rental_type}}</option>
+                                                            <option value="{{$rt->rental_type}}" @checked($rt->rental_type == "rent by day") >{{$rt->rental_type}}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
                                                 <div class="col-lg-6 mb20">
                                                     <h5>Price</h5>
-                                                    <input name="car_price" class="form-control" type="text" id="myLable" readonly/>
+                                                    @foreach($price as $i)
+                                                        <input name="car_price" value="{{$i->price}}" class="form-control" type="text" id="myLable" readonly/>
+                                                    @endforeach
                                                 </div>
                                                 <div class="col-lg-6 mb20">
                                                     <h5>Pick Up Date & Time</h5>
@@ -529,7 +531,9 @@
                                                 <div class="p-3 bg-light bg-opacity-10">
                                                     <h6 class="card-title mb-3">Order Summary</h6>
                                                     <div class="d-flex justify-content-between mb-1 small">
-                                                        <span>Subtotal</span> <span id="subtotal">$0.00</span>
+                                                        @foreach($price as $i)
+                                                        <span>Subtotal</span> <span id="subtotal" >${{$i->price*$expected}}</span>
+                                                        @endforeach
                                                     </div>
                                                     <div class="d-flex justify-content-between mb-1 small">
                                                         <span>Service</span> <span id="service">$0.00</span>
@@ -537,7 +541,9 @@
 
                                                     <hr>
                                                     <div class="d-flex justify-content-between mb-4 small">
-                                                        <span>TOTAL</span> <strong class="text-dark" id="total">$0.00</strong>
+                                                        @foreach($price as $i)
+                                                        <span>TOTAL</span> <strong class="text-dark" id="total">${{$i->price*$expected}}</strong>
+                                                        @endforeach
                                                     </div>
                                                     <div class="d-flex justify-content-between mb-4 small">
                                                         <span>DEPOSIT</span> <strong class="text-dark" id="deposit">${{$car->desposit}}</strong>
@@ -554,9 +560,10 @@
                                                             Get emails about product updates and events. If you change your mind, you can unsubscribe at any time. <a href="#">Privacy Policy</a>
                                                         </label>
                                                     </div>
-                                                    <input type="hidden" value="" id="desposit_amount" name="desposit_amount" />
+                                                    <input type="hidden" value="{{$car->desposit}}" id="desposit_amount" name="desposit_amount" />
                                                     <input type="hidden" value="" id="total_amount" name="total_amount" />
-                                                    <button type="submit" class="btn btn-primary w-100 mt-2">Car Deposit</button>
+
+                                                    <button onclick="calculateTotal()" type="submit" class="btn btn-primary w-100 mt-2">Car Deposit</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -678,7 +685,6 @@
             // Update the total value on the UI
             document.getElementById('total').textContent = '$' + total.toFixed(2);
             document.getElementById('service').textContent = '$' + additionalServicesTotal.toFixed(2);
-            document.getElementById('desposit_amount').value = {{$car->desposit}};
             document.getElementById('total_amount').value = total;
 
         }
