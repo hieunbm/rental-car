@@ -281,6 +281,7 @@ class AdminController extends Controller
             "price"=>"required|numeric|min:0",
             'license_plate'=>'required',
             'desposit'=>'required',
+            'thumbnail'=>'required',
             'brand_id'=>'required',
             'carType_id'=>'required',
             'fuelType'=>'required',
@@ -359,6 +360,22 @@ class AdminController extends Controller
     public function admin_carsUpdate(Request $request, $id) {
         $request->validate([
             "model"=>"required",
+            "price"=>"required|numeric|min:0",
+            'license_plate'=>'required',
+            'desposit'=>'required',
+            'thumbnail'=>'required',
+            'brand_id'=>'required',
+            'carType_id'=>'required',
+            'fuelType'=>'required',
+            'transmission'=>'required',
+            'km_limit'=>'required',
+            'modelYear'=>'required',
+            'reverse_sensor'=>'required',
+            'airConditioner'=>'required',
+            'driverAirbag'=>'required',
+            'cDPlayer'=>'required',
+            'seats'=>'required',
+            'brakeAssist'=>'required',
         ],[
             // thong bao gi thi thong bao
         ]);
