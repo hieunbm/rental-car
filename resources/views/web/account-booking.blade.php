@@ -83,7 +83,7 @@
                                             @endif
                                         </td>
                                         <td>
-                                            <a href="{{url("/order-invoice/".$item->id)}}" class="badge bg-info">View</a>
+                                            <a href="{{url("/order-invoice/".$order->id)}}" class="badge bg-info">View</a>
                                         </td>
                                     </tr>
                                 @endforeach
