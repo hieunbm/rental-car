@@ -114,13 +114,9 @@
                             <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12">
                                 <label for="input-placeholder" class="form-label">Status</label>
                                 <select name="status" class="form-select default-pill" aria-label="Default select example">
-                                    <option value="0">New</option>
-                                    <option value="1">Used</option>
-                                    <option value="2">Excellent</option>
-                                    <option value="3">Good</option>
-                                    <option value="4">Fair</option>
-                                    <option value="5">Poor</option>
-                                    <option value="6">Salvage</option>
+                                    <option value="0">Rentable</option>
+                                    <option value="1">Unrentable</option>
+                                    <option value="2">Repairing</option>
                                 </select>
                             </div>
                             {{--                        reverse sensor--}}
