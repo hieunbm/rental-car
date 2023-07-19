@@ -13,6 +13,7 @@ use App\Models\ContactUsQuery;
 use App\Models\Product;
 use App\Utilities\VNPay;
 use Brian2694\Toastr\Facades\Toastr;
+use DateTime;
 use Illuminate\Support\Facades\Hash;
 use App\Models\DrivingLicenses;
 use App\Models\Gallery;
@@ -157,21 +158,17 @@ class WebController extends Controller
     public function checkCar(Request $request)
     {
         $request->validate([
-            'rental_time' => 'required',
+            'rental_date' => 'required',
             'expected' => 'required',
         ], [
             'rental_time.required' => 'You must choose the number of hours',
         ]);
 
         $car_id = $request->get("car_id");
-        $rental_dayString = $request->get("rental_date");
-        $rental_timeString = $request->get("rental_time");
+        $rental_dateString = $request->get("rental_date");
         $expected = $request->get("expected");
 
-        $rental_day = Carbon::createFromFormat('F j, Y', $rental_dayString);
-        $rental_time = Carbon::createFromFormat('H:i', $rental_timeString);
-
-        $rental_date = $rental_day->setTime($rental_time->hour, $rental_time->minute, $rental_time->second);
+        $rental_date = Carbon::createFromFormat('Y-m-d\TH:i', $rental_dateString);
 
         $car = Car::find($car_id);
         Session::put('car', $car);
@@ -205,8 +202,7 @@ class WebController extends Controller
             $rental_date = Session::get('rental_date');
             $expected = Session::get('expected');
 
-            $rental_day = $rental_date->format('F j, Y');
-            $rental_time = $rental_date->format('H:i');
+            $rental_date_time = $rental_date->format('Y-m-d\TH:i');
 
             $rentalrate = RentalRate::where("car_id", $car->id)->get();
 
@@ -221,8 +217,7 @@ class WebController extends Controller
             "services" => $services,
             "thumbnails" => $thumbnails,
             "rentalrate" => $rentalrate,
-            "rental_day" => $rental_day,
-            "rental_time" => $rental_time,
+            "rental_date" => $rental_date_time,
             "expected" => $expected,
             "price" => $price,
         ]);
@@ -231,7 +226,6 @@ class WebController extends Controller
     public function placeOrder(Request $request)
     {
         $request->validate([// mảng các quy tắt
-            'rental_time' => 'required',
             "rental_date" => "required",
             "expected" => "required",
             "pickup_location" => "required",
@@ -247,12 +241,10 @@ class WebController extends Controller
             return redirect('/login');
         }
         // reset rental_date and expected
-        $rental_dayString = $request->get("rental_date");
-        $rental_timeString = $request->get("rental_time");
+        $rental_dateString = $request->get("rental_date");
         $expected = $request->get("expected");
-        $rental_day = Carbon::createFromFormat('F j, Y', $rental_dayString);
-        $rental_time = Carbon::createFromFormat('H:i', $rental_timeString);
-        $rental_date = $rental_day->setTime($rental_time->hour, $rental_time->minute, $rental_time->second);
+
+        $rental_date = Carbon::createFromFormat('Y-m-d\TH:i', $rental_dateString);
 
         if ($rental_date->isPast()) {
             //chỉ được chọn thời gian từ thời điểm hiện tại trở đi
@@ -551,6 +543,7 @@ class WebController extends Controller
             ]);
 
             $rental->status = 3;
+            $rental->is_desposit_paid == true;
             $rental->save();
 
             Toastr::success('Successfully received the car.', 'Success!');
@@ -702,10 +695,21 @@ class WebController extends Controller
 
     public function detailRental(Rental $rental) {
         $user = auth()->user();
+        $services = $rental->service;
+        $total = 0;
+        foreach ($services as $item){
+            $total += $item->price;
+        }
+        $totalFee = 0;
+        foreach ($rental->incident as $item){
+            $totalFee += $item->expense;
+        }
         if ($rental->user_id == $user->id) {
             return view("web.invoice", [
                 'user' => $user,
-                "rental" => $rental
+                "rental" => $rental,
+                "total" => $total,
+                "totalFee" => $totalFee
             ]);
         } else {
             return abort(404);

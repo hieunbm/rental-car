@@ -167,8 +167,6 @@ class AdminController extends Controller
             $rental->update(["expected"=>$numberOfDays]);
         }
 
-        $startDate = Carbon::parse($rental->rental_date);; // Ngày bắt đầu thuê
-        $endDate = Carbon::parse($rental->return_date); // Ngày kết thúc thuê
         $services = $rental->service;
         $total = 0;
         foreach ($services as $item){
@@ -224,8 +222,16 @@ class AdminController extends Controller
     public function returnCar(Rental $rental)
     {
         // xử lí lưu ngày trả xe
-        $rental->return_date = Carbon::now('Asia/Ho_Chi_Minh')->format('Y-m-d H:i:s');
+        $return_dateString = Carbon::now('Asia/Ho_Chi_Minh')->format('Y-m-d H:i:s');
+        $return_date = Carbon::parse($return_dateString);;
+        if ($return_date->lessThan($rental->rental_date)) {
+            Toastr::warning('Can not pick up the car right now.', 'Warning!');
+            return redirect()->to("/admin/booking-detail/".$rental->id);
+        }
+        // lưu dữ liệu
+        $rental->return_date = $return_dateString;
         $rental->save();
+
         // xử lí ngày trả và tiền
         $startDate = Carbon::parse($rental->rental_date);; // Ngày bắt đầu thuê
         $endDate = Carbon::parse($rental->return_date); // Ngày kết thúc thuê
