@@ -177,7 +177,8 @@ class AdminController extends Controller
     public function admin_cartypeSave(Request $request) {
         $request->validate([
             "name"=>"required",
-            "description"=>"required"
+            "description"=>"required",
+            "icon"=>"required"
         ],[
             // thong bao gi thi thong bao
         ]);
@@ -218,14 +219,23 @@ class AdminController extends Controller
             $path = public_path("images/select-form");
             $file->move($path,$fileName);
             $icon = "/images/select-form/".$fileName;
+
+            CarType::where("id", $id)
+                ->update([
+                    "name" => $request->input("name"),
+                    "slug"=>Str::slug($request->input("name")),
+                    "icon"=>$icon,
+                    "description"=>$request->input("description")
+                ]);
+        } else {
+            CarType::where("id", $id)
+                ->update([
+                    "name" => $request->input("name"),
+                    "slug"=>Str::slug($request->input("name")),
+                    "description"=>$request->input("description")
+                ]);
         }
-        CarType::where("id", $id)
-            ->update([
-                "name" => $request->input("name"),
-                "slug"=>Str::slug($request->input("name")),
-                "icon"=>$icon,
-                "description"=>$request->input("description")
-            ]);
+
         Toastr::success('Update successful.', 'Success!');
         return redirect()->to("/admin/car-type");
     }
@@ -437,7 +447,6 @@ class AdminController extends Controller
     public function admin_brandUpdate(Request $request, $id) {
         $request->validate([
             "name"=>"required",
-            "icon"=>"required",
         ],[
             // thong bao gi thi thong bao
         ]);
@@ -448,13 +457,21 @@ class AdminController extends Controller
             $path = public_path("images/select-form");
             $file->move($path,$fileName);
             $icon = "/images/select-form/".$fileName;
+
+            Brand::where("id", $id)
+                ->update([
+                    "name" => $request->input("name"),
+                    "slug"=>Str::slug($request->input("name")),
+                    "icon"=>$icon,
+                ]);
+        } else {
+            Brand::where("id", $id)
+                ->update([
+                    "name" => $request->input("name"),
+                    "slug"=>Str::slug($request->input("name")),
+                ]);
         }
-        Brand::where("id", $id)
-            ->update([
-                "name" => $request->input("name"),
-                "slug"=>Str::slug($request->input("name")),
-                "icon"=>$icon,
-            ]);
+
         Toastr::success('Update successful.', 'Success!');
         return redirect()->to("/admin/brands");
     }
@@ -579,7 +596,7 @@ class AdminController extends Controller
 
     // start incident
     public function admin_incident() {
-        $incidents = Incident::orderBy("id", "desc")->paginate(6);
+        $incidents = Incident::orderBy("id", "desc")->paginate(12);
         return view("admin.admin-incident", [
             "incidents" => $incidents
         ]);
@@ -593,16 +610,25 @@ class AdminController extends Controller
         $request->validate([
             "title"=>"required",
             "description" => "required",
+            "thumbnail" => "required",
             "expense"=>"required|numeric|min:0",
         ],[
             // thong bao gi thi thong bao
         ]);
+        $thumbnail = null;
+        if($request->hasFile("thumbnail")){
+            $file = $request->file("thumbnail");
+            $fileName = time().$file->getClientOriginalName();
+            $path = public_path("images/incident");
+            $file->move($path,$fileName);
+            $thumbnail = "/images/incident/".$fileName;
+        }
         Incident::create([
             "title" => $request->get("title"),
             "rental_id" => $rental->id,
             "description" => $request->get("description"),
             "expense" => $request->get("expense"),
-            "status" => 0,
+            "thumbnail" => $thumbnail,
         ]);
         Toastr::success('Successful service creation.', 'Success!');
         return redirect()->to("/admin/booking-detail/".$rental->id);
@@ -617,19 +643,36 @@ class AdminController extends Controller
     public function admin_incidentUpdate(Request $request, $id) {
         $request->validate([
             "title"=>"required",
-            "rental_id"=>"required",
             "description" => "required",
             "expense"=>"required|numeric|min:0",
         ],[
             // thong bao gi thi thong bao
         ]);
-        Incident::where("id", $id)
-            ->update([
-                "title" => $request->get("title"),
-                "rental_id" => $request->get("rental_id"),
-                "description" => $request->get("description"),
-                "expense" => $request->get("expense"),
-            ]);
+
+        $thumbnail = null;
+        if($request->hasFile("thumbnail")){
+            $file = $request->file("thumbnail");
+            $fileName = time().$file->getClientOriginalName();
+            $path = public_path("images/incident");
+            $file->move($path,$fileName);
+            $thumbnail = "/images/incident/".$fileName;
+
+            Incident::where("id", $id)
+                ->update([
+                    "title" => $request->get("title"),
+                    "description" => $request->get("description"),
+                    "expense" => $request->get("expense"),
+                    "thumbnail" => $thumbnail
+                ]);
+        } else {
+            Incident::where("id", $id)
+                ->update([
+                    "title" => $request->get("title"),
+                    "description" => $request->get("description"),
+                    "expense" => $request->get("expense"),
+                ]);
+        }
+
         Toastr::success('Update successful.', 'Success!');
         return redirect()->to("/admin/incidents");
     }
