@@ -56,7 +56,7 @@
                             <table class="table de-table">
                                 <thead>
                                 <tr>
-                                    <th scope="col"><span class="text-uppercase fs-12 text-gray">Order ID</span></th>
+                                    <th scope="col"><span class="text-uppercase fs-12 text-gray">ID</span></th>
                                     <th scope="col"><span class="text-uppercase fs-12 text-gray">Car Name</span></th>
                                     <th scope="col"><span class="text-uppercase fs-12 text-gray">Pick Up Location</span></th>
                                     <th scope="col"><span class="text-uppercase fs-12 text-gray">Pick Up Date</span></th>
@@ -71,19 +71,19 @@
                                     <tr>
                                         <td><div class="badge bg-gray-100 text-dark">#{{ $order->id }}</div></td>
                                         <td><span class="bold">{{ $order->car->model }}</span></td>
-                                        <td>{{ $order->address }}, {{ $order->pickup_location }}</td>
-                                        <td>{{ \Carbon\Carbon::parse($order->rental_date)->format('m/d/Y') }}</td>
-                                        <td>{{ \Carbon\Carbon::parse($order->return_date)->format('m/d/Y') }}</td>
+                                        <td>{{ $order->pickup_location }}</td>
+                                        <td>{{$order->rental_date}}</td>
+                                        <td>{{$order->return_date}}</td>
                                         <td>${{ $order->total_amount }}</td>
                                         <td>
-                                            @if($order->is_paid)
-                                                <span class="text-success">Paid</span>
+                                            @if($order->is_rent_paid)
+                                                <span class="badge bg-success">Pain</span>
                                             @else
-                                                <span class="text-danger">unPaid</span>
+                                                <span class="badge bg-danger">UnPain</span>
                                             @endif
                                         </td>
                                         <td>
-                                            <a href="{{url("/order-invoice/".$item->id)}}" class="badge bg-info">View</a>
+                                            <a href="{{url("/order-invoice/".$order->id)}}" class="badge bg-info">View</a>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -102,7 +102,7 @@
                             <table class="table de-table">
                                 <thead>
                                 <tr>
-                                    <th scope="col"><span class="text-uppercase fs-12 text-gray">Order ID</span></th>
+                                    <th scope="col"><span class="text-uppercase fs-12 text-gray">ID</span></th>
                                     <th scope="col"><span class="text-uppercase fs-12 text-gray">Car Name</span></th>
                                     <th scope="col"><span class="text-uppercase fs-12 text-gray">Pick Up Location</span></th>
                                     <th scope="col"><span class="text-uppercase fs-12 text-gray">Pick Up Date</span></th>
@@ -117,15 +117,15 @@
                                     <tr>
                                         <td><div class="badge bg-gray-100 text-dark">#{{ $order->id }}</div></td>
                                         <td><span class="bold">{{ $order->car->model }}</span></td>
-                                        <td>{{ $order->address }}, {{ $order->pickup_location }}</td>
-                                        <td>{{ \Carbon\Carbon::parse($order->rental_date)->format('m/d/Y') }}</td>
-                                        <td>{{ \Carbon\Carbon::parse($order->return_date)->format('m/d/Y') }}</td>
+                                        <td>{{ $order->pickup_location }}</td>
+                                        <td>{{$order->rental_date}}</td>
+                                        <td>{{$order->return_date}}</td>
                                         <td>${{ $order->total_amount }}</td>
                                         <td>
-                                            @if($order->is_paid)
-                                                <span class="text-success">Paid</span>
+                                            @if($order->is_rent_paid)
+                                                <span class="badge bg-success">Pain</span>
                                             @else
-                                                <span class="text-danger">unPaid</span>
+                                                <span class="badge bg-danger">UnPain</span>
                                             @endif
                                         </td>
                                         <td>
@@ -141,14 +141,14 @@
 
 {{--                        Shipping--}}
                         <div class="card p-4 rounded-5 mb25">
-                            <h4 class="rounded-pill" style="width: 180px;background-color: rgb(255,192,8);color: white;text-align: center">In Progress Orders</h4>
+                            <h4 class="rounded-pill" style="width: 180px;background-color: rgb(255,192,8);color: white;text-align: center">Renting Orders</h4>
                             @if($inProgress->isEmpty())
                                 <p class="text-center" style="margin-top: 20px;">If there is an order in this status, it will be displayed here!</p>
                             @else
                             <table class="table de-table">
                                 <thead>
                                 <tr>
-                                    <th scope="col"><span class="text-uppercase fs-12 text-gray">Order ID</span></th>
+                                    <th scope="col"><span class="text-uppercase fs-12 text-gray">ID</span></th>
                                     <th scope="col"><span class="text-uppercase fs-12 text-gray">Car Name</span></th>
                                     <th scope="col"><span class="text-uppercase fs-12 text-gray">Pick Up Location</span></th>
                                     <th scope="col"><span class="text-uppercase fs-12 text-gray">Pick Up Date</span></th>
@@ -163,15 +163,15 @@
                                     <tr>
                                         <td><div class="badge bg-gray-100 text-dark">#{{ $order->id }}</div></td>
                                         <td><span class="bold">{{ $order->car->model }}</span></td>
-                                        <td>{{ $order->address }}, {{ $order->pickup_location }}</td>
-                                        <td>{{ \Carbon\Carbon::parse($order->rental_date)->format('m/d/Y') }}</td>
-                                        <td>{{ \Carbon\Carbon::parse($order->return_date)->format('m/d/Y') }}</td>
+                                        <td>{{ $order->pickup_location }}</td>
+                                        <td>{{$order->rental_date}}</td>
+                                        <td>{{$order->return_date}}</td>
                                         <td>${{ $order->total_amount }}</td>
                                         <td>
-                                            @if($order->is_paid)
-                                                <span class="text-success">Paid</span>
+                                            @if($order->is_rent_paid)
+                                                <span class="badge bg-success">Pain</span>
                                             @else
-                                                <span class="text-danger">unPaid</span>
+                                                <span class="badge bg-danger">UnPain</span>
                                             @endif
                                         </td>
                                         <td>
@@ -195,7 +195,7 @@
                             <table class="table de-table">
                                 <thead>
                                 <tr>
-                                    <th scope="col"><span class="text-uppercase fs-12 text-gray">Order ID</span></th>
+                                    <th scope="col"><span class="text-uppercase fs-12 text-gray">ID</span></th>
                                     <th scope="col"><span class="text-uppercase fs-12 text-gray">Car Name</span></th>
                                     <th scope="col"><span class="text-uppercase fs-12 text-gray">Pick Up Location</span></th>
                                     <th scope="col"><span class="text-uppercase fs-12 text-gray">Pick Up Date</span></th>
@@ -210,15 +210,15 @@
                                     <tr>
                                         <td><div class="badge bg-gray-100 text-dark">#{{ $order->id }}</div></td>
                                         <td><span class="bold">{{ $order->car->model }}</span></td>
-                                        <td>{{ $order->address }}, {{ $order->pickup_location }}</td>
-                                        <td>{{ \Carbon\Carbon::parse($order->rental_date)->format('m/d/Y') }}</td>
-                                        <td>{{ \Carbon\Carbon::parse($order->return_date)->format('m/d/Y') }}</td>
+                                        <td>{{ $order->pickup_location }}</td>
+                                        <td>{{$order->rental_date}}</td>
+                                        <td>{{$order->return_date}}</td>
                                         <td>${{ $order->total_amount }}</td>
                                         <td>
-                                            @if($order->is_paid)
-                                                <span class="text-success">Paid</span>
+                                            @if($order->is_rent_paid)
+                                                <span class="badge bg-success">Pain</span>
                                             @else
-                                                <span class="text-danger">unPaid</span>
+                                                <span class="badge bg-danger">UnPain</span>
                                             @endif
                                         </td>
                                         <td>
@@ -242,7 +242,7 @@
                             <table class="table de-table">
                                 <thead>
                                 <tr>
-                                    <th scope="col"><span class="text-uppercase fs-12 text-gray">Order ID</span></th>
+                                    <th scope="col"><span class="text-uppercase fs-12 text-gray">ID</span></th>
                                     <th scope="col"><span class="text-uppercase fs-12 text-gray">Car Name</span></th>
                                     <th scope="col"><span class="text-uppercase fs-12 text-gray">Pick Up Location</span></th>
                                     <th scope="col"><span class="text-uppercase fs-12 text-gray">Pick Up Date</span></th>
@@ -257,15 +257,15 @@
                                     <tr>
                                         <td><div class="badge bg-gray-100 text-dark">#{{ $order->id }}</div></td>
                                         <td><span class="bold">{{ $order->car->model }}</span></td>
-                                        <td>{{ $order->address }}, {{ $order->pickup_location }}</td>
-                                        <td>{{ \Carbon\Carbon::parse($order->rental_date)->format('m/d/Y') }}</td>
-                                        <td>{{ \Carbon\Carbon::parse($order->return_date)->format('m/d/Y') }}</td>
+                                        <td>{{ $order->pickup_location }}</td>
+                                        <td>{{$order->rental_date}}</td>
+                                        <td>{{$order->return_date}}</td>
                                         <td>${{ $order->total_amount }}</td>
                                         <td>
-                                            @if($order->is_paid)
-                                                <span class="text-success">Paid</span>
+                                            @if($order->is_rent_paid)
+                                                <span class="badge bg-success">Pain</span>
                                             @else
-                                                <span class="text-danger">unPaid</span>
+                                                <span class="badge bg-danger">UnPain</span>
                                             @endif
                                         </td>
                                         <td>

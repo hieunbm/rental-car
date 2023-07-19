@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string("title");
             $table->unsignedBigInteger("rental_id");
-            $table->unsignedBigInteger("status");
+            $table->string("thumbnail");
             $table->text("description");
             $table->unsignedDecimal("expense");
             $table->timestamps();

@@ -22,15 +22,22 @@
                         <div class="row gy-4">
                             {{--                        Name--}}
                             <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12">
-                                <label for="input-placeholder" class="form-label">Enter Name Car Type</label> <input
+                                <label for="input-placeholder" class="form-label">Enter Name Car Type</label>
+                                <input
                                     name="name" type="text" class="form-control" id="input-placeholder"
                                     placeholder="Enter Name Car Type"/>
+                                @error("name")
+                                <p class="text-danger"><i>{{$message}}</i></p>
+                                @enderror
                             </div>
 
                             {{--                        icon--}}
                             <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12">
                                 <label for="input-file" class="form-label">Upload Icon</label>
                                 <input name="icon" class="form-control" type="file" id="input-file" />
+                                @error("icon")
+                                <p class="text-danger"><i>{{$message}}</i></p>
+                                @enderror
                             </div>
 
                             {{--                        Description--}}
@@ -38,6 +45,9 @@
                                 <label for="input-placeholder" class="form-label">Description</label> <input
                                     name="description" type="text" class="form-control" id="input-placeholder"
                                     placeholder="Enter Description"/>
+                                @error("description")
+                                <p class="text-danger"><i>{{$message}}</i></p>
+                                @enderror
                             </div>
 
                             <div class="col-12">

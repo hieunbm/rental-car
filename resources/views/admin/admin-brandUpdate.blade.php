@@ -21,6 +21,9 @@
                             <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12">
                                 <label for="input-placeholder" class="form-label">Enter Name Brand</label>
                                 <input value="{{$brand->name}}" name="name" type="text" class="form-control" id="input-placeholder" placeholder="Enter Name Brand"/>
+                                @error("name")
+                                <p class="text-danger"><i>{{$message}}</i></p>
+                                @enderror
                             </div>
                             {{--                        icon--}}
                             <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12">

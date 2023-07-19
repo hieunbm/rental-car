@@ -15,7 +15,7 @@ class Incident extends Model
     protected $fillable=[
         'title',
         'rental_id',
-        'status',
+        'thumbnail',
         'description',
         'expense',
     ];

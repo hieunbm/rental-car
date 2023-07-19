@@ -21,19 +21,37 @@
                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
                                 <label for="input-placeholder" class="form-label">Enter Name Service</label>
                                 <input type="text" name="title" class="form-control" placeholder="Enter Name Service"/>
+                                @error("title")
+                                <p class="text-danger"><i>{{$message}}</i></p>
+                                @enderror
                             </div>
-
+                            {{--                        thumbnail  --}}
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                                <label for="input-file" class="form-label">Upload Thumbnail</label>
+                                <input name="thumbnail" class="form-control" type="file" id="input-file" />
+                                @error("thumbnail")
+                                <p class="text-danger"><i>{{$message}}</i></p>
+                                @enderror
+                            </div>
 
                             {{--                        description--}}
                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
                                 <label for="text-area" class="form-label">Enter Car Description</label>
                                 <textarea class="form-control" name="description" id="text-area" rows="1"></textarea>
+                                @error("description")
+                                <p class="text-danger"><i>{{$message}}</i></p>
+                                @enderror
                             </div>
 
-                            {{--                        expense--}}
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12"></div>
+
+                            {{-- expense --}}
                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
                                 <label for="input-placeholder" class="form-label">Enter Price</label>
                                 <input type="number" class="form-control" name="expense" placeholder="Enter Price" />
+                                @error("expense")
+                                <p class="text-danger"><i>{{$message}}</i></p>
+                                @enderror
                             </div>
 
                             <div class="col-12">
@@ -47,4 +65,5 @@
     </div>
     <!-- End:: row -->
 @endsection
+
 
