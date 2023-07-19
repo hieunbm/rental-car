@@ -169,6 +169,17 @@
                                             <table class="table table-sm text-nowrap mb-0 table-borderless">
                                                 <tbody>
                                                 <tr>
+                                                    <th scope="row"><p class="mb-0">Deposit Status :</p></th>
+                                                    <td><p class="mb-0 fw-semibold fs-15">
+                                                            @if($rental->is_desposit_paid)
+                                                                <span class="badge bg-success">Pain</span>
+                                                            @else
+                                                                <span class="badge bg-danger">UnPain</span>
+                                                            @endif
+                                                        </p>
+                                                    </td>
+                                                </tr>
+                                                <tr>
                                                     <th scope="row"><p class="mb-0">Payment Status :</p></th>
                                                     <td><p class="mb-0 fw-semibold fs-15">
                                                             @if($rental->is_paid)

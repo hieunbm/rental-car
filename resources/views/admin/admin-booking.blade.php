@@ -33,14 +33,14 @@
                         <table class="table table-hover text-nowrap table-bordered">
                             <thead>
                             <tr>
-                                <th scope="col">ID Booking</th>
+                                <th scope="col">ID</th>
                                 <th scope="col">Customer Name</th>
                                 <th scope="col">Car</th>
                                 <th scope="col">Rental Date & Time</th>
                                 <th>Return Date & Time</th>
-                                <th scope="col">Incident</th>
+                                <th scope="col">Desposit</th>
                                 <th scope="col">Total Amount</th>
-                                <th scope="col">Is paid</th>
+                                <th scope="col">Is Paid</th>
                                 <th scope="col">Status</th>
                                 <th scope="col">View</th>
                             </tr>
@@ -72,11 +72,7 @@
                                         {{$item->return_date}}
                                     </td>
                                     <td>
-                                        @if($item->additional_fee != null)
-                                            ${{$item->additional_fee}}
-                                        @else
-                                            $0.00
-                                        @endif
+                                        ${{$item->desposit_amount}}
                                     </td>
                                     <td>${{$item->total_amount}}</td>
                                     <td>
