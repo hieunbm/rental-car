@@ -396,8 +396,7 @@ class AdminController extends Controller
             $path = public_path("images/cars");
             $file->move($path,$fileName);
             $thumbnail = "/images/cars/".$fileName;
-        }
-        Car::where("id", $id)
+        $car=Car::where("id", $id)
             ->update([
                 'license_plate' => $request->get("license_plate"),
                 'model' => $request->get("model"),
@@ -419,7 +418,61 @@ class AdminController extends Controller
                 'status' => $request->get("status"),
                 'description' => $request->get("description"),
                 'rate' => $request->get("rate"),
+
             ]);
+            $carId = $car->id;
+
+
+            RentalRate::create([
+                'car_id' => $carId,
+                'rental_type' => 'rent by day',
+                'price' => $request->get('rentalrate_price_day'),
+            ]);
+
+            RentalRate::create([
+                'car_id' => $carId,
+                'rental_type' => 'rent by hours',
+                'price' => $request->get('rentalrate_price_hours'),
+            ]);}
+    else {
+            $car=Car::where("id", $id)
+                ->update([
+                    'license_plate' => $request->get("license_plate"),
+                    'model' => $request->get("model"),
+                    'price' => $request->get("price"),
+                    'slug' => Str::slug($request->get("model")),
+                    'brand_id' => $request->get("brand_id"),
+                    'carType_id' => $request->get("carType_id"),
+                    'fuelType' => $request->get("fuelType"),
+                    'transmission' => $request->get("transmission"),
+                    'km_limit' => $request->get("km_limit"),
+                    'modelYear' => $request->get("modelYear"),
+                    'reverse_sensor' => $request->get("reverse_sensor"),
+                    'airConditioner' => $request->get("airConditioner"),
+                    'driverAirbag' => $request->get("driverAirbag"),
+                    'cDPlayer' => $request->get("cDPlayer"),
+                    'brakeAssist' => $request->get("brakeAssist"),
+                    'seats' => $request->get("seats"),
+                    'status' => $request->get("status"),
+                    'description' => $request->get("description"),
+                    'rate' => $request->get("rate"),
+                ]);
+        $carId = $car->id;
+
+
+        RentalRate::create([
+            'car_id' => $carId,
+            'rental_type' => 'rent by day',
+            'price' => $request->get('rentalrate_price_day'),
+        ]);
+
+        RentalRate::create([
+            'car_id' => $carId,
+            'rental_type' => 'rent by hours',
+            'price' => $request->get('rentalrate_price_hours'),
+        ]);
+        }
+        Toastr::success('Update successful.', 'Success!');
         return redirect()->to("/admin/cars");
     }
     // Start Brands

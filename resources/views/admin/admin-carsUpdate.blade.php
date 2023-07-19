@@ -70,6 +70,7 @@
                             <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12">
                                 <label for="input-file" class="form-label">Upload Photos</label>
                                 <input value="{{$cars->thumbnail}}" class="form-control" name="thumbnail" type="file" id="input-file"/>
+                                <span style="display: flex;justify-content: center"><img style="width: 250px;height: 200px;object-fit: contain;" src="{{$cars->thumbnail}}"></span>
                             </div>
                             {{--                        FuelType--}}
                             <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12">
@@ -97,14 +98,6 @@
                             <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12">
                                 <label for="input-month" class="form-label">Enter year of manufacture</label>
                                 <input name="modelYear" type="number" class="form-control" value="{{$cars->modelYear}}" id="input-number" placeholder="Enter Model Year"/>
-                            </div>
-
-                            {{--                        Rate--}}
-                            <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12">
-                                <label for="input-number" class="form-label">Enter Rate</label> <input name="rate" value="{{$cars->rate}}" type="number"
-                                                                                                       class="form-control"
-                                                                                                       id="input-number"
-                                                                                                       placeholder="Enter Rate"/>
                             </div>
 
                             {{--                        Seat--}}
