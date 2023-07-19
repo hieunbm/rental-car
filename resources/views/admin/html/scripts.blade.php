@@ -15,6 +15,16 @@
 <script src="../dashboard/libs/@simonwep/pickr/pickr.es5.min.js"></script>
 <!-- Apex Charts JS -->
 <script src="../dashboard/libs/apexcharts/apexcharts.min.js"></script>
+<!---Used In Basic Area Chart-->
+<script src="../dashboard/js/apexcharts-stock-prices.js"></script>
+<!-- Used For Irregular Time Series Chart -->
+<script src="../dashboard/js/apexcharts-irregulardata.js"></script>
+<!-- Internal Apex Area Charts JS -->
+<script src="../dashboard/js/apexcharts-area.js"></script>
+<!-- Internal Apex Line Charts JS -->
+<script src="../dashboard/js/apexcharts-line.js"></script>
+<!-- Internal Apex-Column-Charts JS -->
+<script src="../dashboard/js/apexcharts-column.js"></script>
 <!-- HRM Dashboard JS -->
 <script src="../dashboard/js/hrm-dashboard.js"></script>
 <!-- Custom-Switcher JS -->
