@@ -139,6 +139,52 @@
                         </div>
 {{--                        End Confirmed--}}
 
+{{--                        Delivery--}}
+                        <div class="card p-4 rounded-5 mb25">
+                            <h4 class="rounded-pill" style="width: 180px;background-color: rgb(108,117,125);color: white;text-align: center">Delivery Orders</h4>
+                            @if($deliveryOrders->isEmpty())
+                                <p class="text-center" style="margin-top: 20px;">If there is an order in this status, it will be displayed here!</p>
+                            @else
+                                <table class="table de-table">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col"><span class="text-uppercase fs-12 text-gray">ID</span></th>
+                                        <th scope="col"><span class="text-uppercase fs-12 text-gray">Car Name</span></th>
+                                        <th scope="col"><span class="text-uppercase fs-12 text-gray">Pick Up Location</span></th>
+                                        <th scope="col"><span class="text-uppercase fs-12 text-gray">Pick Up Date</span></th>
+                                        <th scope="col"><span class="text-uppercase fs-12 text-gray">Return Date</span></th>
+                                        <th scope="col"><span class="text-uppercase fs-12 text-gray">Total Amount</span></th>
+                                        <th scope="col"><span class="text-uppercase fs-12 text-gray">Pay</span></th>
+                                        <th scope="col"><span class="text-uppercase fs-12 text-gray">View</span></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($deliveryOrders as $order)
+                                        <tr>
+                                            <td><div class="badge bg-gray-100 text-dark">#{{ $order->id }}</div></td>
+                                            <td><span class="bold">{{ $order->car->model }}</span></td>
+                                            <td>{{ $order->pickup_location }}</td>
+                                            <td>{{$order->rental_date}}</td>
+                                            <td>{{$order->return_date}}</td>
+                                            <td>${{ $order->total_amount }}</td>
+                                            <td>
+                                                @if($order->is_rent_paid)
+                                                    <span class="badge bg-success">Pain</span>
+                                                @else
+                                                    <span class="badge bg-danger">UnPain</span>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                <a href="{{url("/order-invoice/".$order->id)}}" class="badge bg-info">View</a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+                                </table>
+                            @endif
+                        </div>
+{{--                        End Delivery--}}
+
 {{--                        Shipping--}}
                         <div class="card p-4 rounded-5 mb25">
                             <h4 class="rounded-pill" style="width: 180px;background-color: rgb(255,192,8);color: white;text-align: center">Renting Orders</h4>

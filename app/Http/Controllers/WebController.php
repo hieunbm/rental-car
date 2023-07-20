@@ -13,6 +13,7 @@ use App\Models\ContactUsQuery;
 use App\Models\Product;
 use App\Utilities\VNPay;
 use Brian2694\Toastr\Facades\Toastr;
+use DateTime;
 use Illuminate\Support\Facades\Hash;
 use App\Models\DrivingLicenses;
 use App\Models\Gallery;
@@ -25,6 +26,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Srmklive\PayPal\Services\PayPal as PayPalClient;
+use function PHPUnit\Framework\isEmpty;
 use function Webmozart\Assert\Tests\StaticAnalysis\email;
 
 class WebController extends Controller
@@ -156,21 +158,17 @@ class WebController extends Controller
     public function checkCar(Request $request)
     {
         $request->validate([
-            'rental_time' => 'required',
+            'rental_date' => 'required',
             'expected' => 'required',
         ], [
             'rental_time.required' => 'You must choose the number of hours',
         ]);
 
         $car_id = $request->get("car_id");
-        $rental_dayString = $request->get("rental_date");
-        $rental_timeString = $request->get("rental_time");
+        $rental_dateString = $request->get("rental_date");
         $expected = $request->get("expected");
 
-        $rental_day = Carbon::createFromFormat('F j, Y', $rental_dayString);
-        $rental_time = Carbon::createFromFormat('H:i', $rental_timeString);
-
-        $rental_date = $rental_day->setTime($rental_time->hour, $rental_time->minute, $rental_time->second);
+        $rental_date = Carbon::createFromFormat('Y-m-d\TH:i', $rental_dateString);
 
         $car = Car::find($car_id);
         Session::put('car', $car);
@@ -204,11 +202,11 @@ class WebController extends Controller
             $rental_date = Session::get('rental_date');
             $expected = Session::get('expected');
 
-            $rental_day = $rental_date->format('F j, Y');
-            $rental_time = $rental_date->format('H:i');
+            $rental_date_time = $rental_date->format('Y-m-d\TH:i');
 
             $rentalrate = RentalRate::where("car_id", $car->id)->get();
-//            dd($rentalrate);
+
+            $price = RentalRate::where("car_id", $car->id)->where("rental_type", "rent by day")->get();
 
         } else {
             return redirect('/car-list');
@@ -219,16 +217,15 @@ class WebController extends Controller
             "services" => $services,
             "thumbnails" => $thumbnails,
             "rentalrate" => $rentalrate,
-            "rental_day" => $rental_day,
-            "rental_time" => $rental_time,
+            "rental_date" => $rental_date_time,
             "expected" => $expected,
+            "price" => $price,
         ]);
     }
 
     public function placeOrder(Request $request)
     {
         $request->validate([// mảng các quy tắt
-            'rental_time' => 'required',
             "rental_date" => "required",
             "expected" => "required",
             "pickup_location" => "required",
@@ -244,12 +241,10 @@ class WebController extends Controller
             return redirect('/login');
         }
         // reset rental_date and expected
-        $rental_dayString = $request->get("rental_date");
-        $rental_timeString = $request->get("rental_time");
+        $rental_dateString = $request->get("rental_date");
         $expected = $request->get("expected");
-        $rental_day = Carbon::createFromFormat('F j, Y', $rental_dayString);
-        $rental_time = Carbon::createFromFormat('H:i', $rental_timeString);
-        $rental_date = $rental_day->setTime($rental_time->hour, $rental_time->minute, $rental_time->second);
+
+        $rental_date = Carbon::createFromFormat('Y-m-d\TH:i', $rental_dateString);
 
         if ($rental_date->isPast()) {
             //chỉ được chọn thời gian từ thời điểm hiện tại trở đi
@@ -548,6 +543,7 @@ class WebController extends Controller
             ]);
 
             $rental->status = 3;
+            $rental->is_desposit_paid == true;
             $rental->save();
 
             Toastr::success('Successfully received the car.', 'Success!');
@@ -699,10 +695,21 @@ class WebController extends Controller
 
     public function detailRental(Rental $rental) {
         $user = auth()->user();
+        $services = $rental->service;
+        $total = 0;
+        foreach ($services as $item){
+            $total += $item->price;
+        }
+        $totalFee = 0;
+        foreach ($rental->incident as $item){
+            $totalFee += $item->expense;
+        }
         if ($rental->user_id == $user->id) {
             return view("web.invoice", [
                 'user' => $user,
-                "rental" => $rental
+                "rental" => $rental,
+                "total" => $total,
+                "totalFee" => $totalFee
             ]);
         } else {
             return abort(404);
@@ -735,13 +742,16 @@ class WebController extends Controller
 
         $pendingOrders = Rental::where('status', 0)->where('user_id', $customer_id)->orderBy('id')->get();
         $confirmedOrders = Rental::where('status', 1)->where('user_id', $customer_id)->orderBy('id')->get();
+        $deliveryOrders = Rental::where('status', 2)->where('user_id', $customer_id)->orderBy('id')->get();
         $inProgress = Rental::where('status', 3)->where('user_id', $customer_id)->orderBy('id')->get();
         $completedOrders = Rental::where('status', 5)->where('user_id', $customer_id)->orderBy('id')->get();
         $cancelledOrders = Rental::where('status', 6)->where('user_id', $customer_id)->orderBy('id')->get();
+
         return view("web.account-booking", [
             'user' => $user,
             'pendingOrders' => $pendingOrders,
             'confirmedOrders' => $confirmedOrders,
+            'deliveryOrders' => $deliveryOrders,
             'inProgress' => $inProgress,
             'completedOrders' => $completedOrders,
             'cancelledOrders' => $cancelledOrders

@@ -253,6 +253,17 @@
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
+                                                                    <th scope="row"><p class="mb-0">Pay rent Status :</p></th>
+                                                                    <td><p class="mb-0 fw-semibold fs-15">
+                                                                            @if($rental->is_rent_paid)
+                                                                                <span class="badge bg-success">Pain</span>
+                                                                            @else
+                                                                                <span class="badge bg-danger">UnPain</span>
+                                                                            @endif
+                                                                        </p>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
                                                                     <th scope="row"><p class="mb-0">Car Return Status :</p></th>
                                                                     <td><p class="mb-0 fw-semibold fs-15">
                                                                             @if($rental->is_car_returned)
@@ -264,12 +275,27 @@
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
+                                                                    <th scope="row"><p class="mb-0">Return the deposit :</p></th>
+                                                                    <td><p class="mb-0 fw-semibold fs-15">
+                                                                            @if($rental->is_desposit_returned)
+                                                                                <span class="badge bg-success">Pain</span>
+                                                                            @else
+                                                                                <span class="badge bg-danger">UnPain</span>
+                                                                            @endif
+                                                                        </p>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th scope="row"><p class="mb-0">Sub Total :</p></th>
+                                                                    <td><p class="mb-0 fw-semibold fs-15">${{$rental->car_price * $rental->expected}}</p></td>
+                                                                </tr>
+                                                                <tr>
                                                                     <th scope="row"><p class="mb-0">Service Total :</p></th>
-{{--                                                                    <td><p class="mb-0 fw-semibold fs-15">${{$total}}</p></td>--}}
+                                                                    <td><p class="mb-0 fw-semibold fs-15">${{$total}}</p></td>
                                                                 </tr>
                                                                 <tr>
                                                                     <th scope="row"><p class="mb-0">Additional costs Total :</p></th>
-{{--                                                                    <td><p class="mb-0 fw-semibold fs-15">${{$totalFee}}</p></td>--}}
+                                                                    <td><p class="mb-0 fw-semibold fs-15">${{$totalFee}}</p></td>
                                                                 </tr>
                                                                 <tr>
                                                                     <th scope="row"><p class="mb-0 fs-14">Total :</p></th>

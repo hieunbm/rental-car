@@ -45,7 +45,7 @@
                                                 </div>
                                                 <div class="col-lg-6 mb20">
                                                     <h5>Email</h5>
-                                                    <input type="text" name="email" placeholder="sample@yourcompany.com"
+                                                    <input type="email" value="{{auth()->user()->email}}"  name="email" placeholder="sample@yourcompany.com"
                                                            autocomplete="off" class="form-control">
                                                     <div class="jls-address-preview jls-address-preview--hidden">
                                                         <div class="jls-address-preview__header">
@@ -57,7 +57,7 @@
                                                 </div>
                                                 <div class="col-lg-6 mb20">
                                                     <h5>Telephone</h5>
-                                                    <input type="text" name="telephone" placeholder="+66-4353434"
+                                                    <input type="text" value="{{auth()->user()->phone}}" name="telephone" placeholder="+66-4353434"
                                                            autocomplete="off" class="form-control">
                                                     <div class="jls-address-preview jls-address-preview--hidden">
                                                         <div class="jls-address-preview__header">
@@ -74,220 +74,23 @@
                                                     <select name="rental_type" id="mySelect2" class="form-control"
                                                             onchange="updateInput()">
                                                         @foreach($rentalrate as $rt)
-                                                            <option value="{{$rt->rental_type}}" >{{$rt->rental_type}}</option>
+                                                            <option value="{{$rt->rental_type}}" @checked($rt->rental_type == "rent by day") >{{$rt->rental_type}}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
                                                 <div class="col-lg-6 mb20">
                                                     <h5>Price</h5>
-                                                    <input name="car_price" class="form-control" type="text" id="myLable" readonly/>
+                                                    @foreach($price as $i)
+                                                        <input name="car_price" value="{{$i->price}}" class="form-control" type="text" id="myLable" readonly/>
+                                                    @endforeach
                                                 </div>
                                                 <div class="col-lg-6 mb20">
                                                     <h5>Pick Up Date & Time</h5>
                                                         @error('rental_date')
                                                         <span style="font-size: 12px" class="text-danger">( {{ $message }} )</span>
                                                         @enderror
-                                                        @error('rental_time')
-                                                        <span style="font-size: 12px" class="text-danger">( {{ $message }} )</span>
-                                                        @enderror
                                                     <div class="date-time-field">
-                                                        <input type="text" id="date-picker" name="rental_date"
-                                                               value="{{$rental_day}}">
-                                                        <select name="rental_time" id="pickup-time">
-                                                            <option selected disabled value="Select time">Time</option>
-                                                            <option
-                                                                {{ $rental_time == '00:00' ? 'selected' : '' }} value="00:00">
-                                                                00:00
-                                                            </option>
-                                                            <option
-                                                                {{ $rental_time == '00:30' ? 'selected' : '' }}  value="00:30">
-                                                                00:30
-                                                            </option>
-                                                            <option
-                                                                {{ $rental_time == '01:00' ? 'selected' : '' }}  value="01:00">
-                                                                01:00
-                                                            </option>
-                                                            <option
-                                                                {{ $rental_time == '01:30' ? 'selected' : '' }}  value="01:30">
-                                                                01:30
-                                                            </option>
-                                                            <option
-                                                                {{ $rental_time == '02:00' ? 'selected' : '' }}  value="02:00">
-                                                                02:00
-                                                            </option>
-                                                            <option
-                                                                {{ $rental_time == '02:30' ? 'selected' : '' }}  value="02:30">
-                                                                02:30
-                                                            </option>
-                                                            <option
-                                                                {{ $rental_time == '03:00' ? 'selected' : '' }}  value="03:00">
-                                                                03:00
-                                                            </option>
-                                                            <option
-                                                                {{ $rental_time == '03:30' ? 'selected' : '' }}  value="03:30">
-                                                                03:30
-                                                            </option>
-                                                            <option
-                                                                {{ $rental_time == '04:00' ? 'selected' : '' }}  value="04:00">
-                                                                04:00
-                                                            </option>
-                                                            <option
-                                                                {{ $rental_time == '04:30' ? 'selected' : '' }}  value="04:30">
-                                                                04:30
-                                                            </option>
-                                                            <option
-                                                                {{ $rental_time == '05:00' ? 'selected' : '' }}  value="05:00">
-                                                                05:00
-                                                            </option>
-                                                            <option
-                                                                {{ $rental_time == '05:30' ? 'selected' : '' }}  value="05:30">
-                                                                05:30
-                                                            </option>
-                                                            <option
-                                                                {{ $rental_time == '06:00' ? 'selected' : '' }} value="06:00">
-                                                                06:00
-                                                            </option>
-                                                            <option
-                                                                {{ $rental_time == '06:30' ? 'selected' : '' }} value="06:30">
-                                                                06:30
-                                                            </option>
-                                                            <option
-                                                                {{ $rental_time == '07:00' ? 'selected' : '' }} value="07:00">
-                                                                07:00
-                                                            </option>
-                                                            <option
-                                                                {{ $rental_time == '07:30' ? 'selected' : '' }} value="07:30">
-                                                                07:30
-                                                            </option>
-                                                            <option
-                                                                {{ $rental_time == '08:00' ? 'selected' : '' }} value="08:00">
-                                                                08:00
-                                                            </option>
-                                                            <option
-                                                                {{ $rental_time == '08:30' ? 'selected' : '' }} value="08:30">
-                                                                08:30
-                                                            </option>
-                                                            <option
-                                                                {{ $rental_time == '09:00' ? 'selected' : '' }} value="09:00">
-                                                                09:00
-                                                            </option>
-                                                            <option
-                                                                {{ $rental_time == '09:30' ? 'selected' : '' }} value="09:30">
-                                                                09:30
-                                                            </option>
-                                                            <option
-                                                                {{ $rental_time == '10:00' ? 'selected' : '' }} value="10:00">
-                                                                10:00
-                                                            </option>
-                                                            <option
-                                                                {{ $rental_time == '10:30' ? 'selected' : '' }} value="10:30">
-                                                                10:30
-                                                            </option>
-                                                            <option
-                                                                {{ $rental_time == '11:00' ? 'selected' : '' }} value="11:00">
-                                                                11:00
-                                                            </option>
-                                                            <option
-                                                                {{ $rental_time == '11:30' ? 'selected' : '' }} value="11:30">
-                                                                11:30
-                                                            </option>
-                                                            <option
-                                                                {{ $rental_time == '12:00' ? 'selected' : '' }} value="12:00">
-                                                                12:00
-                                                            </option>
-                                                            <option
-                                                                {{ $rental_time == '12:30' ? 'selected' : '' }} value="12:30">
-                                                                12:30
-                                                            </option>
-                                                            <option
-                                                                {{ $rental_time == '13:00' ? 'selected' : '' }} value="13:00">
-                                                                13:00
-                                                            </option>
-                                                            <option
-                                                                {{ $rental_time == '13:30' ? 'selected' : '' }} value="13:30">
-                                                                13:30
-                                                            </option>
-                                                            <option
-                                                                {{ $rental_time == '14:00' ? 'selected' : '' }} value="14:00">
-                                                                14:00
-                                                            </option>
-                                                            <option
-                                                                {{ $rental_time == '14:30' ? 'selected' : '' }} value="14:30">
-                                                                14:30
-                                                            </option>
-                                                            <option
-                                                                {{ $rental_time == '15:00' ? 'selected' : '' }} value="15:00">
-                                                                15:00
-                                                            </option>
-                                                            <option
-                                                                {{ $rental_time == '15:30' ? 'selected' : '' }} value="15:30">
-                                                                15:30
-                                                            </option>
-                                                            <option
-                                                                {{ $rental_time == '16:00' ? 'selected' : '' }} value="16:00">
-                                                                16:00
-                                                            </option>
-                                                            <option
-                                                                {{ $rental_time == '16:30' ? 'selected' : '' }} value="16:30">
-                                                                16:30
-                                                            </option>
-                                                            <option
-                                                                {{ $rental_time == '17:00' ? 'selected' : '' }} value="17:00">
-                                                                17:00
-                                                            </option>
-                                                            <option
-                                                                {{ $rental_time == '17:30' ? 'selected' : '' }} value="17:30">
-                                                                17:30
-                                                            </option>
-                                                            <option
-                                                                {{ $rental_time == '18:00' ? 'selected' : '' }} value="18:00">
-                                                                18:00
-                                                            </option>
-                                                            <option
-                                                                {{ $rental_time == '18:30' ? 'selected' : '' }} value="18:30">
-                                                                18:30
-                                                            </option>
-                                                            <option
-                                                                {{ $rental_time == '19:00' ? 'selected' : '' }} value="19:00">
-                                                                19:00
-                                                            </option>
-                                                            <option
-                                                                {{ $rental_time == '19:30' ? 'selected' : '' }} value="19:30">
-                                                                19:30
-                                                            </option>
-                                                            <option
-                                                                {{ $rental_time == '20:00' ? 'selected' : '' }} value="20:00">
-                                                                20:00
-                                                            </option>
-                                                            <option
-                                                                {{ $rental_time == '20:30' ? 'selected' : '' }} value="20:30">
-                                                                20:30
-                                                            </option>
-                                                            <option
-                                                                {{ $rental_time == '21:00' ? 'selected' : '' }} value="21:00">
-                                                                21:00
-                                                            </option>
-                                                            <option
-                                                                {{ $rental_time == '21:30' ? 'selected' : '' }} value="21:30">
-                                                                21:30
-                                                            </option>
-                                                            <option
-                                                                {{ $rental_time == '22:00' ? 'selected' : '' }} value="22:00">
-                                                                22:00
-                                                            </option>
-                                                            <option
-                                                                {{ $rental_time == '22:30' ? 'selected' : '' }} value="22:30">
-                                                                22:30
-                                                            </option>
-                                                            <option
-                                                                {{ $rental_time == '23:00' ? 'selected' : '' }} value="23:00">
-                                                                23:00
-                                                            </option>
-                                                            <option
-                                                                {{ $rental_time == '23:30' ? 'selected' : '' }} value="23:30">
-                                                                23:30
-                                                            </option>
-                                                        </select>
+                                                        <input type="datetime-local" name="rental_date" value="{{$rental_date}}" class="form-control" required="">
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-6 mb20">
@@ -529,7 +332,9 @@
                                                 <div class="p-3 bg-light bg-opacity-10">
                                                     <h6 class="card-title mb-3">Order Summary</h6>
                                                     <div class="d-flex justify-content-between mb-1 small">
-                                                        <span>Subtotal</span> <span id="subtotal">$0.00</span>
+                                                        @foreach($price as $i)
+                                                        <span>Subtotal</span> <span id="subtotal" >${{$i->price*$expected}}</span>
+                                                        @endforeach
                                                     </div>
                                                     <div class="d-flex justify-content-between mb-1 small">
                                                         <span>Service</span> <span id="service">$0.00</span>
@@ -537,7 +342,9 @@
 
                                                     <hr>
                                                     <div class="d-flex justify-content-between mb-4 small">
-                                                        <span>TOTAL</span> <strong class="text-dark" id="total">$0.00</strong>
+                                                        @foreach($price as $i)
+                                                        <span>TOTAL</span> <strong class="text-dark" id="total">${{$i->price*$expected}}</strong>
+                                                        @endforeach
                                                     </div>
                                                     <div class="d-flex justify-content-between mb-4 small">
                                                         <span>DEPOSIT</span> <strong class="text-dark" id="deposit">${{$car->desposit}}</strong>
@@ -554,9 +361,10 @@
                                                             Get emails about product updates and events. If you change your mind, you can unsubscribe at any time. <a href="#">Privacy Policy</a>
                                                         </label>
                                                     </div>
-                                                    <input type="hidden" value="" id="desposit_amount" name="desposit_amount" />
+                                                    <input type="hidden" value="{{$car->desposit}}" id="desposit_amount" name="desposit_amount" />
                                                     <input type="hidden" value="" id="total_amount" name="total_amount" />
-                                                    <button type="submit" class="btn btn-primary w-100 mt-2">Car Deposit</button>
+
+                                                    <button onclick="calculateTotal()" type="submit" class="btn btn-primary w-100 mt-2">Car Deposit</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -678,7 +486,6 @@
             // Update the total value on the UI
             document.getElementById('total').textContent = '$' + total.toFixed(2);
             document.getElementById('service').textContent = '$' + additionalServicesTotal.toFixed(2);
-            document.getElementById('desposit_amount').value = {{$car->desposit}};
             document.getElementById('total_amount').value = total;
 
         }
