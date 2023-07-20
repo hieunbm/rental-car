@@ -22,6 +22,9 @@
                         </div>
                     </div>
                 </div>
+                <div class="ms-auto float-end">
+                    {!! $cars->appends(app("request")->input())->links("pagination::bootstrap-4") !!}
+                </div>
             </div>
         </section>
     </div>

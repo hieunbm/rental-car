@@ -109,6 +109,7 @@
                             <a href="{{url("/admin/customers/invalid", ['id' => $customer->id])}}" class="btn bg-danger">Invalid</a>
                             @break
                         @case(2)
+                            <a href="{{url("/admin/customers/invalid", ['id' => $customer->id])}}" class="btn bg-danger">Invalid</a>
                             @break
                         @case(3)
                             <a href="{{url("/admin/customers/confirm", ['id' => $customer->id])}}" class="btn bg-success">Confirmed</a>

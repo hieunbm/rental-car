@@ -289,7 +289,7 @@ class AdminController extends Controller
     }
     // end booking
     public function admin_cars() {
-        $cars=Car::get();
+        $cars=Car::orderBy("id", "desc")->paginate(12);
         return view("admin.admin-cars",[
             "cars"=>$cars,
         ]);

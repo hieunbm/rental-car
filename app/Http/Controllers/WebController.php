@@ -79,7 +79,7 @@ class WebController extends Controller
 
     public function car_list()
     {
-        $cars = Car::where("status", 0)->paginate(18);
+        $cars = Car::where("status", 0)->paginate(12);
         $merge = $this->mergeCode($cars);
 
         return view("web.car-list", $merge, [
@@ -761,7 +761,7 @@ class WebController extends Controller
 
     public function dashboard(User $user)
     {
-        $rental = Rental::limit(10)->where("user_id", auth()->user()->id)->get();
+        $rental = Rental::where("user_id", auth()->user()->id)->paginate(5);
         $rentalCount = DB::table('rental')->where("user_id", auth()->user()->id)->count();
         $rentalUpComing = DB::table('rental')->where("user_id", auth()->user()->id)->where("status", 0)->count();
         $rentalCancel = DB::table('rental')->where("user_id", auth()->user()->id)->where("status", 2)->count();

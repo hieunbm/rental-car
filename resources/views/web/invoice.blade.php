@@ -22,27 +22,26 @@
                         <div class="card p-4 rounded-5">
                             <div class="profile_avatar">
                                 <div class="profile_img">
-                                    <img src="images/profile/1.jpg" alt="">
+                                    <img src="images/misc/avatar.jpg" alt="">
                                 </div>
                                 <div class="profile_name">
                                     <h4>
-                                        {{$user->name}}
-                                        <span class="profile_username text-gray">{{$user->email}}</span>
+                                        {{auth()->user()->name}}
+                                        <span class="profile_username text-gray">{{auth()->user()->email}}</span>
                                     </h4>
                                 </div>
                             </div>
                             <div class="spacer-20"></div>
                             <ul class="menu-col">
-                                <li><a href="{{url("/account-dashboard")}}"><i class="fa fa-home"></i>Dashboard</a></li>
+                                <li><a href="{{url("/account-dashboard")}}" class="active"><i class="fa fa-home"></i>Dashboard</a></li>
                                 <li><a href="{{url("/account-profile")}}"><i class="fa fa-user"></i>My Profile</a></li>
-                                <li><a href="{{url("/account-booking")}}" class="active"><i class="fa fa-calendar"></i>My
-                                        Orders</a></li>
+                                <li><a href="{{url("/account-booking")}}"><i class="fa fa-calendar"></i>My Orders</a></li>
+                                <li><a href="{{url("/account-favorite-cars")}}"><i class="fa fa-heart"></i>My Favorite Cars</a></li>
                                 <li>
                                     <form action="{{route("logout")}}" method="post">
                                         @csrf
-                                        <button
-                                            style="border: none; background-color: white; width: 100%;text-align: left;margin-left: 5px"
-                                            class="menu-item" type="submit"><i class="fa fa-sign-out"></i>Sign out
+                                        <button style="border: none; background-color: white; width: 100%;text-align: left;margin-left: 5px"
+                                                class="menu-item" type="submit"><i class="fa fa-sign-out"></i>Sign out
                                         </button>
                                     </form>
                                 </li>
