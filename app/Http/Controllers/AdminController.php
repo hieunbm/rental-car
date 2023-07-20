@@ -222,11 +222,16 @@ class AdminController extends Controller
 
     }
     public function inProgress(Rental $rental){
-        // cập nhật status cuả order thành 1 (cònfirm)
-        $rental->update(["status"=>3]);
-        // gửi email cho khách báo đơn đã đc chuyển trạng thái
-        Toastr::success('Status update successful.', 'Success!');
-        return redirect()->to("/admin/booking-detail/".$rental->id);
+        if ($rental->status == 2) {
+            // cập nhật status cuả order thành 1 (cònfirm)
+            $rental->update(["status"=>3]);
+            // gửi email cho khách báo đơn đã đc chuyển trạng thái
+            Toastr::success('Status update successful.', 'Success!');
+            return redirect()->to("/admin/booking-detail/".$rental->id);
+        } else {
+            Toastr::warning('Failed update status.', 'Warning!');
+            return redirect()->to("/admin/booking-detail/".$rental->id);
+        }
     }
     public function returnCar(Rental $rental)
     {
@@ -267,25 +272,35 @@ class AdminController extends Controller
         return redirect()->to("/admin/booking-detail/".$rental->id);
     }
     public function complete(Rental $rental){
-        // cập nhật status cuả order thành 1 (cònfirm)
-        $incidents = 0;
-        foreach ($rental->incident as $item) {
-            $incidents += $item->expense;
+        if ($rental->status == 4) {
+            // cập nhật status cuả order thành 1 (cònfirm)
+            $incidents = 0;
+            foreach ($rental->incident as $item) {
+                $incidents += $item->expense;
+            }
+
+            $rental->update(["status"=>5, "is_rent_paid"=>true, "is_desposit_returned" => true, "additional_fee" => $incidents]);
+
+            // gửi email cho khách báo đơn đã đc chuyển trạng thái
+            Mail::to($rental->email)->send(new OrderMail($rental));
+            Toastr::success('Status update successful.', 'Success!');
+            return redirect()->to("/admin/booking-detail/".$rental->id);
+        } else {
+            Toastr::warning('Failed update status.', 'Warning!');
+            return redirect()->to("/admin/booking-detail/".$rental->id);
         }
-
-        $rental->update(["status"=>5, "is_rent_paid"=>true, "is_desposit_returned" => true, "additional_fee" => $incidents]);
-
-        // gửi email cho khách báo đơn đã đc chuyển trạng thái
-        Mail::to($rental->email)->send(new OrderMail($rental));
-        Toastr::success('Status update successful.', 'Success!');
-        return redirect()->to("/admin/booking-detail/".$rental->id);
     }
     public function cancel(Rental $rental){
-        // cập nhật status cuả order thành 1 (cònfirm)
-        $rental->update(["status"=>6]);
-        // gửi email cho khách báo đơn đã đc chuyển trạng thái
+        if ($rental->status == 0 || $rental->status == 1 || $rental->status == 2) {
+            // cập nhật status cuả order thành 1 (cònfirm)
+            $rental->update(["status"=>6]);
+            // gửi email cho khách báo đơn đã đc chuyển trạng thái
 
-        return redirect()->to("/admin/booking-detail/".$rental->id);
+            return redirect()->to("/admin/booking-detail/".$rental->id);
+        } else {
+            Toastr::warning('Failed update status.', 'Warning!');
+            return redirect()->to("/admin/booking-detail/".$rental->id);
+        }
     }
     // end booking
     public function admin_cars() {
@@ -296,6 +311,7 @@ class AdminController extends Controller
     }
     public function admin_carsDelete(Car $car){
         $car->delete();
+        Toastr::success('Your file has been deleted.', 'Deleted!');
         return redirect()->to("/admin/cars");
     }
     public function admin_imageDelete(Gallery $gallery){
@@ -484,6 +500,7 @@ class AdminController extends Controller
             'rental_type' => 'rent by hour',
             'price' => $request->get('rentalrate_price_hours'),
         ]);
+        Toastr::success('Successful car creation.', 'Success!');
         return redirect()->to("/admin/cars");
     }
     public function admin_carsEdit($id){
@@ -554,15 +571,13 @@ class AdminController extends Controller
 
 
 
-            RentalRate::where("rental_type", 'rent by day')
+            RentalRate::where("rental_type", 'rent by day')->where("car_id", $car)
                 ->update([
-                    'car_id' => $car,
                     'price' => $request->get('rentalrate_price_day'),
                 ]);
 
-            RentalRate::where('rental_type', 'rent by hour')
+            RentalRate::where('rental_type', 'rent by hour')->where("car_id", $car)
                 ->update([
-                    'car_id' => $car,
                     'price' => $request->get('rentalrate_price_hours'),
                 ]);
         }
@@ -591,15 +606,13 @@ class AdminController extends Controller
                 ]);
 
 
-        RentalRate::where("rental_type", 'rent by day')
+        RentalRate::where("rental_type", 'rent by day')->where("car_id", $car)
             ->update([
-            'car_id' => $car,
             'price' => $request->get('rentalrate_price_day'),
         ]);
 
-        RentalRate::where('rental_type', 'rent by hour')
+        RentalRate::where('rental_type', 'rent by hour')->where("car_id", $car)
             ->update([
-            'car_id' => $car,
             'price' => $request->get('rentalrate_price_hours'),
         ]);
         }
@@ -696,7 +709,7 @@ class AdminController extends Controller
     public function admin_customer(Request $request) {
         $status = $request->get('status');
 
-        $customers = User::all();
+        $customers = User::paginate(12);
         $license = DrivingLicenses::all();
 
         //Loc theo status

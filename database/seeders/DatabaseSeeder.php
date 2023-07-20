@@ -25,27 +25,27 @@ class DatabaseSeeder extends Seeder
         //Users
         DB::table('users')->insert([
             [
-                'name' => 'Khach Hang',
-                'email' => 'chuduchoang@gmail.com',
+                'name' => 'Chu Duc Hoang',
+                'email' => 'chuduchoang2@gmail.com',
                 'password' => Hash::make('12345678'),
                 'phone' => '0987654321',
                 "role" => null,
-                'status' => "0",
+                'status' => "2",
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
                 'name' => 'Admin',
-                'email' => 'admin@gmail.com',
+                'email' => 'chuduchoang@gmail.com',
                 'password' => Hash::make('12345678'),
                 'phone' => '0123456789',
                 "role" => 'admin',
-                'status' => "0",
+                'status' => "2",
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'name' => 'Tien Duc',
+                'name' => 'Sai Tien Duc',
                 'email' => 'tienduc@gmail.com',
                 'password' => Hash::make('12345678'),
                 'phone' => '0987654541',
@@ -55,17 +55,17 @@ class DatabaseSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'name' => 'Trung Trinh',
-                'email' => 'trungtrinh@gmail.com',
+                'name' => 'Trinh Van Trung',
+                'email' => 'hoangtulaubar@gmail.com',
                 'password' => Hash::make('12345678'),
                 'phone' => '0986554541',
                 "role" => null,
-                'status' => "0",
+                'status' => "2",
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'name' => 'Hoang Hiep',
+                'name' => 'Nguyen Hoang Hiep',
                 'email' => 'hoanghiep@gmail.com',
                 'password' => Hash::make('12345678'),
                 'phone' => '0987654111',
@@ -75,7 +75,7 @@ class DatabaseSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'name' => 'Minh Hieu',
+                'name' => 'Nguyen Bui Minh Hieu',
                 'email' => 'minhhieu@gmail.com',
                 'password' => Hash::make('12345678'),
                 'phone' => '0987654211',
@@ -85,7 +85,7 @@ class DatabaseSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'name' => 'Huy',
+                'name' => 'Nguyen Van Huy',
                 'email' => 'huy@gmail.com',
                 'password' => Hash::make('12345678'),
                 'phone' => '0987334211',
@@ -95,7 +95,7 @@ class DatabaseSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'name' => 'Minh',
+                'name' => 'Bui Duc Minh',
                 'email' => 'minh@gmail.com',
                 'password' => Hash::make('12345678'),
                 'phone' => '0997654211',
@@ -105,7 +105,7 @@ class DatabaseSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'name' => 'Dung',
+                'name' => 'Nguyen Tuan Dung',
                 'email' => 'dung@gmail.com',
                 'password' => Hash::make('12345678'),
                 'phone' => '0987754211',
@@ -115,7 +115,7 @@ class DatabaseSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'name' => 'manh',
+                'name' => 'Doan Duy Manh',
                 'email' => 'manh@gmail.com',
                 'password' => Hash::make('12345678'),
                 'phone' => '0987666211',
@@ -125,7 +125,7 @@ class DatabaseSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'name' => 'vu',
+                'name' => 'Phung Van Vu',
                 'email' => 'vu@gmail.com',
                 'password' => Hash::make('12345678'),
                 'phone' => '0987754211',
@@ -135,7 +135,7 @@ class DatabaseSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'name' => 'Tuan',
+                'name' => 'Nguyen Anh Tuan',
                 'email' => 'tuan@gmail.com',
                 'password' => Hash::make('12345678'),
                 'phone' => '0987555211',
@@ -145,7 +145,7 @@ class DatabaseSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'name' => 'Hai',
+                'name' => 'Quach Van Hai',
                 'email' => 'hai@gmail.com',
                 'password' => Hash::make('12345678'),
                 'phone' => '0988888211',
@@ -155,7 +155,7 @@ class DatabaseSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'name' => 'Nam',
+                'name' => 'Nguyen Van Nam',
                 'email' => 'nam@gmail.com',
                 'password' => Hash::make('12345678'),
                 'phone' => '0986666211',
@@ -165,7 +165,7 @@ class DatabaseSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'name' => 'Lam',
+                'name' => 'Bui Thi Lam',
                 'email' => 'lam@gmail.com',
                 'password' => Hash::make('12345678'),
                 'phone' => '0887654211',
@@ -175,7 +175,7 @@ class DatabaseSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'name' => 'Hoang',
+                'name' => 'Ha Huy Hoang',
                 'email' => 'hoang@gmail.com',
                 'password' => Hash::make('12345678'),
                 'phone' => '0980054211',
@@ -185,7 +185,7 @@ class DatabaseSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'name' => 'Tuan Anh',
+                'name' => 'Vu Tuan Anh',
                 'email' => 'tuananh@gmail.com',
                 'password' => Hash::make('12345678'),
                 'phone' => '0987600211',
@@ -195,8 +195,8 @@ class DatabaseSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'name' => 'Vy',
-                'email' => 'vy@gmail.com',
+                'name' => 'Nguyen Khanh Vy',
+                'email' => 'vykhanh@gmail.com',
                 'password' => Hash::make('12345678'),
                 'phone' => '0999654211',
                 "role" => null,
@@ -205,7 +205,7 @@ class DatabaseSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'name' => 'Phuong',
+                'name' => 'Nguyen Van Phuong',
                 'email' => 'phuong@gmail.com',
                 'password' => Hash::make('12345678'),
                 'phone' => '0987554211',
@@ -215,7 +215,7 @@ class DatabaseSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'name' => 'Lan',
+                'name' => 'Trinh Thi Lan',
                 'email' => 'lan@gmail.com',
                 'password' => Hash::make('12345678'),
                 'phone' => '0987924211',
@@ -241,6 +241,16 @@ class DatabaseSeeder extends Seeder
             [
                 'user_id' => 2,
                 'license_number' => '083947193999',
+                'thumbnail_1' => 'uploadLicenses/mattruoc.jpg',
+                'thumbnail_2' => 'uploadLicenses/matsau.jpg',
+                'issue_date' => "2020-07-12",
+                'expiration_date' => "2028-07-12",
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'user_id' => 4,
+                'license_number' => '083947193456',
                 'thumbnail_1' => 'uploadLicenses/mattruoc.jpg',
                 'thumbnail_2' => 'uploadLicenses/matsau.jpg',
                 'issue_date' => "2020-07-12",
@@ -1771,19 +1781,19 @@ class DatabaseSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'thumbnail' => 'images/gallery/Peugeot 2008 2.jpg',
+                'thumbnail' => 'images/gallery/Peugeot 2008​ 2.jpg',
                 'car_id' => 30,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'thumbnail' => 'images/gallery/Peugeot 2008 3.jpg',
+                'thumbnail' => 'images/gallery/Peugeot 2008​ 3.jpg',
                 'car_id' => 30,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'thumbnail' => 'images/gallery/Peugeot 2008 4.jpg',
+                'thumbnail' => 'images/gallery/Peugeot 2008​ 4.jpg',
                 'car_id' => 30,
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -2255,21 +2265,20 @@ class DatabaseSeeder extends Seeder
         //service
         DB::table('service')->insert([
             [
-                'title' => 'Trang tri',
-                'description' => 'Trang tri cho xe dam cuoi ...',
-                'price' => '15',
+                'title' => 'Hire a driver',
+                'description' => 'Hire a driver for the trip...',
+                'price' => '20',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'title' => 'Goi dau',
-                'description' => 'Tren xe trang bi san goi dau ...',
-                'price' => '5',
+                'title' => 'Flower car decoration',
+                'description' => 'flower car decoration...',
+                'price' => '30',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
         ]);
-
 
     }
 }

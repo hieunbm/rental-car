@@ -25,7 +25,6 @@
                     <ul class="slide-menu child1">
                         <li class="slide side-menu__label1"><a href="javascript:void(0)">Dashboards</a></li>
                         <li class="slide"><a href="{{url("/admin")}}" class="side-menu__item">Overview</a></li>
-                        <li class="slide"><a href="#" class="side-menu__item">Action for overview</a></li>
                     </ul>
                 </li>
                 <!-- End::slide -->
@@ -38,7 +37,6 @@
                     <a href="javascript:void(0);" class="side-menu__item"> <i class="fa-solid fa-car-on side-menu__icon"></i> <span class="side-menu__label">Booking</span> <i class="fe fe-chevron-right side-menu__angle"></i> </a>
                     <ul class="slide-menu child1">
                         <li class="slide"><a href="{{url("/admin/booking")}}" class="side-menu__item">Booking</a></li>
-                        <li class="slide"><a href="{{url("/admin/booking-detail")}}" class="side-menu__item">Booking Details</a></li>
                     </ul>
                 </li>
                 <!-- End::slide -->

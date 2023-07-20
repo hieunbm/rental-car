@@ -17,12 +17,12 @@
                             <div class="card p-4 rounded-5">
                                 <div class="profile_avatar">
                                     <div class="profile_img">
-                                        <img src="images/profile/1.jpg" alt="">
+                                        <img src="images/misc/avatar.jpg" alt="">
                                     </div>
                                     <div class="profile_name">
                                         <h4>
-                                            Monica Lucas
-                                            <span class="profile_username text-gray">monica@rentaly.com</span>
+                                            {{auth()->user()->name}}
+                                            <span class="profile_username text-gray">{{auth()->user()->email}}</span>
                                         </h4>
                                     </div>
                                 </div>

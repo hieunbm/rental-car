@@ -100,7 +100,7 @@
 
                             {{--                        KmLimit--}}
                             <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12">
-                                <label for="input-number" class="form-label">Enter Km Limit</label> <input name="km_limit" type="number"
+                                <label for="input-number" class="form-label">Enter Km Limit</label> <input min="1" name="km_limit" type="number"
                                                                                                            class="form-control" value="{{$cars->km_limit}}"
                                                                                                            id="input-number"
                                                                                                            placeholder="Enter Km Limit"/>
@@ -112,7 +112,7 @@
                             {{--                        modelYear--}}
                             <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12">
                                 <label for="input-month" class="form-label">Enter year of manufacture</label>
-                                <input name="modelYear" type="number" class="form-control" value="{{$cars->modelYear}}" id="input-number" placeholder="Enter Model Year"/>
+                                <input min="1" name="modelYear" type="number" class="form-control" value="{{$cars->modelYear}}" id="input-number" placeholder="Enter Model Year"/>
                                 @error("name")
                                 <p class="text-danger"><i>{{$message}}</i></p>
                                 @enderror
@@ -120,7 +120,7 @@
 
                             {{--                        Seat--}}
                             <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12">
-                                <label for="input-number" class="form-label">Enter Seat</label> <input name="seats" type="number"
+                                <label for="input-number" class="form-label">Enter Seat</label> <input min="1" name="seats" type="number"
                                                                                                        class="form-control"
                                                                                                        id="input-number" value="{{$cars->seats}}"
                                                                                                        placeholder="Enter Seat"/>
@@ -206,7 +206,7 @@
                             </div>
                             {{--                                Rent by Day--}}
                             <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12">
-                                <label for="input-number" class="form-label">Price Rent By Day</label> <input value="{{$priceday->price}}" name="rentalrate_price_day" type="number"
+                                <label for="input-number" class="form-label">Price Rent By Day</label> <input min="1" value="{{$priceday->price}}" name="rentalrate_price_day" type="number"
                                                                                                               class="form-control"
                                                                                                               id="input-number"
                                                                                                               placeholder="Enter Price"/>
@@ -216,7 +216,7 @@
                             </div>
                             {{--                                Rent by hour--}}
                             <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12">
-                                <label for="input-number" class="form-label">Price Rent By Hours</label> <input value="{{$pricehour->price}}" name="rentalrate_price_hours" type="number"
+                                <label for="input-number" class="form-label">Price Rent By Hours</label> <input min="1" value="{{$pricehour->price}}" name="rentalrate_price_hours" type="number"
                                                                                                                 class="form-control"
                                                                                                                 id="input-number"
                                                                                                                 placeholder="Enter Price"/>
@@ -226,7 +226,7 @@
                             </div>
                             {{--                                Desposit--}}
                             <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12">
-                                <label for="input-number" class="form-label">Price Desposit</label> <input value="{{$cars->desposit}}" name="desposit" type="number"
+                                <label for="input-number" class="form-label">Price Desposit</label> <input min="1" value="{{$cars->desposit}}" name="desposit" type="number"
                                                                                                            class="form-control"
                                                                                                            id="input-number"
                                                                                                            placeholder="Enter Desposit"/>

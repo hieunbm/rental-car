@@ -122,6 +122,7 @@
                                             <tr>
                                                 <th>TITLE</th>
                                                 <th>EXPENSE</th>
+                                                <th>Image</th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -129,6 +130,9 @@
                                                 <tr>
                                                     <td>{{$item->title}}</td>
                                                     <td>{{$item->expense}}</td>
+                                                    <td>
+                                                        <img src="{{$item->thumbnail}}" style="width: 80px; height: 80px; object-fit: contain">
+                                                    </td>
                                                 </tr>
                                             @endforeach
                                             </tbody>
@@ -263,7 +267,7 @@
                             @case(2) <span
                                 class="badge bg-info text-black fw-bold">Delivery</span>@break
                             @case(3) <span
-                                class="badge bg-warning text-black fw-bold">In Progress</span>@break
+                                class="badge bg-warning text-black fw-bold">Renting</span>@break
                             @case(4) <span
                                 class="badge bg-warning text-black fw-bold">Processing</span>@break
                             @case(5) <span
@@ -307,13 +311,13 @@
                             <a href="{{url("admin/booking/complete", ["rental" => $rental->id])}}" class="btn btn-success float-right"><i class="far fa-credit-card"></i> Submit
                                 Completed
                             </a>
-                            <a href="{{url("admin/incidents/create", ["rental" => $rental->id])}}" class="btn btn-danger float-right"><i class="far fa-credit-card"></i> Submit
-                                Incident
+                            <a href="{{url("admin/incidents/create", ["rental" => $rental->id])}}" class="btn btn-danger float-right"><i class="far fa-credit-card"></i>
+                                Report Incident
                             </a>
                             @break
                         @case(3)
-                            <a href="{{url("admin/booking/return-car", ["rental" => $rental->id])}}" class="btn btn-success float-right"><i class="far fa-credit-card"></i> Submit
-                                Nhận xe
+                            <a href="{{url("admin/booking/return-car", ["rental" => $rental->id])}}" class="btn btn-success float-right"><i class="far fa-credit-card"></i>
+                                Receive the car
                             </a>
                             @break
                     @endswitch
@@ -340,7 +344,7 @@
                                         @case(2) <span
                                             class="badge bg-info text-black fw-bold">Delivery</span>@break
                                         @case(3) <span
-                                            class="badge bg-warning text-black fw-bold">In Progress</span>@break
+                                            class="badge bg-warning text-black fw-bold">Renting</span>@break
                                         @case(4) <span
                                             class="badge bg-warning text-black fw-bold">Processing</span>@break
                                         @case(5) <span

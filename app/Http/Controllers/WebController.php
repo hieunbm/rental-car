@@ -37,11 +37,13 @@ class WebController extends Controller
         $countCar = Car::count();
         $countBrand = Brand::count();
         $countRental = Rental::count();
+        $countUser = User::count();
         return view("welcome", [
             "car" => $car,
             "countCar" => $countCar,
             "countBrand" => $countBrand,
             "countRental" => $countRental,
+            "countUser" => $countUser,
         ]);
     }
 
@@ -340,7 +342,7 @@ class WebController extends Controller
             // thanh toan = vnpay
 //            $data=$request->all();
             $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-            $vnp_Returnurl = "http://127.0.0.1:8000/success-transaction/".$rental->id;
+            $vnp_Returnurl = "http://127.0.0.1:8000/nhan-ket-qua/".$rental->id;
             $vnp_TmnCode = "YNSXI5ZN";//Mã website tại VNPAY
             $vnp_HashSecret = "GKSNDWHVYQOWDPQQLHTQJCPQQVGUMIQL"; //Chuỗi bí mật
 
@@ -489,6 +491,8 @@ class WebController extends Controller
             Toastr::success('Deposit payment successful.', 'Success!');
             return redirect()->to("/order-invoice/" . $rental->id);
         }
+        Toastr::warning('Failed deposit payment.', 'Warning!');
+        return redirect()->to("/order-invoice/" . $rental->id);
     }
 
     public function successTransaction(Rental $rental, Request $request)
@@ -619,23 +623,29 @@ class WebController extends Controller
 
 
             } else {
-                return response("Xe đã được trả trước đó", 400);
+                return abort(404);
             }
-            return redirect()->to('/car-list')->with('success', 'Đánh giá đã được tạo thành công.');
+            Toastr::success('Successful car review.', 'Success!');
+            return redirect()->to('/car-list');
         }
     }
 
     public function cancel($rentalId) {
         $rental = Rental::find($rentalId);
-        $rental->update(["status"=>6]);
-        $rental->save();
+        if ($rental->status == 0) {
+            $rental->update(["status"=>6]);
+            $rental->save();
 
-        $car = Car::find($rental->car_id);
-        $car->status = 0;
-        $car->save();
-        Toastr::success('Cancellation of car booking successfully.', 'Success!');
+            $car = Car::find($rental->car_id);
+            $car->status = 0;
+            $car->save();
+            Toastr::success('Cancellation of car booking successfully.', 'Success!');
 
-        return redirect()->to("/order-invoice/".$rental->id);
+            return redirect()->to("/order-invoice/".$rental->id);
+        } else {
+
+        }
+
     }
 
     public function execPostRequest($url, $data)
@@ -660,12 +670,15 @@ class WebController extends Controller
     public function about()
     {
         $OverallQuantityOfVehicles = Car::orderBy("id", "desc")->limit(6)->get();
-        $OverallQuantityOfBrands = Brand::count();
-        $OverallQuantityOfRental = Rental::count();
+        $countCar = Car::count();
+        $countBrand = Brand::count();
+        $countRental = Rental::count();
+        $countUser = User::count();
         return view("web.about-us", [
-            "OverallQuantityOfVehicles" => $OverallQuantityOfVehicles,
-            "OverallQuantityOfBrands" => $OverallQuantityOfBrands,
-            "OverallQuantityOfRental" => $OverallQuantityOfRental,
+            "countCar" => $countCar,
+            "countBrand" => $countBrand,
+            "countRental" => $countRental,
+            "countUser" => $countUser,
         ]);
     }
 
@@ -696,6 +709,7 @@ class WebController extends Controller
             "message" => $request->get("message"),
             "status" => 0
         ]);
+        Toastr::success('Successful contact creation.', 'Success!');
         return redirect()->to("/contact");
     }
 
@@ -909,9 +923,11 @@ class WebController extends Controller
     }
     //End account profile
     public function favoriteCar()  {
+        $user = auth()->user();
         $cars = session()->has("favoriteCar")?session()->get("favoriteCar"):[];
         return view("web.account-favorite-cars",[
-            "cars"=>$cars
+            "cars"=>$cars,
+            'user' => $user,
         ]);
     }
     public function addFavoriteCar(Car $car)  {

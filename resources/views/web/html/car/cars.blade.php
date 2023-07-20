@@ -112,7 +112,7 @@
                     <h5 class="review-count">{{ $reviews->where('car_id', $c->id)->count() }} Reviews</h5>
                 </div>
                 <div style="margin-bottom: 25px">
-                    Daily rate from <span>{{ $c->price }}</span>
+                    Daily rate from <span>${{ $c->price }}</span>
                     <a class="btn-main" href="{{url("/car",["car"=>$c->slug])}}">Rent Now</a>
                 </div>
             </div>

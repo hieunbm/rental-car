@@ -80,7 +80,7 @@
                                 <td>
                                     <div class="hstack gap-2 fs-15">
                                         <a href="{{url("/admin/cars/edit", ["id" => $item->id])}} " class="btn btn-icon btn-sm btn-info-transparent rounded-pill"><i class="ri-edit-line"></i></a>
-                                        <a onclick="return confirm('Delete product?')" href="{{url("/admin/cars/delete",["car"=>$item->id])}}" class="btn btn-icon btn-sm btn-danger-transparent rounded-pill"><i class="ri-delete-bin-line"></i></a>
+                                        <a onclick="confirmation(event)" href="{{url("/admin/cars/delete",["car"=>$item->id])}}" class="btn btn-icon btn-sm btn-danger-transparent rounded-pill"><i class="ri-delete-bin-line"></i></a>
                                     </div>
                                 </td>
                             </tr>

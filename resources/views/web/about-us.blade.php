@@ -28,29 +28,29 @@
                     </div>
                 </div>
                 <div class="spacer-double"></div>
-                <div class="row text-center">
-                    <div class="col-md-3 col-sm-6 mb-sm-30">
-                        <div class="de_count wow fadeInUp" data-bgcolor="#f5f5f5">
-                            <h3 class="timer" data-to="{{$OverallQuantityOfVehicles}}" data-speed="3000">0</h3>
-                            Overall quantity of vehicles
+                <div class="row text-center" style="background-size: 100%; background-repeat: no-repeat;">
+                    <div class="col-md-3 col-sm-6 mb-sm-30" style="background-size: 100%; background-repeat: no-repeat;">
+                        <div class="de_count wow fadeInUp bgcustom animated" data-bgcolor="#f5f5f5" style="background-color: rgb(245, 245, 245); background-size: 100%; background-repeat: no-repeat; visibility: visible; animation-name: fadeInUp;">
+                            <h3 class="timer" data-to="{{$countCar}}" data-speed="3000">15425</h3>
+                            Cars
                         </div>
                     </div>
-                    <div class="col-md-3 col-sm-6 mb-sm-30">
-                        <div class="de_count wow fadeInUp" data-bgcolor="#f5f5f5">
-                            <h3 class="timer" data-to="{{$OverallQuantityOfBrands}}" data-speed="3000">0</h3>
-                            Overall quantity of brands
+                    <div class="col-md-3 col-sm-6 mb-sm-30" style="background-size: 100%; background-repeat: no-repeat;">
+                        <div class="de_count wow fadeInUp bgcustom animated" data-bgcolor="#f5f5f5" style="background-color: rgb(245, 245, 245); background-size: 100%; background-repeat: no-repeat; visibility: visible; animation-name: fadeInUp;">
+                            <h3 class="timer" data-to="{{$countBrand}}" data-speed="3000">8745</h3>
+                            Brands
                         </div>
                     </div>
-                    <div class="col-md-3 col-sm-6 mb-sm-30">
-                        <div class="de_count wow fadeInUp" data-bgcolor="#f5f5f5">
-                            <h3 class="timer" data-to="235" data-speed="3000">0</h3>
-                            Overall quantity of orders placed
+                    <div class="col-md-3 col-sm-6 mb-sm-30" style="background-size: 100%; background-repeat: no-repeat;">
+                        <div class="de_count wow fadeInUp bgcustom animated" data-bgcolor="#f5f5f5" style="background-color: rgb(245, 245, 245); background-size: 100%; background-repeat: no-repeat; visibility: visible; animation-name: fadeInUp;">
+                            <h3 class="timer" data-to="{{$countRental}}" data-speed="3000">235</h3>
+                            Rentals
                         </div>
                     </div>
-                    <div class="col-md-3 col-sm-6 mb-sm-30">
-                        <div class="de_count wow fadeInUp" data-bgcolor="#f5f5f5">
-                            <h3 class="timer" data-to="5" data-speed="3000">0</h3>
-
+                    <div class="col-md-3 col-sm-6 mb-sm-30" style="background-size: 100%; background-repeat: no-repeat;">
+                        <div class="de_count wow fadeInUp bgcustom animated" data-bgcolor="#f5f5f5" style="background-color: rgb(245, 245, 245); background-size: 100%; background-repeat: no-repeat; visibility: visible; animation-name: fadeInUp;">
+                            <h3 class="timer" data-to="{{$countUser}}" data-speed="3000">15</h3>
+                            Customers
                         </div>
                     </div>
                 </div>

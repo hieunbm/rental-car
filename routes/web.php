@@ -63,7 +63,7 @@ Route::prefix("/")->middleware(["auth"])->group(function () {//
 
 // 2 cái này dùng cho paypal
 Route::get('/success-transaction/{rental}', [\App\Http\Controllers\WebController::class, 'successTransaction'])->name('successTransaction');
-Route::get('/nhan-ket-qua', [\App\Http\Controllers\WebController::class, 'successTransaction'])->name('nhanKetQua');
+Route::get('/nhan-ket-qua/{rental}', [\App\Http\Controllers\WebController::class, 'nhanKetQua']);
 Route::get('/cancel-transaction/{rental}', [\App\Http\Controllers\WebController::class, 'cancelTransaction'])->name('cancelTransaction');
 
 // website end

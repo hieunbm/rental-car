@@ -204,22 +204,54 @@
                                             <h4 style="width: 65%">{{$c->model}}</h4>
                                             <div class="d-item_like">
                                                 <div class="ratings">
-                                                    <i class="fa fa-star rating-color"></i>
-                                                    <i class="fa fa-star rating-color"></i>
-                                                    <i class="fa fa-star rating-color"></i>
-                                                    <i class="fa fa-star rating-color"></i>
-                                                    <i class="fa fa-star"></i>
+
+                                                    @if($c->rate == 5)
+                                                        <i class="fa fa-star rating-color"></i>
+                                                        <i class="fa fa-star rating-color"></i>
+                                                        <i class="fa fa-star rating-color"></i>
+                                                        <i class="fa fa-star rating-color"></i>
+                                                        <i class="fa fa-star rating-color"></i>
+                                                    @elseif($c->rate < 5 && $c->rate >= 4)
+                                                        <i class="fa fa-star rating-color"></i>
+                                                        <i class="fa fa-star rating-color"></i>
+                                                        <i class="fa fa-star rating-color"></i>
+                                                        <i class="fa fa-star rating-color"></i>
+                                                        <i class="fa fa-star"></i>
+                                                    @elseif($c->rate < 4 && $c->rate >= 3)
+                                                        <i class="fa fa-star rating-color"></i>
+                                                        <i class="fa fa-star rating-color"></i>
+                                                        <i class="fa fa-star rating-color"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                    @elseif($c->rate < 3 && $c->rate >= 2)
+                                                        <i class="fa fa-star rating-color"></i>
+                                                        <i class="fa fa-star rating-color"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                    @elseif($c->rate < 2 && $c->rate >= 1)
+                                                        <i class="fa fa-star rating-color"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                    @else
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                    @endif
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="d-atr-group">
                                             <span class="d-atr"><img src="images/icons/1.svg" alt="">{{$c->seats}}</span>
-                                            <span class="d-atr"><img src="images/icons/2.svg" alt="">{{$c->price}}</span>
-                                            <span class="d-atr"><img src="images/icons/3.svg" alt="">{{$c->price}}</span>
+                                            <span class="d-atr"><img src="images/icons/2.svg" alt="">${{$c->desposit}}</span>
                                             <span class="d-atr"><img src="images/icons/4.svg" alt="">{{$c->carType->name}}</span>
                                         </div>
                                         <div class="d-price">
-                                            Daily rate from <span>{{$c->price}}</span>
+                                            Daily rate from <span>${{$c->price}}</span>
                                             <a class="btn-main" href="{{url("/car",["car"=>$c->slug])}}">Rent Now</a>
                                         </div>
                                     </div>
@@ -266,8 +298,8 @@
                     </div>
                     <div class="col-md-3 col-sm-6 mb-sm-30">
                         <div class="de_count transparent text-light wow fadeInUp">
-                            <h3 class="timer" data-to="{{$countRental}}" data-speed="3000">0</h3>
-                            Rentals
+                            <h3 class="timer" data-to="{{$countUser}}" data-speed="3000">0</h3>
+                            Customer
                         </div>
                     </div>
                 </div>
