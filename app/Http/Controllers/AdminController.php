@@ -816,9 +816,14 @@ class AdminController extends Controller
         ]);
     }
     public function admin_incidentCreate(Rental $rental) {
-        return view("admin.admin-incidentCreate", [
-            "rental" => $rental
-        ]);
+        if ($rental->status == 4) {
+            return view("admin.admin-incidentCreate", [
+                "rental" => $rental
+            ]);
+        } else {
+            return abort(404);
+        }
+
     }
     public function admin_incidentSave(Request $request, Rental $rental) {
         $request->validate([
@@ -849,10 +854,20 @@ class AdminController extends Controller
 
     }
     public function admin_incidentEdit($id) {
+
         $incident = Incident::find($id);
-        return view("admin.admin-incidentUpdate", [
-            "incident" => $incident
-        ]);
+        if ($incident == null) {
+            return redirect()->to("/admin/incidents");
+        }
+        $rental = Rental::find($incident->rental_id);
+        if ($rental->status == 4) {
+            return view("admin.admin-incidentUpdate", [
+                "incident" => $incident
+            ]);
+        } else {
+            return redirect()->to("/admin/incidents");
+        }
+
     }
     public function admin_incidentUpdate(Request $request, $id) {
         $request->validate([
@@ -891,9 +906,18 @@ class AdminController extends Controller
         return redirect()->to("/admin/incidents");
     }
     public function admin_incidentDelete(Incident $incident) {
-        $incident->delete();
-        Toastr::success('Your file has been deleted.', 'Deleted!');
-        return redirect()->to("/admin/incidents");
+        if ($incident == null) {
+            return redirect()->to("/admin/incidents");
+        }
+        $rental = Rental::find($incident->rental_id);
+        if ($rental->status == 4) {
+            $incident->delete();
+            Toastr::success('Your file has been deleted.', 'Deleted!');
+            return redirect()->to("/admin/incidents");
+        } else {
+            return redirect()->to("/admin/incidents");
+        }
+
     }
 
 
