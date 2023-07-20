@@ -494,6 +494,7 @@ class WebController extends Controller
 
     public function cancelTransaction(Request $request)
     {
+        Toastr::warning('Failed deposit payment.', 'Warning!');
         return "error";
     }
 
