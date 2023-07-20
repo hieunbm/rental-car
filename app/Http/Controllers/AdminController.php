@@ -289,21 +289,6 @@ class AdminController extends Controller
         $request->validate([
             "model"=>"required",
             "price"=>"required|numeric|min:0",
-            'license_plate'=>'required',
-            'desposit'=>'required',
-            'thumbnail'=>'required',
-            'brand_id'=>'required',
-            'carType_id'=>'required',
-            'fuelType'=>'required',
-            'transmission'=>'required',
-            'km_limit'=>'required',
-            'modelYear'=>'required',
-            'reverse_sensor'=>'required',
-            'airConditioner'=>'required',
-            'driverAirbag'=>'required',
-            'cDPlayer'=>'required',
-            'seats'=>'required',
-            'brakeAssist'=>'required',
         ],[
             // thong bao gi thi thong bao
         ]);
@@ -315,6 +300,11 @@ class AdminController extends Controller
             $file->move($path,$fileName);
             $thumbnail = "/images/cars/".$fileName;
         }
+        $reverseSensor = $request->has('reverse_sensor') ? 1 : 0;
+        $airConditioner = $request->has('airConditioner') ? 1 : 0;
+        $driverAirbag = $request->has('driverAirbag') ? 1 : 0;
+        $cdPlayer = $request->has('cDPlayer') ? 1 : 0;
+        $brakeAssist = $request->has('brakeAssist') ? 1 : 0;
         $car = Car::create([
             'license_plate' => $request->get("license_plate"),
             'model' => $request->get("model"),
@@ -323,15 +313,16 @@ class AdminController extends Controller
             'slug' => Str::slug($request->get("model")),
             'brand_id' => $request->get("brand_id"),
             'carType_id' => $request->get("carType_id"),
+            'thumbnail' => $thumbnail,
             'fuelType' => $request->get("fuelType"),
             'transmission' => $request->get("transmission"),
             'km_limit' => $request->get("km_limit"),
             'modelYear' => $request->get("modelYear"),
-            'reverse_sensor' => $request->get("reverse_sensor"),
-            'airConditioner' => $request->get("airConditioner"),
-            'driverAirbag' => $request->get("driverAirbag"),
-            'cDPlayer' => $request->get("cDPlayer"),
-            'brakeAssist' => $request->get("brakeAssist"),
+            'reverse_sensor' => $reverseSensor,
+            'airConditioner' => $airConditioner,
+            'driverAirbag' => $driverAirbag,
+            'cDPlayer' => $cdPlayer,
+            'brakeAssist' => $brakeAssist,
             'seats' => $request->get("seats"),
             'status' => $request->get("status"),
             'description' => $request->get("description"),
@@ -339,21 +330,16 @@ class AdminController extends Controller
         ]);
 
         $carId = $car->id;
-
-
         RentalRate::create([
             'car_id' => $carId,
             'rental_type' => 'rent by day',
             'price' => $request->get('rentalrate_price_day'),
         ]);
-
         RentalRate::create([
             'car_id' => $carId,
             'rental_type' => 'rent by hours',
             'price' => $request->get('rentalrate_price_hours'),
         ]);
-
-
         return redirect()->to("/admin/cars");
     }
     public function admin_carsEdit($id){
@@ -378,15 +364,15 @@ class AdminController extends Controller
             'transmission'=>'required',
             'km_limit'=>'required',
             'modelYear'=>'required',
-            'reverse_sensor'=>'required',
-            'airConditioner'=>'required',
-            'driverAirbag'=>'required',
-            'cDPlayer'=>'required',
-            'seats'=>'required',
-            'brakeAssist'=>'required',
+
         ],[
             // thong bao gi thi thong bao
         ]);
+        $reverseSensor = $request->has('reverse_sensor') ? 1 : 0;
+        $airConditioner = $request->has('airConditioner') ? 1 : 0;
+        $driverAirbag = $request->has('driverAirbag') ? 1 : 0;
+        $cdPlayer = $request->has('cDPlayer') ? 1 : 0;
+        $brakeAssist = $request->has('brakeAssist') ? 1 : 0;
         $thumbnail = null;
         if($request->hasFile("thumbnail")){
             $file = $request->file("thumbnail");
@@ -407,31 +393,32 @@ class AdminController extends Controller
                 'transmission' => $request->get("transmission"),
                 'km_limit' => $request->get("km_limit"),
                 'modelYear' => $request->get("modelYear"),
-                'reverse_sensor' => $request->get("reverse_sensor"),
-                'airConditioner' => $request->get("airConditioner"),
-                'driverAirbag' => $request->get("driverAirbag"),
-                'cDPlayer' => $request->get("cDPlayer"),
-                'brakeAssist' => $request->get("brakeAssist"),
+                'reverse_sensor' => $reverseSensor,
+                'airConditioner' => $airConditioner,
+                'driverAirbag' => $driverAirbag,
+                'cDPlayer' => $cdPlayer,
+                'brakeAssist' => $brakeAssist,
                 'seats' => $request->get("seats"),
                 'status' => $request->get("status"),
                 'description' => $request->get("description"),
-                'rate' => $request->get("rate"),
+                'rate' => 0,
 
             ]);
-            $carId = $car->id;
 
 
-            RentalRate::create([
-                'car_id' => $carId,
-                'rental_type' => 'rent by day',
-                'price' => $request->get('rentalrate_price_day'),
-            ]);
 
-            RentalRate::create([
-                'car_id' => $carId,
-                'rental_type' => 'rent by hours',
-                'price' => $request->get('rentalrate_price_hours'),
-            ]);}
+            RentalRate::where("rental_type", 'rent by day')
+                ->update([
+                    'car_id' => $car->id,
+                    'price' => $request->get('rentalrate_price_day'),
+                ]);
+
+            RentalRate::where('rental_type', 'rent by hours')
+                ->update([
+                    'car_id' => $car->id,
+                    'price' => $request->get('rentalrate_price_hours'),
+                ]);
+        }
     else {
             $car=Car::where("id", $id)
                 ->update([
@@ -445,28 +432,28 @@ class AdminController extends Controller
                     'transmission' => $request->get("transmission"),
                     'km_limit' => $request->get("km_limit"),
                     'modelYear' => $request->get("modelYear"),
-                    'reverse_sensor' => $request->get("reverse_sensor"),
-                    'airConditioner' => $request->get("airConditioner"),
-                    'driverAirbag' => $request->get("driverAirbag"),
-                    'cDPlayer' => $request->get("cDPlayer"),
-                    'brakeAssist' => $request->get("brakeAssist"),
+                    'reverse_sensor' => $reverseSensor,
+                    'airConditioner' => $airConditioner,
+                    'driverAirbag' => $driverAirbag,
+                    'cDPlayer' => $cdPlayer,
+                    'brakeAssist' => $brakeAssist,
                     'seats' => $request->get("seats"),
                     'status' => $request->get("status"),
                     'description' => $request->get("description"),
-                    'rate' => $request->get("rate"),
+                    'rate' => 0,
                 ]);
-        $carId = $car->id;
 
 
-        RentalRate::create([
-            'car_id' => $carId,
-            'rental_type' => 'rent by day',
+        RentalRate::where("rental_type", 'rent by day')
+            ->update([
+            'car_id' => $car->id
+        ,
             'price' => $request->get('rentalrate_price_day'),
         ]);
 
-        RentalRate::create([
-            'car_id' => $carId,
-            'rental_type' => 'rent by hours',
+        RentalRate::where('rental_type', 'rent by hours')
+            ->update([
+            'car_id' => $car->id,
             'price' => $request->get('rentalrate_price_hours'),
         ]);
         }
