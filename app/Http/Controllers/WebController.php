@@ -553,7 +553,7 @@ class WebController extends Controller
             ]);
 
             $rental->status = 3;
-            $rental->is_desposit_paid == true;
+            $rental->is_desposit_paid = true;
             $rental->save();
 
             Toastr::success('Successfully received the car.', 'Success!');

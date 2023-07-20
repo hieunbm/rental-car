@@ -48,7 +48,7 @@
                             {{-- expense --}}
                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
                                 <label for="input-placeholder" class="form-label">Enter Price</label>
-                                <input type="number" class="form-control" name="expense" placeholder="Enter Price" />
+                                <input type="number" min="1" class="form-control" name="expense" placeholder="Enter Price" />
                                 @error("expense")
                                 <p class="text-danger"><i>{{$message}}</i></p>
                                 @enderror

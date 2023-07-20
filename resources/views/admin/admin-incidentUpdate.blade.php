@@ -46,7 +46,7 @@
                             {{--                        expense--}}
                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
                                 <label for="input-placeholder" class="form-label">Enter Price</label>
-                                <input type="number" value="{{$incident->expense}}" class="form-control" name="expense" placeholder="Enter Price" />
+                                <input type="number" min="1" value="{{$incident->expense}}" class="form-control" name="expense" placeholder="Enter Price" />
                             </div>
 
                             <div class="col-12">
