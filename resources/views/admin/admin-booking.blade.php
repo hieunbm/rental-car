@@ -12,18 +12,20 @@
                 <div class="card-header justify-content-between flex-wrap">
                     <div class="card-title">Booking</div>
                     <div class="d-flex">
-                        <div class="me-3"><input class="form-control form-control-sm" type="text"
-                                                 placeholder="Search Here" aria-label=".form-control-sm example"/></div>
+                        <div class="me-3"><input class="form-control form-control-sm" type="text" placeholder="Search Here" aria-label=".form-control-sm example"/></div>
                         <div class="dropdown">
-                            <a href="javascript:void(0);"
-                               class="btn btn-primary btn-sm btn-wave waves-effect waves-light"
-                               data-bs-toggle="dropdown" aria-expanded="false">
+                            <a href="javascript:void(0);" class="btn btn-primary btn-sm btn-wave waves-effect waves-light" data-bs-toggle="dropdown" aria-expanded="false">
                                 Sort By<i class="ri-arrow-down-s-line align-middle ms-1 d-inline-block"></i>
                             </a>
                             <ul class="dropdown-menu" role="menu">
-                                <li><a class="dropdown-item" href="javascript:void(0);">New</a></li>
-                                <li><a class="dropdown-item" href="javascript:void(0);">Popular</a></li>
-                                <li><a class="dropdown-item" href="javascript:void(0);">Relevant</a></li>
+                                <li><a class="dropdown-item" href="{{ url('/admin/booking?status=0') }}">Pending</a></li>
+                                <li><a class="dropdown-item" href="{{ url('/admin/booking?status=1') }}">Confirmed</a></li>
+                                <li><a class="dropdown-item" href="{{ url('/admin/booking?status=2') }}">Delivery</a></li>
+                                <li><a class="dropdown-item" href="{{ url('/admin/booking?status=3') }}">Renting</a></li>
+                                <li><a class="dropdown-item" href="{{ url('/admin/booking?status=4') }}">Processing</a></li>
+                                <li><a class="dropdown-item" href="{{ url('/admin/booking?status=5') }}">Completed</a></li>
+                                <li><a class="dropdown-item" href="{{ url('/admin/booking?status=6') }}">Cancel</a></li>
+                                <li><a class="dropdown-item" href="{{ url('/admin/booking') }}">All</a></li>
                             </ul>
                         </div>
                     </div>
