@@ -492,10 +492,10 @@ class WebController extends Controller
         return redirect()->to("/order-invoice/" . $rental->id);
     }
 
-    public function cancelTransaction(Request $request)
+    public function cancelTransaction(Rental $rental, Request $request)
     {
         Toastr::warning('Failed deposit payment.', 'Warning!');
-        return "error";
+        return redirect()->to("/order-invoice/" . $rental->id);
     }
 
     public function receive(Request $request, Rental $rental) {
