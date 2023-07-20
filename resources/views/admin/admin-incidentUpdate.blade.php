@@ -13,7 +13,7 @@
                     <div class="card-title">Update Incident</div>
                 </div>
 
-                <form method="post" action="{{url("/admin/incidents/edit",  $incident->id)}}" class="row row-cols-lg-auto g-3 align-items-center">
+                <form method="post" action="{{url("/admin/incidents/edit",  $incident->id)}}" enctype="multipart/form-data" class="row row-cols-lg-auto g-3 align-items-center">
                     @csrf
                     @method('PUT')
                     <div class="card-body">
