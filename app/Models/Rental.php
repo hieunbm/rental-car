@@ -47,4 +47,7 @@ class Rental extends Model
     public function service(){
         return $this->belongsToMany(Service::class, "rental_service")->withPivot('price');
     }
+    public function carStatus(){
+        return $this->hasMany(CarStatuses::class, "rental_id");
+    }
 }

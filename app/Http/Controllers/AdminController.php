@@ -22,12 +22,119 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
 {
-    public function admin_dashboard() {
-        return view("admin.dashboard");
+
+    //Start Dashboard
+    public function admin_dashboard(){
+        $totalAmountByDay7Days = [];
+        $totalAmountByDay30Days = [];
+        $successfulRentalsByDay7Days = [];
+        $canceledRentalsByDay7Days = [];
+        $today = now()->format('Y-m-d');
+
+        // Bieu do doanh thu 7 ngay truoc
+        $startDate7Days = date('Y-m-d', strtotime("-7 days", strtotime($today)));
+        $endDate7Days = $today;
+        $currentDate7Days = $startDate7Days;
+        while (strtotime($currentDate7Days) <= strtotime($endDate7Days)) {
+            $totalAmount7Days = Rental::whereDate("rental_date", $currentDate7Days)->where("status", 5)->sum("total_amount");
+            $successfulRentals7Days = Rental::whereDate("rental_date", $currentDate7Days)->where("status", 5)->count(); //lay nhung don thue thanh cong
+            $canceledRentals7Days = Rental::whereDate("rental_date", $currentDate7Days)->where("status", 6)->count(); //don bi huy
+            $totalAmountByDay7Days[$currentDate7Days] = $totalAmount7Days;
+            $successfulRentalsByDay7Days[$currentDate7Days] = $successfulRentals7Days;
+            $canceledRentalsByDay7Days[$currentDate7Days] = $canceledRentals7Days;
+            $currentDate7Days = date('Y-m-d', strtotime("+1 day", strtotime($currentDate7Days)));
+        }
+
+        // Biểu đồ daonh thu của tháng trước
+        $startDatePreviousMonth = now()->subMonth()->startOfMonth()->format('Y-m-d');
+        $endDatePreviousMonth = now()->subMonth()->endOfMonth()->format('Y-m-d');
+        $currentDatePreviousMonth = $startDatePreviousMonth;
+        while (strtotime($currentDatePreviousMonth) <= strtotime($endDatePreviousMonth)) {
+            $totalAmountPreviousMonth = Rental::whereDate("rental_date", $currentDatePreviousMonth)->where("status", 5)->sum("total_amount");
+            $totalAmountByDay30Days[$currentDatePreviousMonth] = $totalAmountPreviousMonth;
+            $currentDatePreviousMonth = date('Y-m-d', strtotime("+1 day", strtotime($currentDatePreviousMonth)));
+        }
+
+        // Biểu đồ doanh thu của 12 tháng trong năm
+        $currentYear = now()->format('Y');
+        $revenueByMonth = [];
+        for ($month = 1; $month <= 12; $month++) {
+            $startDate = Carbon::create($currentYear, $month, 1)->format('Y-m-d');
+            $endDate = Carbon::create($currentYear, $month, 1)->endOfMonth()->format('Y-m-d');
+
+            $revenueByMonth[] = Rental::whereBetween('rental_date', [$startDate, $endDate])
+                ->where("status", 5)
+                ->sum("total_amount");
+        }
+
+        //Tong so don thue xe va tong doanh thu cua ngay hom nay
+        $totalCarRentalOrdersToday = Rental::whereDate("rental_date", $today)->count();
+        $paidOrdersCount = Rental::whereDate("rental_date", $today)->where("is_rent_paid", 1)->count();
+        $totalRevenueToday = Rental::whereDate("rental_date", $today)->where("is_rent_paid", 1)->sum("total_amount");
+
+        //Tong so don thue xe va tong doanh thu
+        $totalCarRentalOrdersAllTime = Rental::count();
+        $paidOrdersCountAllTime = Rental::where("is_rent_paid", 1)->count();
+        $totalRevenueAll = Rental::sum("total_amount");
+        $totalRevenueAllTime = Rental::where("is_rent_paid", 1)->where("status", 5)->sum("total_amount");
+
+        // Tong so nguoi dung va tong so nguoi dung da thue xe
+        $totalClients = User::count();
+        $totalRenters = Rental::distinct('user_id')->count('user_id');
+
+        //Tong so xe va tong so xe da duoc thue
+        $totalCar = Car::count();
+        $totalRentersCar = Car::where('status', 1)->count();
+
+        //Lấy ra tổng số lần thanh toán của từng phương thức
+        $totalVNPayPayments = Rental::where('desposit_type', 'VN Pay')->count();
+        $totalPayPalPayments = Rental::where('desposit_type', 'PAYPAL')->count();
+        $totalMomoPayments = Rental::where('desposit_type', 'MOMO')->count();
+        $totalCODPayments = Rental::where('desposit_type', 'COD')->count();
+
+        //lấy ra 5 xe được thuê nhiều nhất và tính số lần được thuê
+        $mostRentedCars = Rental::select('car_id', DB::raw('COUNT(car_id) as rental_count'))->where("status", 5)->groupBy('car_id')->orderByDesc('rental_count')->limit(5)->get();
+        $carIds = $mostRentedCars->pluck('car_id')->toArray();
+        $mostRentedCarDetails = Car::whereIn('id', $carIds)->with('brand')->get();
+        //tính số tiền kiếm được của từng xe
+        foreach ($mostRentedCarDetails as $car) {
+            $totalAmountEarned = Rental::where('car_id', $car->id)->where('status', 5)->where('is_rent_paid', 1)->sum('total_amount');
+            $rentalCount = Rental::where('car_id', $car->id)->where('status', 5)->count();
+            $car->total_amount_earned = $totalAmountEarned;
+            $car->rental_count = $rentalCount;
+        }
+        $mostRentedCarDetails = $mostRentedCarDetails->sortByDesc('rental_count');//sắp xếp xe nào được thuê nhiều nhất thì đứng đầu
+
+        return view('admin.dashboard', compact('totalAmountByDay7Days',
+            'totalAmountByDay30Days',
+            'successfulRentalsByDay7Days',
+            'canceledRentalsByDay7Days',
+            'totalCarRentalOrdersToday',
+            'paidOrdersCount',
+            'totalRevenueToday',
+            'totalCarRentalOrdersAllTime',
+            'paidOrdersCountAllTime',
+            'totalRevenueAll',
+            'totalRevenueAllTime',
+            'totalClients',
+            'totalRenters',
+            'totalCar',
+            'totalRentersCar',
+            'totalVNPayPayments',
+            'totalPayPalPayments',
+            'totalMomoPayments',
+            'totalCODPayments',
+            'mostRentedCars',
+            'mostRentedCarDetails',
+            'revenueByMonth'
+        ));
     }
+    //End Dashboard
+
 
     // start booking
     public function admin_booking() {
@@ -60,8 +167,6 @@ class AdminController extends Controller
             $rental->update(["expected"=>$numberOfDays]);
         }
 
-        $startDate = Carbon::parse($rental->rental_date);; // Ngày bắt đầu thuê
-        $endDate = Carbon::parse($rental->return_date); // Ngày kết thúc thuê
         $services = $rental->service;
         $total = 0;
         foreach ($services as $item){
@@ -89,12 +194,23 @@ class AdminController extends Controller
         return redirect()->to("/admin/booking-detail/".$rental->id);
     }
     public function carHandoverOrder(Rental $rental){
-        // cập nhật status cuả order (confirm)
-        $rental->update(["status"=>2]);
-        // gửi email cho khách báo đơn đã đc chuyển trạng thái
-        Mail::to($rental->email)->send(new OrderMail($rental));
-        Toastr::success('Status update successful.', 'Success!');
-        return redirect()->to("/admin/booking-detail/".$rental->id);
+        // kiểm tra
+        $rentalDate = Carbon::parse($rental->rental_date);
+        $now = Carbon::now();
+
+        if ($now->diffInHours($rentalDate, false) < 24) {
+            // cập nhật status cuả order (confirm)
+            $rental->update(["status"=>2]);
+            // gửi email cho khách báo đơn đã đc chuyển trạng thái
+            Mail::to($rental->email)->send(new OrderMail($rental));
+            Toastr::success('Status update successful.', 'Success!');
+            return redirect()->to("/admin/booking-detail/".$rental->id);
+        } else {
+            // Không đủ thời gian để giao xe, hiển thị thông báo lỗi hoặc xử lý theo yêu cầu
+            Toastr::warning('Delivery date not yet.', 'Warning!');
+            return redirect()->to("/admin/booking-detail/".$rental->id);
+        }
+
     }
     public function inProgress(Rental $rental){
         // cập nhật status cuả order thành 1 (cònfirm)
@@ -106,8 +222,16 @@ class AdminController extends Controller
     public function returnCar(Rental $rental)
     {
         // xử lí lưu ngày trả xe
-        $rental->return_date = Carbon::now('Asia/Ho_Chi_Minh')->format('Y-m-d H:i:s');
+        $return_dateString = Carbon::now('Asia/Ho_Chi_Minh')->format('Y-m-d H:i:s');
+        $return_date = Carbon::parse($return_dateString);;
+        if ($return_date->lessThan($rental->rental_date)) {
+            Toastr::warning('Can not pick up the car right now.', 'Warning!');
+            return redirect()->to("/admin/booking-detail/".$rental->id);
+        }
+        // lưu dữ liệu
+        $rental->return_date = $return_dateString;
         $rental->save();
+
         // xử lí ngày trả và tiền
         $startDate = Carbon::parse($rental->rental_date);; // Ngày bắt đầu thuê
         $endDate = Carbon::parse($rental->return_date); // Ngày kết thúc thuê

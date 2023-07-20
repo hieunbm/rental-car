@@ -4,7 +4,7 @@
 <table style="max-width:670px;margin:50px auto 10px;background-color:#fff;padding:50px;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;-webkit-box-shadow:0 1px 3px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.24);-moz-box-shadow:0 1px 3px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.24);box-shadow:0 1px 3px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.24); border-top: solid 10px green;">
     <thead>
     <tr>
-        <th style="text-align:left;"><img style="max-width: 150px;" src="images/logo.png" alt="bachana tours"></th>
+        <th style="text-align:left;"><img style="max-width: 150px;" src="https://f9-zpcloud.zdn.vn/3498997325777801273/0e67715cacf67ca825e7.jpg" alt="bachana tours"></th>
         <th style="text-align:right;font-weight:400;">{{$rental->updated_at->format('dS M, Y')}}</th>
     </tr>
     </thead>

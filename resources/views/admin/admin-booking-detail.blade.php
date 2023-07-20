@@ -14,7 +14,7 @@
                                                            alt=""></div>
                         <div class="ms-sm-2 ms-0 mt-sm-0 mt-2">
                             <div class="h6 fw-semibold mb-0">CAR RENTAL CONTRACT : <span
-                                    class="text-primary">#8140-2099</span>
+                                    class="text-primary">#{{$rental->id}}</span>
                             </div>
                         </div>
                     </div>
@@ -34,9 +34,9 @@
                                         CAR RENTAL CONTRACT
                                     </h4>
                                     <div style="float: right; margin-bottom: 20px">
-                                        <span>No: 2343</span>
+                                        <span>No: #{{$rental->id}}</span>
                                         <br>
-                                        <span>Contact Date: 22/34/3454</span>
+                                        <span>Contact Date: {{$rental->created_at}}</span>
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -182,7 +182,7 @@
                                                 <tr>
                                                     <th scope="row"><p class="mb-0">Payment Status :</p></th>
                                                     <td><p class="mb-0 fw-semibold fs-15">
-                                                            @if($rental->is_paid)
+                                                            @if($rental->is_rent_paid)
                                                                 <span class="badge bg-success">Pain</span>
                                                             @else
                                                                 <span class="badge bg-danger">UnPain</span>
@@ -328,14 +328,10 @@
                 </div>
                 <div class="card-body">
                     <div class="row gy-3">
-                        <div class="col-xl-12"><p class="fs-14 fw-semibold"> Credit/Debit Card </p>
+                        <div class="col-xl-12">
                             <p><span class="fw-semibold text-muted fs-12">Name On Card :</span> {{$rental->customer->name}} </p>
-                            <p><span class="fw-semibold text-muted fs-12">Card Number :</span> 1234 5678 9087 XXXX
-                            </p>
                             <p><span class="fw-semibold text-muted fs-12">Total Amount :</span> <span
                                     class="text-success fw-semibold fs-14">${{$rental->total_amount}}</span></p>
-                            <p><span class="fw-semibold text-muted fs-12">Due Date :</span> 29,Dec 2022 - <span
-                                    class="text-danger fs-12 fw-semibold">30 days due</span></p>
                             <p><span class="fw-semibold text-muted fs-12">Invoice Status : @switch($rental->status)
                                         @case(0) <span
                                             class="badge bg-dark text-white fw-bold">Pending</span>@break
@@ -352,6 +348,51 @@
                                         @case(6) <span
                                             class="badge bg-danger text-black fw-bold">Cancel</span>@break
                                     @endswitch</span></p>
+                            <p>
+                                <span class="fw-semibold text-muted fs-12">Deposit Status :
+                                    @if($rental->is_desposit_paid)
+                                        <span class="badge bg-success">Pain</span>
+                                    @else
+                                        <span class="badge bg-danger">UnPain</span>
+                                    @endif
+                                </span>
+                            </p>
+                            <p>
+                                <span class="fw-semibold text-muted fs-12">Pay rent Status :
+                                    @if($rental->is_rent_paid)
+                                        <span class="badge bg-success">Pain</span>
+                                    @else
+                                        <span class="badge bg-danger">UnPain</span>
+                                    @endif
+                                </span>
+                            </p>
+                            <p>
+                                <span class="fw-semibold text-muted fs-12">Return Car :
+                                    @if($rental->is_car_returned)
+                                        <span class="badge bg-success">Pain</span>
+                                    @else
+                                        <span class="badge bg-danger">UnPain</span>
+                                    @endif
+                                </span>
+                            </p>
+                            <p>
+                                <span class="fw-semibold text-muted fs-12">Return the deposit :
+                                    @if($rental->is_desposit_returned)
+                                        <span class="badge bg-success">Pain</span>
+                                    @else
+                                        <span class="badge bg-danger">UnPain</span>
+                                    @endif
+                                </span>
+                            </p>
+                            <p>
+                                <span class="fw-semibold text-muted fs-12">Review :
+                                    @if($rental->is_reviewed)
+                                        <span class="badge bg-success">Reviewed</span>
+                                    @else
+                                        <span class="badge bg-danger">Not yet reviewed</span>
+                                    @endif
+                                </span>
+                            </p>
                             <div class="alert alert-success" role="alert"> Please Make sure to pay the invoice bill
                                 within 30 days.
                             </div>
@@ -359,5 +400,32 @@
                     </div>
                 </div>
             </div>
+            @if($rental->carStatus->isEmpty())
+                <div class="card custom-card">
+                    <div class="card-header">
+                        <div class="card-title">The customer has not received the car yet!</div>
+                    </div>
+                </div>
+            @else
+                <div class="card custom-card">
+                    <div class="card-header">
+                        <div class="card-title">The customer has received the car</div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row gy-3">
+                            <div class="col-xl-12">
+                                @foreach($rental->carStatus as $item)
+                                    <p class="card-title mb-3">Note: {{$item->note}}</p>
+                                    <img src="{{$item->thumbnail_1}}" class="img-fluid rounded" alt="...">
+                                    <br>
+                                    <br>
+                                    <img src="{{$item->thumbnail_2}}" class="img-fluid rounded" alt="...">
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endif
+
         </div>
 @endsection
