@@ -413,30 +413,28 @@ class WebController extends Controller
 //    }
 
     //var_dump($inputData);
-    ksort($inputData);
-    $query = "";
-    $i = 0;
-    $hashdata = "";
-    foreach ($inputData as $key => $value) {
-        if ($i == 1) {
-            $hashdata .= '&' . urlencode($key) . "=" . urlencode($value);
-        } else {
-            $hashdata .= urlencode($key) . "=" . urlencode($value);
-            $i = 1;
-        }
-        $query .= urlencode($key) . "=" . urlencode($value) . '&';
-    }
+            ksort($inputData);
+            $query = "";
+            $i = 0;
+            $hashdata = "";
+            foreach ($inputData as $key => $value) {
+                if ($i == 1) {
+                    $hashdata .= '&' . urlencode($key) . "=" . urlencode($value);
+                } else {
+                    $hashdata .= urlencode($key) . "=" . urlencode($value);
+                    $i = 1;
+                }
+                $query .= urlencode($key) . "=" . urlencode($value) . '&';
+            }
 
-    $vnp_Url = $vnp_Url . "?" . $query;
-    if (isset($vnp_HashSecret)) {
-        $vnpSecureHash =   hash_hmac('sha512', $hashdata, $vnp_HashSecret);//
-        $vnp_Url .= 'vnp_SecureHash=' . $vnpSecureHash;
-    }
-    $returnData = array('code' => '00'
-    , 'message' => 'success'
-    , 'data' => $vnp_Url);
-            header('Location: ' . $vnp_Url);
-            die();
+            $vnp_Url = $vnp_Url . "?" . $query; // gheps
+            if (isset($vnp_HashSecret)) {
+                $vnpSecureHash =   hash_hmac('sha512', $hashdata, $vnp_HashSecret);//
+                $vnp_Url .= 'vnp_SecureHash=' . $vnpSecureHash; // ghép tghanhf 1 url để đi sang vnpay
+            }
+            header("Location: ".$vnp_Url);// đi sang bên vnpay
+                die();// xong việc của việc gửi thông tin thanh toán
+
         // vui lòng tham khảo thêm tại code demo
         } else if ($rental->desposit_type == "MOMO") {
             // thanh toan bang momo
@@ -483,6 +481,14 @@ class WebController extends Controller
         // chuyển đến trang home
         Toastr::success('Successful booking.', 'Success!');
         return redirect()->to("/order-invoice/" . $rental->id);
+    }
+    public function nhanKetQua(Rental $rental,Request $request)
+    {
+        if ($request->get("vnp_ResponseCode") == "00") {
+            $rental->update(["is_desposit_paid" => true, "status" => 1]);// đã thanh toán, trạng thái về xác nhận
+            Toastr::success('Deposit payment successful.', 'Success!');
+            return redirect()->to("/order-invoice/" . $rental->id);
+        }
     }
 
     public function successTransaction(Rental $rental, Request $request)
