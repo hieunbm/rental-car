@@ -425,7 +425,14 @@ class AdminController extends Controller
     public function admin_savecar(Request $request){
         $request->validate([
             "model"=>"required",
-            "price"=>"required|numeric|min:0",
+            'license_plate'=>'required',
+            'desposit'=>'required',
+            'brand_id'=>'required',
+            'carType_id'=>'required',
+            'fuelType'=>'required',
+            'transmission'=>'required',
+            'km_limit'=>'required',
+            'modelYear'=>'required',
         ],[
             // thong bao gi thi thong bao
         ]);
@@ -445,7 +452,7 @@ class AdminController extends Controller
         $car = Car::create([
             'license_plate' => $request->get("license_plate"),
             'model' => $request->get("model"),
-            'price' => $request->get("price"),
+            'price' => $request->get("rentalrate_price_day"),
             'desposit' => $request->get("desposit"),
             'slug' => Str::slug($request->get("model")),
             'brand_id' => $request->get("brand_id"),
@@ -474,7 +481,7 @@ class AdminController extends Controller
         ]);
         RentalRate::create([
             'car_id' => $carId,
-            'rental_type' => 'rent by hours',
+            'rental_type' => 'rent by hour',
             'price' => $request->get('rentalrate_price_hours'),
         ]);
         return redirect()->to("/admin/cars");
@@ -483,7 +490,11 @@ class AdminController extends Controller
         $cars = Car::where("id", $id)->first();
         $brands=Brand::get();
         $carTypes=CarType::get();
+        $priceday=RentalRate::where('car_id',$id)->where('rental_type','rent by day')->first();
+        $pricehour=RentalRate::where('car_id',$id)->where('rental_type','rent by hour')->first();
         return view("admin.admin-carsUpdate", [
+            'priceday'=>$priceday,
+            'pricehour'=>$pricehour,
             "cars" => $cars,
             'brands'=>$brands,
             'carTypes'=>$carTypes,
@@ -492,7 +503,6 @@ class AdminController extends Controller
     public function admin_carsUpdate(Request $request, $id) {
         $request->validate([
             "model"=>"required",
-            "price"=>"required|numeric|min:0",
             'license_plate'=>'required',
             'desposit'=>'required',
             'brand_id'=>'required',
@@ -521,7 +531,7 @@ class AdminController extends Controller
             ->update([
                 'license_plate' => $request->get("license_plate"),
                 'model' => $request->get("model"),
-                'price' => $request->get("price"),
+                'price' => $request->get("rentalrate_price_day"),
                 'slug' => Str::slug($request->get("model")),
                 'brand_id' => $request->get("brand_id"),
                 'carType_id' => $request->get("carType_id"),
@@ -550,7 +560,7 @@ class AdminController extends Controller
                     'price' => $request->get('rentalrate_price_day'),
                 ]);
 
-            RentalRate::where('rental_type', 'rent by hours')
+            RentalRate::where('rental_type', 'rent by hour')
                 ->update([
                     'car_id' => $car,
                     'price' => $request->get('rentalrate_price_hours'),
@@ -561,7 +571,7 @@ class AdminController extends Controller
                 ->update([
                     'license_plate' => $request->get("license_plate"),
                     'model' => $request->get("model"),
-                    'price' => $request->get("price"),
+                    'price' => $request->get("rentalrate_price_day"),
                     'slug' => Str::slug($request->get("model")),
                     'brand_id' => $request->get("brand_id"),
                     'carType_id' => $request->get("carType_id"),
@@ -587,7 +597,7 @@ class AdminController extends Controller
             'price' => $request->get('rentalrate_price_day'),
         ]);
 
-        RentalRate::where('rental_type', 'rent by hours')
+        RentalRate::where('rental_type', 'rent by hour')
             ->update([
             'car_id' => $car,
             'price' => $request->get('rentalrate_price_hours'),

@@ -46,16 +46,6 @@
                                 @enderror
                             </div>
 
-                            {{--                        Price--}}
-                            <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12">
-                                <label for="input-number" class="form-label">Enter Price</label> <input name="price" type="number"
-                                                                                                       class="form-control"
-                                                                                                       id="input-number"
-                                                                                                       placeholder="Enter Price"/>
-                                @error("name")
-                                <p class="text-danger"><i>{{$message}}</i></p>
-                                @enderror
-                            </div>
 
                             {{--                        Brand--}}
                             <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12">
@@ -200,7 +190,7 @@
                             </div>
                             {{--                                Rent by hour--}}
                                 <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12">
-                                <label for="input-number" class="form-label">Price Rent By Hours</label> <input name="rentalrate_price_hours" type="number"
+                                <label for="input-number" class="form-label">Price Rent By Hour</label> <input name="rentalrate_price_hours" type="number"
                                                                                                        class="form-control"
                                                                                                        id="input-number"
                                                                                                        placeholder="Enter Rate"/>
