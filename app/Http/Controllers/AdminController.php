@@ -533,13 +533,13 @@ class AdminController extends Controller
 
             RentalRate::where("rental_type", 'rent by day')
                 ->update([
-                    'car_id' => $car->id,
+                    'car_id' => $car,
                     'price' => $request->get('rentalrate_price_day'),
                 ]);
 
             RentalRate::where('rental_type', 'rent by hours')
                 ->update([
-                    'car_id' => $car->id,
+                    'car_id' => $car,
                     'price' => $request->get('rentalrate_price_hours'),
                 ]);
         }
@@ -570,14 +570,13 @@ class AdminController extends Controller
 
         RentalRate::where("rental_type", 'rent by day')
             ->update([
-            'car_id' => $car->id
-        ,
+            'car_id' => $car,
             'price' => $request->get('rentalrate_price_day'),
         ]);
 
         RentalRate::where('rental_type', 'rent by hours')
             ->update([
-            'car_id' => $car->id,
+            'car_id' => $car,
             'price' => $request->get('rentalrate_price_hours'),
         ]);
         }
