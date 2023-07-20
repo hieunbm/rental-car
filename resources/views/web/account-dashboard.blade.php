@@ -15,7 +15,7 @@
                         <div class="card p-4 rounded-5">
                             <div class="profile_avatar">
                                 <div class="profile_img">
-                                    <img src="images/profile/1.jpg" alt="">
+                                    <img src="images/misc/avatar.jpg" alt="">
                                 </div>
                                 <div class="profile_name">
                                     <h4>
@@ -107,6 +107,9 @@
                                 @endforeach
                                 </tbody>
                             </table>
+                        </div>
+                        <div class="ms-auto float-end">
+                            {!! $rental->appends(app("request")->input())->links("pagination::bootstrap-4") !!}
                         </div>
                     </div>
                 </div>

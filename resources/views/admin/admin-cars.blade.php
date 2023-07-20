@@ -89,6 +89,14 @@
                     </table>
                 </div>
             </div>
+            <div class="card-footer">
+                <div class="d-flex align-items-center">
+                    <div>Table of contents <i class="bi bi-arrow-right ms-2 fw-semibold"></i></div>
+                    <div class="ms-auto">
+                        {!! $cars->appends(app("request")->input())->links("pagination::bootstrap-4") !!}
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
