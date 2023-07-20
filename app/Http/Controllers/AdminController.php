@@ -822,7 +822,7 @@ class AdminController extends Controller
             "expense" => $request->get("expense"),
             "thumbnail" => $thumbnail,
         ]);
-        Toastr::success('Successful service creation.', 'Success!');
+        Toastr::success('Successful incident creation.', 'Success!');
         return redirect()->to("/admin/booking-detail/".$rental->id);
 
     }

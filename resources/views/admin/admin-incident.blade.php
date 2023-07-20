@@ -27,7 +27,7 @@
                                     <br>
                                     UPDATE AT
                                 </th>
-                                <th>STATUS</th>
+                                <th>IMAGES</th>
                                 <th scope="col">ACTION</th>
                             </tr>
                             </thead>
@@ -44,11 +44,13 @@
                                         <br>
                                         {{$item->updated_at}}
                                     </td>
-                                    <td>{{$item->status}}</td>
+                                    <td>
+                                        <img src="{{$item->thumbnail}}" style="width: 80px; height: 80px; object-fit: contain">
+                                    </td>
                                     <td>
                                         <div class="hstack gap-2 fs-15">
                                             <a href="{{url("/admin/incidents/edit", ["id" => $item->id])}}" class="btn btn-icon btn-sm btn-info-transparent rounded-pill"><i class="ri-edit-line"></i></a>
-                                            <a onclick="return confirm('Xoá sản phẩm?')" href="{{url("/admin/incidents/delete",["incident"=>$item->id])}}" class="btn btn-icon btn-sm btn-danger-transparent rounded-pill"><i class="ri-delete-bin-line"></i></a>
+                                            <a onclick="confirmation(event)" href="{{url("/admin/incidents/delete",["incident"=>$item->id])}}" class="btn btn-icon btn-sm btn-danger-transparent rounded-pill"><i class="ri-delete-bin-line"></i></a>
                                         </div>
                                     </td>
                                 </tr>

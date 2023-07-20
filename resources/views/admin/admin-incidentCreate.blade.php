@@ -13,7 +13,7 @@
                     <div class="card-title">Add Incident</div>
                 </div>
 
-                <form method="post" action="{{url("/admin/incidents/create", ["rental" => $rental->id])}}" class="row row-cols-lg-auto g-3 align-items-center">
+                <form method="post" action="{{url("/admin/incidents/create", ["rental" => $rental->id])}}" enctype="multipart/form-data" class="row row-cols-lg-auto g-3 align-items-center">
                     @csrf
                     <div class="card-body">
                         <div class="row gy-4">
