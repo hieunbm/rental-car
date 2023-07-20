@@ -90,7 +90,7 @@ class WebController extends Controller
     public function car_search(Request $request)
     {
         $q = $request->get("q");
-        $cars = Car::where("model", 'like', "%$q%")->get();
+        $cars = Car::where("model", 'like', "%$q%")->where("status",0)->get();
         $merge = $this->mergeCode($cars);
 
         $count = $cars->count(); //hiển thị số lượng xe tìm thấy
@@ -102,7 +102,7 @@ class WebController extends Controller
 
     public function car_filter_brand(Brand $brand)
     {
-        $cars = Car::where('brand_id', $brand->id)->get();
+        $cars = Car::where('brand_id', $brand->id)->where("status",0)->get();
         $merge = $this->mergeCode($cars);
 
         return view("web.car-filter", array_merge($merge, [
@@ -113,7 +113,7 @@ class WebController extends Controller
 
     public function car_filter_type(CarType $carType)
     {
-        $cars = Car::where('carType_id', $carType->id)->get();
+        $cars = Car::where('carType_id', $carType->id)->where("status",0)->get();
         $merge = $this->mergeCode($cars);
 
         return view("web.car-filter", array_merge($merge, [
@@ -124,7 +124,7 @@ class WebController extends Controller
 
     public function car_filter_price(Request $request)
     {
-        $query = Car::query();
+        $query = Car::query()->where("status", 0);
         if ($request->has('min_price') && $request->has('max_price')) {
             $minPrice = $request->input('min_price');
             $maxPrice = $request->input('max_price');
@@ -143,7 +143,7 @@ class WebController extends Controller
 
     public function car_filter_seats($seats)
     {
-        $cars = Car::where('seats', $seats)->get();
+        $cars = Car::where('seats', $seats)->where("status",0)->get();
         $merge = $this->mergeCode($cars);
 
         return view("web.car-filter", array_merge($merge, [
@@ -151,7 +151,6 @@ class WebController extends Controller
             "selectedSeats" => $seats
         ]));
     }
-
     //End CarList
 
     // Start Booking

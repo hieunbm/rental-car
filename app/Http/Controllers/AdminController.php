@@ -137,10 +137,19 @@ class AdminController extends Controller
 
 
     // start booking
-    public function admin_booking() {
-        $rentals = Rental::orderBy("id", "desc")->paginate(12);
+    public function admin_booking(Request $request) {
+        $status = $request->get('status');
+        $rentalsQuery = Rental::orderBy("id", "desc");
+
+        //lọc booking theo status
+        if ($status !== null) {
+            $rentalsQuery = $rentalsQuery->where('status', $status);
+        }
+
+        $rentals = $rentalsQuery->paginate(12);
+
         return view("admin.admin-booking", [
-            "rentals" => $rentals
+            "rentals" => $rentals,
         ]);
     }
     public function admin_booking_detail(Rental $rental) {
