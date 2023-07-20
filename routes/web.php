@@ -81,6 +81,7 @@ Route::prefix("/admin")->middleware(["auth", "admin"])->group(function () {// mi
     Route::get("/booking/cancel/{rental}", [App\Http\Controllers\AdminController::class, "cancel"]);
     Route::get("/cars", [App\Http\Controllers\AdminController::class, "admin_cars"]);
     Route::get("/cars/delete/{car}",[App\Http\Controllers\AdminController::class,"admin_carsDelete"]);
+    Route::get("/images/delete/{gallery}",[App\Http\Controllers\AdminController::class,"admin_imageDelete"]);
     Route::get("/cars/edit/{id}", [App\Http\Controllers\AdminController::class, "admin_carsEdit"]);
     Route::put("/cars/edit/{id}", [App\Http\Controllers\AdminController::class, "admin_carsUpdate"]);
     Route::get("/car-type", [App\Http\Controllers\AdminController::class, "admin_cartype"]);

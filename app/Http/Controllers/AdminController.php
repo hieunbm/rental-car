@@ -289,6 +289,10 @@ class AdminController extends Controller
         $car->delete();
         return redirect()->to("/admin/cars");
     }
+    public function admin_imageDelete(Gallery $gallery){
+        $gallery->delete();
+        return redirect()->to("/admin/cars");
+    }
     public function admin_cartype() {
         $carTypes = CarType::orderBy("id", "desc")->paginate(10);
         return view("admin.admin-cartype",[
