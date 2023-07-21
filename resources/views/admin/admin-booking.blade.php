@@ -93,7 +93,7 @@
                                             @case(2) <span
                                                 class="badge bg-info text-black fw-bold">Delivery</span>@break
                                             @case(3) <span
-                                                class="badge bg-warning text-black fw-bold">In Progress</span>@break
+                                                class="badge bg-warning text-black fw-bold">Renting</span>@break
                                             @case(4) <span
                                                 class="badge bg-warning text-black fw-bold">Processing</span>@break
                                             @case(5) <span
