@@ -26,7 +26,7 @@ class DatabaseSeeder extends Seeder
         DB::table('users')->insert([
             [
                 'name' => 'Chu Duc Hoang',
-                'email' => 'chuduchoang2@gmail.com',
+                'email' => 'chuduchoangg@gmail.com',
                 'password' => Hash::make('12345678'),
                 'phone' => '0987654321',
                 "role" => null,
@@ -36,7 +36,7 @@ class DatabaseSeeder extends Seeder
             ],
             [
                 'name' => 'Admin',
-                'email' => 'chuduchoang@gmail.com',
+                'email' => 'admin@gmail.com',
                 'password' => Hash::make('12345678'),
                 'phone' => '0123456789',
                 "role" => 'admin',
@@ -2279,6 +2279,5 @@ class DatabaseSeeder extends Seeder
                 'updated_at' => now(),
             ],
         ]);
-
     }
 }

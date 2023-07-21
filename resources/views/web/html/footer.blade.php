@@ -12,9 +12,9 @@
                 <div class="widget">
                     <h5>Contact Info</h5>
                     <address class="s1">
-                        <span><i class="id-color fa fa-map-marker fa-lg"></i>Số 8 Tôn Thất Thuyết</span>
+                        <span><i class="id-color fa fa-map-marker fa-lg"></i>No 8 Ton That Thuyet</span>
                         <span><i class="id-color fa fa-phone fa-lg"></i>+84 396321425</span>
-                        <span><i class="id-color fa fa-envelope-o fa-lg"></i><a href="mailto:contact@example.com">hiepga1243gmail.com</a></span>
+                        <span><i class="id-color fa fa-envelope-o fa-lg"></i><a href="mailto:contact@example.com">rentalygmail.com</a></span>
                         <span><i class="id-color fa fa-file-pdf-o fa-lg"></i><a href="#">Download Brochure</a></span>
                     </address>
                 </div>

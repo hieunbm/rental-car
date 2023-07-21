@@ -410,9 +410,6 @@
                             </div>
                         </div>
                     </div>
-                    <div class="p-3 border-top">
-                        <div class="d-grid"><a href="javascript:void(0);" class="btn btn-primary">View All</a></div>
-                    </div>
                 </div>
                 <!-- End::main-header-dropdown -->
             </div>
@@ -429,10 +426,10 @@
                 <!-- Start::header-link|dropdown-toggle -->
                 <a href="#" class="header-link dropdown-toggle" id="mainHeaderProfile" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
                     <div class="d-flex align-items-center">
-                        <div class="me-sm-2 me-0"><img src="../dashboard/images/faces/9.jpg" alt="img" width="32" height="32" class="rounded-circle" /></div>
+                        <div class="me-sm-2 me-0"><img src="images/misc/avatar.jpg" alt="img" width="32" height="32" class="rounded-circle" /></div>
                         <div class="d-sm-block d-none">
-                            <p class="fw-semibold mb-0 lh-1">Json Taylor</p>
-                            <span class="op-7 fw-normal d-block fs-11">Web Designer</span>
+                            <p class="fw-semibold mb-0 lh-1">{{auth()->user()->name}}</p>
+                            <span class="op-7 fw-normal d-block fs-11">Site Administrator</span>
                         </div>
                     </div>
                 </a>

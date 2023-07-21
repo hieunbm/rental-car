@@ -30,7 +30,7 @@
                         <div class="spacer-double d-lg-none d-sm-block"></div>
                         <div class="spacer-double d-lg-none d-sm-block"></div>
                         <div class="spacer-double d-lg-none d-sm-block"></div>
-                        <div class="row align-items-center">
+                        <div class="row align-items-center pt-5">
                             <div class="col-lg-6 text-light pt-5">
                                 <h4><span class="id-color">Fast and Easy Way to Rent a Car</span></h4>
                                 <div class="spacer-10"></div>

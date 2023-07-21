@@ -95,7 +95,7 @@
                                                 </div>
                                                 <div class="col-lg-6 mb20">
                                                     <h5>Expected number of days/hours</h5>
-                                                    <input onchange="updateInput()" oninput="checkMinValue(this)" name="expected" id="expected" value="{{$expected}}" class="form-control" type="number" min="1"/>
+                                                    <input onchange="updateInput()" oninput="checkMinValue(this)" name="expected" id="expected" value="{{$expected}}" class="form-control" type="number" min="1" max="100"/>
                                                 </div>
                                             </div>
                                             <div class="col-lg-12 mb30" id="address_input" style="display: none;">

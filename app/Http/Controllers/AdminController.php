@@ -72,9 +72,9 @@ class AdminController extends Controller
         }
 
         //Tong so don thue xe va tong doanh thu cua ngay hom nay
-        $totalCarRentalOrdersToday = Rental::whereDate("rental_date", $today)->count();
-        $paidOrdersCount = Rental::whereDate("rental_date", $today)->where("is_rent_paid", 1)->count();
-        $totalRevenueToday = Rental::whereDate("rental_date", $today)->where("is_rent_paid", 1)->sum("total_amount");
+        $totalCarRentalOrdersToday = Rental::whereDate("created_at", $today)->count();
+        $paidOrdersCount = Rental::whereDate("created_at", $today)->where("is_rent_paid", 1)->count();
+        $totalRevenueToday = Rental::whereDate("created_at", $today)->where("is_rent_paid", 1)->sum("total_amount");
 
         //Tong so don thue xe va tong doanh thu
         $totalCarRentalOrdersAllTime = Rental::count();
@@ -91,7 +91,7 @@ class AdminController extends Controller
         $totalRentersCar = Car::where('status', 1)->count();
 
         //Lấy ra tổng số lần thanh toán của từng phương thức
-        $totalVNPayPayments = Rental::where('desposit_type', 'VN Pay')->count();
+        $totalVNPayPayments = Rental::where('desposit_type', 'VNPAY')->count();
         $totalPayPalPayments = Rental::where('desposit_type', 'PAYPAL')->count();
         $totalMomoPayments = Rental::where('desposit_type', 'MOMO')->count();
         $totalCODPayments = Rental::where('desposit_type', 'COD')->count();
@@ -198,7 +198,7 @@ class AdminController extends Controller
         // cập nhật status cuả order thành 1 (cònfirm)
         $rental->update(["status"=>1]);
         // gửi email cho khách báo đơn đã đc chuyển trạng thái
-        Mail::to("hoangtulaubar@gmail.com")->send(new OrderMail($rental));
+        Mail::to($rental->email)->send(new OrderMail($rental));
         Toastr::success('Status update successful.', 'Success!');
         return redirect()->to("/admin/booking-detail/".$rental->id);
     }
@@ -708,8 +708,8 @@ class AdminController extends Controller
     //start customer
     public function admin_customer(Request $request) {
         $status = $request->get('status');
-
-        $customers = User::paginate(12);
+//
+        $customers = User::orderBy("id","desc")->get();
         $license = DrivingLicenses::all();
 
         //Loc theo status

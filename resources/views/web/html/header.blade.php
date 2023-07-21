@@ -4,7 +4,7 @@
             <div class="topbar-left xs-hide">
                 <div class="topbar-widget">
                     <div class="topbar-widget"><a href="#"><i class="fa fa-phone"></i>+84 396321425</a></div>
-                    <div class="topbar-widget"><a href="#"><i class="fa fa-envelope"></i>hiepga1243@gmail.com</a></div>
+                    <div class="topbar-widget"><a href="#"><i class="fa fa-envelope"></i>rentaly@gmail.com</a></div>
                     <div class="topbar-widget"><a href="#"><i class="fa fa-clock-o"></i>Mon - Fri 08.00 - 18.00</a>
                     </div>
                 </div>

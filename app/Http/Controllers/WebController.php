@@ -198,6 +198,10 @@ class WebController extends Controller
         }
         if (Session::has('car')) {
             $car = Session::get('car');
+            if( $car->status == 1){
+                Toastr::warning('This car has been rented.', 'Warning!');
+                return redirect('/car-list');
+            }
             $services = Service::all();
             $thumbnails = Gallery::where("car_id", $car->id)->limit(2)->get();
             $rental_date = Session::get('rental_date');
